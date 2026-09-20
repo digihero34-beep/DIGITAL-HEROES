@@ -3,82 +3,120 @@
 import React from 'react';
 import { useTheme, ThemeOption } from './ThemeProvider';
 
+interface ThemeConfig {
+  id: ThemeOption;
+  label: string;
+  shortLabel: string;
+  color: string;
+  accent: string;
+  step: string;
+}
+
+const THEMES: Record<ThemeOption, ThemeConfig> = {
+  spruce: {
+    id: 'spruce',
+    label: 'Spruce & Ivory',
+    shortLabel: 'Spruce',
+    color: '#001910',
+    accent: '#c59b27',
+    step: '1/3',
+  },
+  navy: {
+    id: 'navy',
+    label: 'Navy & Gold',
+    shortLabel: 'Navy',
+    color: '#08192d',
+    accent: '#eec14b',
+    step: '2/3',
+  },
+  slate: {
+    id: 'slate',
+    label: 'Slate & Mint',
+    shortLabel: 'Slate',
+    color: '#141a18',
+    accent: '#10B981',
+    step: '3/3',
+  },
+};
+
+const NEXT_THEME: Record<ThemeOption, ThemeOption> = {
+  spruce: 'navy',
+  navy: 'slate',
+  slate: 'spruce',
+};
+
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
-  const themes: { id: ThemeOption; label: string; color: string }[] = [
-    { id: 'spruce', label: 'Spruce & Ivory', color: '#001910' },
-    { id: 'navy', label: 'Navy & Gold', color: '#08192d' },
-    { id: 'slate', label: 'Slate & Mint', color: '#141a18' },
-  ];
+  const currentTheme = THEMES[theme] || THEMES.spruce;
+  const nextThemeKey = NEXT_THEME[theme] || 'spruce';
+  const nextTheme = THEMES[nextThemeKey];
+
+  const handleCycleTheme = () => {
+    setTheme(nextThemeKey);
+  };
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={handleCycleTheme}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
+        gap: '0.45rem',
         border: '1px solid var(--border-subtle)',
         background: 'var(--surface-container-low)',
-        padding: '2px',
-        gap: '2px',
+        color: 'var(--text-primary)',
+        padding: '0.35rem 0.65rem',
+        fontFamily: 'var(--font-sans)',
+        fontSize: '0.6875rem',
+        fontWeight: 600,
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+        cursor: 'pointer',
+        transition: 'all 140ms ease',
+        borderRadius: 0,
+        outline: 'none',
+        userSelect: 'none',
       }}
-      role="group"
-      aria-label="Palette Calibration Switcher"
+      title={`Current: ${currentTheme.label} — Click to switch to ${nextTheme.label}`}
+      aria-label={`Current theme: ${currentTheme.label}. Click to switch to ${nextTheme.label}.`}
     >
+      {/* Theme Color Swatch */}
       <span
         style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '0.625rem',
-          fontWeight: 700,
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-          color: 'var(--text-muted)',
-          padding: '0 0.4rem',
-          whiteSpace: 'nowrap',
+          width: 8,
+          height: 8,
+          background: currentTheme.color,
+          border: `1px solid ${currentTheme.accent}`,
+          boxShadow: `0 0 4px ${currentTheme.accent}40`,
+          flexShrink: 0,
+          display: 'inline-block',
         }}
-        className="hidden xl:inline"
-      >
-        Theme:
+        aria-hidden="true"
+      />
+
+      {/* Theme Name Label */}
+      <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Theme:</span>
+      <span style={{ color: 'var(--primary)', fontWeight: 700 }}>
+        {currentTheme.shortLabel}
       </span>
-      {themes.map((t) => {
-        const isActive = theme === t.id;
-        return (
-          <button
-            key={t.id}
-            type="button"
-            onClick={() => setTheme(t.id)}
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.65rem',
-              fontWeight: isActive ? 700 : 500,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              padding: '0.25rem 0.55rem',
-              background: isActive ? 'var(--primary)' : 'transparent',
-              color: isActive ? 'var(--on-primary)' : 'var(--text-secondary)',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'background 120ms ease, color 120ms ease',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              whiteSpace: 'nowrap',
-            }}
-            title={`Switch to ${t.label}`}
-          >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                background: t.color,
-                border: '1px solid rgba(255,255,255,0.4)',
-                flexShrink: 0,
-              }}
-            />
-            <span>{t.label}</span>
-          </button>
-        );
-      })}
-    </div>
+
+      {/* Cycle Indicator Badge */}
+      <span
+        style={{
+          fontSize: '0.6rem',
+          fontFamily: 'var(--font-mono, monospace)',
+          color: 'var(--text-muted)',
+          background: 'var(--surface-container-high, rgba(0,0,0,0.06))',
+          padding: '0.1rem 0.3rem',
+          border: '1px solid var(--border-subtle)',
+          marginLeft: '0.15rem',
+        }}
+        aria-hidden="true"
+      >
+        {currentTheme.step} ↻
+      </span>
+    </button>
   );
 }
