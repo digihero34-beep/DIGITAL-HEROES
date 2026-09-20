@@ -15,15 +15,16 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeOption>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('dh_theme') as ThemeOption;
-      if (saved && (saved === 'spruce' || saved === 'navy' || saved === 'slate')) {
-        return saved;
-      }
+  const [theme, setThemeState] = useState<ThemeOption>('spruce');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('dh_theme') as ThemeOption;
+    if (saved && (saved === 'spruce' || saved === 'navy' || saved === 'slate')) {
+      requestAnimationFrame(() => {
+        setThemeState(saved);
+      });
     }
-    return 'spruce';
-  });
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

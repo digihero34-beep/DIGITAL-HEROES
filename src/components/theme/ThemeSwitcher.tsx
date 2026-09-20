@@ -60,6 +60,7 @@ export function ThemeSwitcher() {
     <button
       type="button"
       onClick={handleCycleTheme}
+      suppressHydrationWarning
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -84,6 +85,7 @@ export function ThemeSwitcher() {
     >
       {/* Theme Color Swatch */}
       <span
+        suppressHydrationWarning
         style={{
           width: 8,
           height: 8,
@@ -98,12 +100,16 @@ export function ThemeSwitcher() {
 
       {/* Theme Name Label */}
       <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Theme:</span>
-      <span style={{ color: 'var(--primary)', fontWeight: 700 }}>
+      <span
+        suppressHydrationWarning
+        style={{ color: 'var(--primary)', fontWeight: 700 }}
+      >
         {currentTheme.shortLabel}
       </span>
 
       {/* Cycle Indicator Badge */}
       <span
+        suppressHydrationWarning
         style={{
           fontSize: '0.6rem',
           fontFamily: 'var(--font-mono, monospace)',
