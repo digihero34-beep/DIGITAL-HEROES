@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../auth.module.css';
 import { signInAction } from '@/modules/auth/auth-actions';
+import { PasswordInput } from '@/components/auth/PasswordInput';
 
 function LoginForm() {
   const router = useRouter();
@@ -84,15 +85,13 @@ function LoginForm() {
               Password
             </label>
           </div>
-          <input
+          <PasswordInput
             id="login-password"
-            type="password"
             required
             autoComplete="current-password"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
             disabled={loading}
           />
         </div>

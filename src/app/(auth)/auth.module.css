@@ -259,3 +259,163 @@
   border: 1px solid var(--border-subtle);
   background: var(--surface-container-lowest);
 }
+
+/* ============================================================
+   PASSWORD TOGGLE, STRENGTH METER & MATCH INDICATOR
+   ============================================================ */
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.passwordInput {
+  width: 100%;
+  padding: 0.625rem 2.5rem 0.625rem 0.875rem;
+  background-color: var(--surface-container-low);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  transition: border-color var(--transition-fast);
+}
+
+.passwordInput:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.passwordInputValid {
+  border-color: #10b981 !important;
+}
+
+.passwordInputInvalid {
+  border-color: #ba1a1a !important;
+}
+
+.eyeToggleBtn {
+  position: absolute;
+  right: 0.625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0.35rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+  border-radius: 0;
+  line-height: 1;
+}
+
+.eyeToggleBtn:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.eyeToggleBtn:focus-visible {
+  outline: 1px solid var(--primary);
+  color: var(--text-primary);
+}
+
+/* Strength Meter */
+.strengthContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.strengthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+}
+
+.strengthLabel {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.strengthValue {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+}
+
+.strengthBars {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  height: 4px;
+}
+
+.strengthBar {
+  flex: 1;
+  height: 100%;
+  background: var(--border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+/* Criteria Grid */
+.criteriaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.criteriaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.criteriaItemMet {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.criteriaIcon {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  width: 12px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Match Indicator */
+.matchIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.matchIndicatorSuccess {
+  color: #10b981;
+}
+
+.matchIndicatorError {
+  color: #ba1a1a;
+}
+
+.matchIndicatorNeutral {
+  color: var(--text-muted);
+}
+

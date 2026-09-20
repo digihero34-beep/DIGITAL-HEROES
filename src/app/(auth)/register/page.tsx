@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from '../auth.module.css';
 import { signUpAction } from '@/modules/auth/auth-actions';
+import { PasswordInput } from '@/components/auth/PasswordInput';
+import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
 
 const DEFAULT_CHARITIES = [
   {
@@ -32,6 +34,7 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [charityId, setCharityId] = useState(DEFAULT_CHARITIES[0].id);
   const [contributionPercentage, setContributionPercentage] = useState(10);
   const [loading, setLoading] = useState(false);
@@ -42,7 +45,12 @@ export default function RegisterPage() {
     setErrorMessage(null);
 
     if (password.length < 8) {
-      setErrorMessage('Password must be at least 8 characters.');
+      setErrorMessage('Password must be at least 8 characters long.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match. Please verify your confirmation password.');
       return;
     }
 
@@ -78,6 +86,7 @@ export default function RegisterPage() {
   }
 
   const selectedCharity = DEFAULT_CHARITIES.find((c) => c.id === charityId);
+  const isMatch = confirmPassword.length > 0 ? password === confirmPassword : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
@@ -132,22 +141,53 @@ export default function RegisterPage() {
           />
         </div>
 
+        {/* Primary Password Field with Eye Toggle & Strength Indicator */}
         <div className={styles.formGroup}>
           <label htmlFor="reg-password" className={styles.label}>
             Password
           </label>
-          <input
+          <PasswordInput
             id="reg-password"
-            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="new-password"
             placeholder="At least 8 characters"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
             disabled={loading}
           />
-          <span className={styles.helperText}>Must be at least 8 characters long.</span>
+          <PasswordStrengthMeter password={password} />
+        </div>
+
+        {/* Confirm Password Field with Eye Toggle & Match Indicator */}
+        <div className={styles.formGroup}>
+          <label htmlFor="reg-confirm-password" className={styles.label}>
+            Confirm Password
+          </label>
+          <PasswordInput
+            id="reg-confirm-password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+            placeholder="Re-enter password"
+            disabled={loading}
+            isValid={isMatch}
+          />
+          {confirmPassword.length > 0 ? (
+            isMatch ? (
+              <div className={`${styles.matchIndicator} ${styles.matchIndicatorSuccess}`} role="status">
+                <span>✓</span>
+                <span>Passwords match</span>
+              </div>
+            ) : (
+              <div className={`${styles.matchIndicator} ${styles.matchIndicatorError}`} role="alert">
+                <span>✕</span>
+                <span>Passwords do not match</span>
+              </div>
+            )
+          ) : (
+            <span className={styles.helperText}>Please re-enter your password to confirm match.</span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
