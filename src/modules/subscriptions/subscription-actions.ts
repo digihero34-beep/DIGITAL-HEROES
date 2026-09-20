@@ -5,6 +5,7 @@ import { stripe } from '@/lib/stripe';
 import { env } from '@/lib/env';
 import { supabaseAdmin } from '@/infrastructure/database/supabase-admin';
 import { ActionResult } from '@/modules/auth/auth-actions';
+import { UserSubscription } from './subscription-types';
 
 interface PlanConfig {
   name: string;
@@ -125,5 +126,45 @@ export async function createCustomerPortalAction(): Promise<ActionResult<{ url: 
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to open customer portal.';
     return { success: false, error: message, code: 'PORTAL_ERROR' };
+  }
+}
+
+export async function getUserSubscriptionAction(): Promise<ActionResult<UserSubscription | null>> {
+  try {
+    const user = await requireAuth();
+
+    const { data: row, error } = await supabaseAdmin
+      .from('subscriptions')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (error) {
+      return { success: false, error: error.message, code: 'FETCH_ERROR' };
+    }
+
+    if (!row) {
+      return { success: true, data: null };
+    }
+
+    const sub: UserSubscription = {
+      id: row.id,
+      userId: row.user_id,
+      planId: row.plan_id,
+      status: row.status,
+      stripeCustomerId: row.stripe_customer_id,
+      stripeSubscriptionId: row.stripe_subscription_id,
+      currentPeriodStart: row.current_period_start,
+      currentPeriodEnd: row.current_period_end,
+      cancelAtPeriodEnd: row.cancel_at_period_end,
+      canceledAt: row.canceled_at,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    };
+
+    return { success: true, data: sub };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to retrieve subscription.';
+    return { success: false, error: message, code: 'SUB_ERROR' };
   }
 }

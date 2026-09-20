@@ -1,0 +1,379 @@
+/* Domain Components Shared Styling */
+
+.bannerCard {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.bannerCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-mint);
+}
+
+.bannerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.statusActive {
+  background: var(--status-active-bg);
+  color: var(--status-active-text);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.statusWarning {
+  background: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.statusDanger {
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.bannerTitle {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.bannerSubtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.portalBtn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.portalBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-mint);
+  color: var(--accent-mint);
+}
+
+.subscribeBtn {
+  background: var(--accent-mint);
+  color: #080C14;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-glow-mint);
+  transition: all var(--transition-fast);
+}
+
+.subscribeBtn:hover {
+  background: #34D399;
+  transform: translateY(-1px);
+}
+
+/* ScoreCardGrid */
+.gridCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.cardTitleArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.cardSubtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.manageLink {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-mint);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--transition-fast);
+}
+
+.manageLink:hover {
+  text-decoration: underline;
+}
+
+.scoreSlotsRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+}
+
+.scoreSlot {
+  background: rgba(8, 12, 20, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.scoreSlot:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.slotBall {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #0F172A 100%);
+  border: 2px solid var(--accent-mint);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-mint);
+}
+
+.slotPoints {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.slotDate {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.slotEmpty {
+  background: rgba(8, 12, 20, 0.3);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-2);
+  min-height: 120px;
+}
+
+.slotEmptyIcon {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.slotEmptyText {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Charity Card */
+.charityCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.charityHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.charityLogo {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+}
+
+.charityDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.charityName {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.charityCategory {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.sliderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: rgba(8, 12, 20, 0.4);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sliderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.sliderBadge {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent-mint);
+}
+
+.rangeInput {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  outline: none;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-mint);
+  cursor: pointer;
+  box-shadow: var(--shadow-glow-mint);
+}
+
+/* Upcoming Draw & Winnings */
+.widgetRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-6);
+}
+
+.drawWidget, .winningsWidget {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.highlightAmount {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--accent-mint);
+  letter-spacing: -0.5px;
+}
+
+.alertNotice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--status-warning-bg);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--status-warning-text);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .scoreSlotsRow {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .widgetRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .scoreSlotsRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}

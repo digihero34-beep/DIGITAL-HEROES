@@ -257,3 +257,40 @@ export async function getLatestPublishedDrawAction(): Promise<ActionResult<DrawR
     return { success: false, error: message, code: 'QUERY_ERROR' };
   }
 }
+
+export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord | null>> {
+  try {
+    const supabase = await createServerSupabaseClient();
+
+    const { data: row, error } = await supabase
+      .from('draws')
+      .select('*')
+      .in('status', ['draft', 'simulated'])
+      .order('scheduled_for', { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+    if (error || !row) {
+      return { success: true, data: null };
+    }
+
+    return {
+      success: true,
+      data: {
+        id: row.id,
+        drawNumber: row.draw_number,
+        scheduledFor: row.scheduled_for,
+        drawMode: row.draw_mode as DrawMode,
+        status: row.status,
+        winningNumbers: row.winning_numbers as WinningNumbers | null,
+        publishedAt: row.published_at,
+        publishedBy: row.published_by,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      },
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to retrieve upcoming draw.';
+    return { success: false, error: message, code: 'QUERY_ERROR' };
+  }
+}
