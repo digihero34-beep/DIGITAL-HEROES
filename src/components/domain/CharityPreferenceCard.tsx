@@ -28,6 +28,8 @@ export function CharityPreferenceCard({
 
   const calculatedDonationCents = Math.round((subscriptionAmountCents * percentage) / 100);
 
+  const [imgError, setImgError] = useState(false);
+
   async function handlePercentageChange(newVal: number) {
     setPercentage(newVal);
     setSaveSuccess(false);
@@ -78,19 +80,38 @@ export function CharityPreferenceCard({
 
       {charity ? (
         <div className={styles.charityHeader}>
-          {charity.logoUrl ? (
-            <div style={{ position: 'relative', width: 54, height: 54, borderRadius: 0, overflow: 'hidden', border: '1px solid var(--border-subtle)' }}>
+          {charity.logoUrl && !imgError ? (
+            <div style={{ position: 'relative', width: 54, height: 54, borderRadius: 0, overflow: 'hidden', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
               <Image
                 src={charity.logoUrl}
                 alt={charity.name}
                 fill
                 sizes="54px"
                 style={{ objectFit: 'cover' }}
+                onError={() => setImgError(true)}
               />
             </div>
           ) : (
-            <div className={styles.charityLogo} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-tertiary)' }}>
-              🤝
+            <div
+              className={styles.charityLogo}
+              style={{
+                width: 54,
+                height: 54,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'var(--status-active-bg, rgba(0, 25, 16, 0.08))',
+                border: '1px solid var(--border-subtle)',
+                color: 'var(--primary)',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                fontFamily: 'var(--font-sans)',
+                letterSpacing: '0.05em',
+                flexShrink: 0,
+              }}
+              aria-hidden="true"
+            >
+              {charity.name.split(' ').map((w) => w[0]).filter(Boolean).slice(0, 2).join('')}
             </div>
           )}
 
