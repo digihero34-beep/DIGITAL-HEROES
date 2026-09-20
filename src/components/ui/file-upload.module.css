@@ -4,10 +4,10 @@
   align-items: center;
   text-align: center;
   padding: var(--space-8) var(--space-6);
-  background: var(--bg-card);
-  border: 2px dashed var(--border-card);
-  border-radius: var(--radius-xl);
-  gap: var(--space-3);
+  background: var(--surface-container-low);
+  border: 2px dashed var(--outline-variant);
+  border-radius: var(--radius-sharp);
+  gap: var(--space-2);
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
@@ -15,8 +15,8 @@
 
 .dropzone:hover,
 .dropzoneActive {
-  border-color: var(--accent-mint);
-  background: var(--bg-elevated);
+  border-color: var(--primary);
+  background: var(--surface-container);
 }
 
 .hiddenInput {
@@ -28,63 +28,67 @@
 
 .iconSlot {
   font-size: 2rem;
-  color: var(--accent-mint);
+  color: var(--outline);
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
   font-weight: 700;
-  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
 }
 
 .subtitle {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: var(--outline);
 }
 
 .filePreviewCard {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
+  background: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sharp);
+  padding: var(--space-3) var(--space-4);
   width: 100%;
 }
 
 .fileInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
   text-align: left;
 }
 
 .fileName {
-  font-size: 0.92rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--primary);
 }
 
 .fileMeta {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--outline);
 }
 
 .removeBtn {
-  color: var(--text-muted);
+  color: var(--outline);
   padding: var(--space-1);
   transition: color var(--transition-fast);
 }
 
 .removeBtn:hover {
-  color: #EF4444;
+  color: var(--error);
 }
 
 .errorText {
-  font-size: 0.82rem;
-  color: var(--status-danger-text);
+  font-size: 12px;
+  color: var(--error);
   font-weight: 600;
   margin-top: var(--space-2);
 }

@@ -3,9 +3,11 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  border-radius: var(--radius-md);
-  font-family: var(--font-display);
+  border-radius: var(--radius-sharp);
+  font-family: var(--font-sans);
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   text-decoration: none;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -15,94 +17,89 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--accent-mint);
-  outline-offset: 2px;
+  outline: 2px solid var(--primary-container);
+  outline-offset: 1px;
 }
 
 /* Sizes */
 .sizeSm {
-  font-size: 0.8rem;
+  font-size: 11px;
   padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.08em;
 }
 
 .sizeMd {
-  font-size: 0.92rem;
+  font-size: 13px;
   padding: 0.65rem 1.4rem;
-  border-radius: var(--radius-md);
 }
 
 .sizeLg {
-  font-size: 1.05rem;
+  font-size: 14px;
   padding: 0.85rem 2rem;
-  border-radius: var(--radius-md);
+  letter-spacing: 0.08em;
 }
 
 /* Variants */
 .variantPrimary {
-  background: var(--accent-mint);
-  color: var(--text-inverse);
-  box-shadow: var(--shadow-glow-mint);
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
 }
 
 .variantPrimary:hover:not(:disabled) {
-  background: var(--accent-mint-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 0 28px rgba(16, 185, 129, 0.45);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .variantPrimary:active:not(:disabled) {
-  transform: translateY(0);
+  background: var(--tertiary-container);
 }
 
 .variantSecondary {
-  background: var(--bg-card);
-  color: var(--text-primary);
-  border-color: var(--border-card);
-  box-shadow: var(--shadow-subtle);
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--outline);
 }
 
 .variantSecondary:hover:not(:disabled) {
-  background: var(--bg-elevated);
-  border-color: var(--border-hover);
-  color: var(--accent-mint);
+  background: var(--surface-container-low);
+  border-color: var(--primary);
 }
 
 .variantSecondary:active:not(:disabled) {
-  background: var(--bg-quaternary);
+  background: var(--surface-container);
 }
 
 .variantTertiary {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  border-color: var(--border-subtle);
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border-color: var(--outline-variant);
 }
 
 .variantTertiary:hover:not(:disabled) {
-  background: var(--bg-quaternary);
-  border-color: var(--border-medium);
+  background: var(--surface-container-high);
+  color: var(--primary);
 }
 
 .variantDestructive {
-  background: rgba(239, 68, 68, 0.15);
-  color: #F87171;
-  border-color: rgba(239, 68, 68, 0.3);
+  background: var(--error-container);
+  color: var(--on-error-container);
+  border-color: var(--error);
 }
 
 .variantDestructive:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.25);
-  border-color: rgba(239, 68, 68, 0.5);
-  color: #FCA5A5;
+  background: var(--error);
+  color: var(--on-error);
 }
 
 .variantGhost {
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--on-surface-variant);
 }
 
 .variantGhost:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
+  background: var(--surface-container-low);
+  color: var(--primary);
 }
 
 /* States */
@@ -111,7 +108,6 @@
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
-  box-shadow: none;
 }
 
 .loading {

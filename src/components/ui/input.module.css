@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
   width: 100%;
 }
 
@@ -12,14 +12,16 @@
 }
 
 .label {
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-variant);
 }
 
 .requiredStar {
-  color: var(--status-danger-text);
+  color: var(--error);
   margin-left: 2px;
 }
 
@@ -32,39 +34,39 @@
 
 .input {
   width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-md);
-  padding: 0.65rem 1rem;
-  color: var(--text-primary);
-  font-family: inherit;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sharp);
+  padding: 0.65rem 0.85rem;
+  color: var(--on-surface);
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
   outline: none;
 }
 
 .input::placeholder {
-  color: var(--text-muted);
+  color: var(--outline);
 }
 
 .input:focus {
-  border-color: var(--accent-mint);
-  box-shadow: 0 0 0 1px var(--accent-mint), 0 0 16px var(--accent-mint-glow);
+  border-color: var(--primary-container);
+  outline: 1px solid var(--primary-container);
 }
 
 .inputError {
-  border-color: #EF4444;
+  border-color: var(--error);
 }
 
 .inputError:focus {
-  border-color: #EF4444;
-  box-shadow: 0 0 0 1px #EF4444, 0 0 16px rgba(239, 68, 68, 0.2);
+  border-color: var(--error);
+  outline: 1px solid var(--error);
 }
 
 .input:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-container-low);
 }
 
 .hasLeftIcon {
@@ -80,25 +82,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted);
+  color: var(--outline);
   pointer-events: none;
 }
 
 .leftIconSlot {
-  left: 0.85rem;
+  left: 0.75rem;
 }
 
 .rightIconSlot {
-  right: 0.85rem;
+  right: 0.75rem;
 }
 
 .helperText {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  color: var(--outline);
 }
 
 .errorText {
-  font-size: 0.8rem;
-  color: var(--status-danger-text);
-  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--error);
+  font-weight: 600;
 }

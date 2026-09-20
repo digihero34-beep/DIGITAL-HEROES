@@ -1,77 +1,73 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-display);
-  font-size: 0.78rem;
+  gap: var(--space-1);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sharp);
+  font-family: var(--font-sans);
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  line-height: 1;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   width: fit-content;
   white-space: nowrap;
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 /* Semantic Variants */
 .variantActive {
-  background: var(--status-active-bg);
-  color: var(--status-active-text);
-  border: 1px solid var(--status-active-border);
+  background: var(--surface-container);
+  color: var(--primary);
+  border: 1px solid var(--primary-container);
 }
 
 .variantActive .dot {
-  background: var(--accent-mint);
-  box-shadow: 0 0 8px var(--accent-mint);
+  background: var(--success);
 }
 
 .variantWarning {
-  background: var(--status-warning-bg);
-  color: var(--status-warning-text);
-  border: 1px solid var(--status-warning-border);
+  background: var(--surface-container-low);
+  color: var(--secondary);
+  border: 1px solid var(--secondary-gold);
 }
 
 .variantWarning .dot {
-  background: var(--accent-gold);
-  box-shadow: 0 0 8px var(--accent-gold);
+  background: var(--secondary-gold);
 }
 
 .variantDanger {
-  background: var(--status-danger-bg);
-  color: var(--status-danger-text);
-  border: 1px solid var(--status-danger-border);
+  background: var(--error-container);
+  color: var(--on-error-container);
+  border: 1px solid var(--error);
 }
 
 .variantDanger .dot {
-  background: #EF4444;
-  box-shadow: 0 0 8px #EF4444;
+  background: var(--error);
 }
 
 .variantInfo {
-  background: var(--status-info-bg);
-  color: var(--status-info-text);
-  border: 1px solid var(--status-info-border);
+  background: var(--surface-container-low);
+  color: var(--primary);
+  border: 1px solid var(--outline-variant);
 }
 
 .variantInfo .dot {
-  background: var(--accent-blue);
-  box-shadow: 0 0 8px var(--accent-blue);
+  background: var(--primary-container);
 }
 
 .variantNeutral {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
+  background: var(--surface-container-lowest);
+  color: var(--on-surface-variant);
+  border: 1px solid var(--outline-variant);
 }
 
 .variantNeutral .dot {
-  background: var(--text-muted);
+  background: var(--outline);
 }

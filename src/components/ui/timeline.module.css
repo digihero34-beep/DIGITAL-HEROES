@@ -1,13 +1,13 @@
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
   position: relative;
 }
 
 .timelineItem {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
   position: relative;
 }
 
@@ -19,52 +19,53 @@
 }
 
 .dot {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sharp);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 700;
   z-index: 2;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-fast);
 }
 
 .dotCompleted {
-  background: var(--accent-mint);
-  color: var(--obsidian-deep);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  background: var(--primary-container);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
 }
 
 .dotCurrent {
-  background: var(--accent-gold);
-  color: var(--obsidian-deep);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border: 1px solid var(--secondary-gold);
 }
 
 .dotUpcoming {
-  background: var(--surface-hover);
-  color: var(--text-muted);
-  border: 1px solid var(--border-subtle);
+  background: var(--surface-container);
+  color: var(--outline);
+  border: 1px solid var(--outline-variant);
 }
 
 .line {
   position: absolute;
-  top: 28px;
-  bottom: -24px;
-  width: 2px;
-  background: var(--border-subtle);
+  top: 26px;
+  bottom: -16px;
+  width: 1px;
+  background: var(--outline-variant);
   z-index: 1;
 }
 
 .lineCompleted {
-  background: var(--accent-mint);
+  background: var(--primary-container);
 }
 
 .content {
   flex: 1;
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
 }
 
 .itemHeader {
@@ -72,26 +73,30 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-bottom: var(--space-1);
+  margin-bottom: 2px;
 }
 
 .title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
 }
 
 .timestamp {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--outline);
   font-variant-numeric: tabular-nums;
 }
 
 .description {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-top: var(--space-1);
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  line-height: 1.4;
+  margin-top: 2px;
 }
 
 .metadata {

@@ -1,27 +1,35 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Outfit } from 'next/font/google';
+import { EB_Garamond, Manrope, JetBrains_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { ToastProvider } from '@/components/ui/toast';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const ebGaramond = EB_Garamond({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-eb-garamond',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
 });
 
-const outfit = Outfit({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-manrope',
   display: 'swap',
-  weight: ['600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  weight: ['400', '500', '600'],
 });
 
 export const metadata: Metadata = {
-  title: 'Digital Heroes — Play for Purpose. Enter the Monthly Draw.',
+  title: 'DIGITAL HEROES — Philanthropic Golf Trust & Audited Draw Protocol',
   description:
-    'Turn your golf rounds into radical social good while participating in transparent monthly prize draws with rollover jackpots and provably fair results.',
+    'Championship philanthropy cryptographically verified. Enter official monthly handicap draws with deterministic mathematical clarity, total audit permanence, and mandatory charity yield.',
 };
 
 export default function RootLayout({
@@ -30,13 +38,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${outfit.variable}`}>
-      <body>
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Header />
-          <div style={{ flex: 1 }}>{children}</div>
-          <Footer />
-        </div>
+    <html
+      lang="en"
+      className={`${ebGaramond.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-secondary-fixed selection:text-primary">
+        <ToastProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

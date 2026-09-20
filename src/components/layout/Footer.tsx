@@ -1,95 +1,37 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './footer.module.css';
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <div className={styles.topGrid}>
-          {/* Brand & Purpose */}
-          <div className={styles.brandCol}>
-            <Link href="/" className={styles.brand}>
-              <div className={styles.brandGem}>DH</div>
-              <span className={styles.brandName}>Digital Heroes</span>
-            </Link>
-            <p className={styles.mission}>
-              Transforming golf performance into direct charitable funding while rewarding players through transparent,
-              provably fair monthly prize draws.
-            </p>
-            <div className={styles.charityPledgeBadge}>
-              <span className={styles.badgeDot} />
-              10% Minimum Guaranteed Charity Lock
-            </div>
+    <footer className="w-full bg-primary border-t border-primary-container text-on-primary mt-16">
+      <div className="w-full py-10 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          <div className="text-headline-md font-headline-md text-on-primary tracking-widest uppercase mb-1">
+            DIGITAL HEROES
           </div>
-
-          {/* Platform Navigation */}
-          <div>
-            <h4 className={styles.colTitle}>Platform</h4>
-            <ul className={styles.linkList}>
-              <li className={styles.linkItem}>
-                <Link href="/how-it-works">How It Works</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/charities">Charity Directory</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/pricing">Membership Plans</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/scores">Stableford Scorecard</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/winnings">Winnings & Claims</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Transparency & Rules */}
-          <div>
-            <h4 className={styles.colTitle}>Fairness</h4>
-            <ul className={styles.linkList}>
-              <li className={styles.linkItem}>
-                <Link href="/how-it-works#math">Draw Mathematics</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/how-it-works#audit">Scorecard Audit Protocol</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/charities">Verified Causes</Link>
-              </li>
-              <li className={styles.linkItem}>
-                <Link href="/pricing">Integer-Cent Accounting</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Social Good Commitment */}
-          <div className={styles.trustCol}>
-            <h4 className={styles.colTitle}>Integrity</h4>
-            <p className={styles.trustText}>
-              Digital Heroes is a skill-anchored golf participation platform. Draws are tied strictly to players&apos; official Stableford scores (1–45). All prize disbursements require scorecard proof audits.
-            </p>
-            <p className={styles.trustText}>
-              Payments processed securely via Stripe. Charity disbursements remitted directly to registered charity partners under platform charter.
-            </p>
-          </div>
-        </div>
-
-        <div className={styles.divider} />
-
-        <div className={styles.bottomRow}>
-          <p className={styles.legalNotice}>
-            &copy; {new Date().getFullYear()} Digital Heroes Ltd. All rights reserved. Registered under UK corporate and charitable donation regulations.
+          <p className="text-body-sm font-body-sm text-on-primary-container max-w-md">
+            &copy; {new Date().getFullYear()} Digital Heroes Trust &amp; Philanthropic Archive. Regulated &amp; Cryptographically Verified.
           </p>
-          <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.85rem' }}>
-            <span>Stripe Secured</span>
-            <span>•</span>
-            <span>Scorecard Verified</span>
-            <span>•</span>
-            <span>CSPRNG Validated</span>
-          </div>
         </div>
+
+        {/* Mandatory Governance & Legal Navigation */}
+        <nav aria-label="Governance and Legal Navigation" className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-label-sm font-label-sm uppercase tracking-wider">
+          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/how-it-works#audit">
+            Audit Manifest
+          </Link>
+          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/how-it-works#charter">
+            Charter &amp; Governance
+          </Link>
+          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/scores">
+            Handicap Protocol
+          </Link>
+          <Link className="text-secondary-fixed font-semibold underline underline-offset-4" href="/charities">
+            Charity Allocation Ledger
+          </Link>
+          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/pricing">
+            Terms of Trust
+          </Link>
+        </nav>
       </div>
     </footer>
   );

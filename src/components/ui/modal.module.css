@@ -2,9 +2,9 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(6, 8, 13, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(0, 25, 16, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,16 +13,16 @@
 }
 
 .modal {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
-  max-width: 540px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sharp);
+  max-width: 580px;
   width: 100%;
-  box-shadow: var(--shadow-elevated);
-  padding: var(--space-8);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
   position: relative;
   animation: scaleIn var(--transition-fast) ease-out;
 }
@@ -32,38 +32,41 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--space-4);
+  border-bottom: 1px solid var(--outline-variant);
+  padding-bottom: var(--space-3);
 }
 
 .titleArea {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .title {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.25;
 }
 
 .description {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
 }
 
 .closeButton {
   background: transparent;
-  color: var(--text-muted);
+  color: var(--outline);
   padding: var(--space-1);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sharp);
   transition: color var(--transition-fast);
 }
 
 .closeButton:hover {
-  color: var(--text-primary);
+  color: var(--primary);
 }
 
 .modalContent {
@@ -76,8 +79,8 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--space-3);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--outline-variant);
 }
 
 @keyframes fadeIn {
@@ -92,7 +95,7 @@
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: scale(0.98);
   }
   to {
     opacity: 1;

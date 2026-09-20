@@ -3,47 +3,48 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: var(--space-12) var(--space-6);
-  background: var(--bg-card);
-  border: 1px dashed var(--border-card);
-  border-radius: var(--radius-xl);
-  gap: var(--space-4);
+  padding: var(--space-8) var(--space-6);
+  background: var(--surface-container-lowest);
+  border: 1px dashed var(--outline-variant);
+  border-radius: var(--radius-sharp);
+  gap: var(--space-3);
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
 }
 
 .iconSlot {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-lg);
-  background: var(--bg-elevated);
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sharp);
+  background: var(--surface-container-low);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  color: var(--accent-mint);
-  border: 1px solid var(--border-subtle);
+  color: var(--primary);
+  border: 1px solid var(--outline-variant);
 }
 
 .iconSlotError {
-  background: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
-  border-color: rgba(239, 68, 68, 0.25);
+  background: var(--error-container);
+  color: var(--error);
+  border-color: var(--error);
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.25;
 }
 
 .description {
-  font-size: 0.92rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
   max-width: 440px;
 }
 
@@ -64,10 +65,10 @@
 
 .skeletonLine {
   height: 16px;
-  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+  background: linear-gradient(90deg, var(--surface-container-low) 25%, var(--surface-container) 50%, var(--surface-container-low) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sharp);
 }
 
 @keyframes shimmer {
