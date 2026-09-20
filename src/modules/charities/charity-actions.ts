@@ -54,23 +54,32 @@ function mapCharityRow(row: CharityRow): Charity {
   };
 }
 
+import { getCached, setCached } from '@/lib/memory-cache';
+
 export async function getCharitiesAction(params?: {
   query?: string;
   category?: string;
 }): Promise<ActionResult<Charity[]>> {
   try {
-    const supabase = await createServerSupabaseClient();
+    const cacheKey = 'charities_all_active';
+    let charities = getCached<Charity[]>(cacheKey);
 
-    const { data: rows, error } = await supabase
-      .from('charities')
-      .select('*')
-      .eq('is_active', true);
+    if (!charities) {
+      const supabase = await createServerSupabaseClient();
 
-    if (error || !rows) {
-      return { success: false, error: error?.message || 'Failed to load charities.', code: 'QUERY_FAILED' };
+      const { data: rows, error } = await supabase
+        .from('charities')
+        .select('*')
+        .eq('is_active', true);
+
+      if (error || !rows) {
+        return { success: false, error: error?.message || 'Failed to load charities.', code: 'QUERY_FAILED' };
+      }
+
+      charities = (rows as unknown as CharityRow[]).map(mapCharityRow);
+      setCached(cacheKey, charities, 120); // 2 minutes in-memory cache
     }
 
-    const charities = (rows as unknown as CharityRow[]).map(mapCharityRow);
     const filtered = filterCharities(charities, params?.query, params?.category);
 
     return { success: true, data: filtered };
@@ -82,6 +91,13 @@ export async function getCharitiesAction(params?: {
 
 export async function getCharityBySlugAction(slug: string): Promise<ActionResult<Charity | null>> {
   try {
+    // Check in-memory list first for instant 0ms resolution
+    const cachedList = getCached<Charity[]>('charities_all_active');
+    if (cachedList) {
+      const found = cachedList.find((c) => c.slug === slug);
+      if (found) return { success: true, data: found };
+    }
+
     const supabase = await createServerSupabaseClient();
 
     const { data: row, error } = await supabase

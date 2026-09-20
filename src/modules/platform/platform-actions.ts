@@ -24,8 +24,16 @@ export interface PublicPlatformStats {
   featuredCharityYieldCents: number;
 }
 
+import { getCached, setCached } from '@/lib/memory-cache';
+
 export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatformStats>> {
   try {
+    const cacheKey = 'public_platform_stats';
+    const cachedStats = getCached<PublicPlatformStats>(cacheKey);
+    if (cachedStats) {
+      return { success: true, data: cachedStats };
+    }
+
     // 1. Query Upcoming Draw with Prize Pool
     const { data: latestDraw } = await supabaseAdmin
       .from('draws')
@@ -155,17 +163,21 @@ export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatf
     const totalPhilanthropicYieldCents = totalDonationsCents + totalSubscriptionPledgesCents;
     const featuredCharityYieldCents = featuredDonationsCents + featuredSubscriptionPledgesCents;
 
+    const resultData: PublicPlatformStats = {
+      upcomingDraw,
+      publishedDrawsCount: publishedDrawsCount ?? 0,
+      totalSubscribersCount: totalProfilesCount ?? 0,
+      activeSubscribersCount: activeSubsCount ?? 0,
+      accreditedCharitiesCount: accreditedCharitiesCount ?? 0,
+      totalPhilanthropicYieldCents,
+      featuredCharityYieldCents,
+    };
+
+    setCached(cacheKey, resultData, 30); // 30-second TTL
+
     return {
       success: true,
-      data: {
-        upcomingDraw,
-        publishedDrawsCount: publishedDrawsCount ?? 0,
-        totalSubscribersCount: totalProfilesCount ?? 0,
-        activeSubscribersCount: activeSubsCount ?? 0,
-        accreditedCharitiesCount: accreditedCharitiesCount ?? 0,
-        totalPhilanthropicYieldCents,
-        featuredCharityYieldCents,
-      },
+      data: resultData,
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to query platform stats.';

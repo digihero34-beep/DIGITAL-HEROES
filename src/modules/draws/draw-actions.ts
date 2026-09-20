@@ -258,8 +258,15 @@ export async function getLatestPublishedDrawAction(): Promise<ActionResult<DrawR
   }
 }
 
+import { getCached, setCached } from '@/lib/memory-cache';
+
 export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord | null>> {
   try {
+    const cachedDraw = getCached<DrawRecord | null>('upcoming_draw_active');
+    if (cachedDraw !== null && cachedDraw !== undefined) {
+      return { success: true, data: cachedDraw };
+    }
+
     const supabase = await createServerSupabaseClient();
 
     const { data: row, error } = await supabase
@@ -283,21 +290,25 @@ export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord |
       ? row.prize_pools[0]
       : row.prize_pools;
 
+    const drawRecord: DrawRecord = {
+      id: row.id,
+      drawNumber: row.draw_number,
+      scheduledFor: row.scheduled_for,
+      drawMode: row.draw_mode as DrawMode,
+      status: row.status,
+      winningNumbers: row.winning_numbers as WinningNumbers | null,
+      publishedAt: row.published_at,
+      publishedBy: row.published_by,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+      totalPoolCents: prizePool?.total_pool_cents ?? 10000000,
+    };
+
+    setCached('upcoming_draw_active', drawRecord, 30);
+
     return {
       success: true,
-      data: {
-        id: row.id,
-        drawNumber: row.draw_number,
-        scheduledFor: row.scheduled_for,
-        drawMode: row.draw_mode as DrawMode,
-        status: row.status,
-        winningNumbers: row.winning_numbers as WinningNumbers | null,
-        publishedAt: row.published_at,
-        publishedBy: row.published_by,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
-        totalPoolCents: prizePool?.total_pool_cents ?? 10000000,
-      },
+      data: drawRecord,
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to retrieve upcoming draw.';
