@@ -1,0 +1,90 @@
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--bg-card);
+  border: 2px dashed var(--border-card);
+  border-radius: var(--radius-xl);
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.dropzone:hover,
+.dropzoneActive {
+  border-color: var(--accent-mint);
+  background: var(--bg-elevated);
+}
+
+.hiddenInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.iconSlot {
+  font-size: 2rem;
+  color: var(--accent-mint);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.filePreviewCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  width: 100%;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: left;
+}
+
+.fileName {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.fileMeta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.removeBtn {
+  color: var(--text-muted);
+  padding: var(--space-1);
+  transition: color var(--transition-fast);
+}
+
+.removeBtn:hover {
+  color: #EF4444;
+}
+
+.errorText {
+  font-size: 0.82rem;
+  color: var(--status-danger-text);
+  font-weight: 600;
+  margin-top: var(--space-2);
+}
