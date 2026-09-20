@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { createServerSupabaseClient } from '@/infrastructure/database/supabase-server';
 import {
   AuthUser,
@@ -8,8 +9,9 @@ import {
 
 /**
  * Returns the currently authenticated user with their profile role, or null if unauthenticated.
+ * Memoized per-request using React.cache to eliminate redundant remote network calls.
  */
-export async function getCurrentUser(): Promise<AuthUser | null> {
+export const getCurrentUser = cache(async (): Promise<AuthUser | null> => {
   const supabase = await createServerSupabaseClient();
   const {
     data: { user },
@@ -33,7 +35,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
     fullName: profile?.full_name ?? undefined,
     role: (profile?.role as AuthUser['role']) ?? 'subscriber',
   };
-}
+});
 
 /**
  * Guard: Requires that the user is authenticated. Throws UnauthorizedError if not.

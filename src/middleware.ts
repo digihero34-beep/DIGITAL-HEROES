@@ -3,6 +3,19 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { env } from '@/lib/env';
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // 1. Fast-path: completely bypass remote auth calls for public routes
+  const isProtected =
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/admin') ||
+    pathname.startsWith('/scores') ||
+    pathname.startsWith('/winnings');
+
+  if (!isProtected) {
+    return NextResponse.next();
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -32,10 +45,8 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
-
-  // 1. Protect /dashboard routes (requires authenticated subscriber)
-  if (pathname.startsWith('/dashboard')) {
+  // 2. Protect subscriber routes (/dashboard, /scores, /winnings)
+  if (pathname.startsWith('/dashboard') || pathname.startsWith('/scores') || pathname.startsWith('/winnings')) {
     if (!user) {
       const redirectUrl = new URL('/login', request.url);
       redirectUrl.searchParams.set('redirect', pathname);
@@ -43,7 +54,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // 2. Protect /admin routes (requires authenticated user with admin role)
+  // 3. Protect /admin routes (requires authenticated user with admin role)
   if (pathname.startsWith('/admin')) {
     if (!user) {
       const redirectUrl = new URL('/login', request.url);
