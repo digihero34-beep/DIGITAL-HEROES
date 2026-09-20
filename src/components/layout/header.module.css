@@ -2,9 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(8, 12, 20, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-subtle);
   transition: background var(--transition-normal);
 }
@@ -13,7 +13,7 @@
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
-  height: 72px;
+  height: 74px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,17 +27,18 @@
 }
 
 .brandGem {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--accent-mint) 0%, #059669 100%);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-mint-deep) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-glow-mint);
-  color: #080C14;
-  font-weight: 800;
-  font-size: 1.1rem;
+  color: var(--text-inverse);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
   letter-spacing: -0.5px;
 }
 
