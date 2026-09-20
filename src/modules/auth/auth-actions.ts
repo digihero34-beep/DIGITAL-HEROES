@@ -105,6 +105,25 @@ export async function signInAction(formData: z.infer<typeof SignInSchema>): Prom
   };
 }
 
+export async function adminSignInAction(formData: z.infer<typeof SignInSchema>): Promise<ActionResult<{ user: AuthUser }>> {
+  const result = await signInAction(formData);
+  if (!result.success) {
+    return result;
+  }
+
+  if (result.data.user.role !== 'admin') {
+    const supabase = await createServerSupabaseClient();
+    await supabase.auth.signOut();
+    return {
+      success: false,
+      error: 'Access Denied: Level 4 Administrative Clearance is required for this terminal. Only authorized Sovereign Trustees may access.',
+      code: 'FORBIDDEN_ROLE',
+    };
+  }
+
+  return result;
+}
+
 export async function signOutAction(): Promise<ActionResult<void>> {
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.auth.signOut();
@@ -113,3 +132,4 @@ export async function signOutAction(): Promise<ActionResult<void>> {
   }
   return { success: true, data: undefined };
 }
+

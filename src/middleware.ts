@@ -54,10 +54,25 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // 3. Protect /admin routes (requires authenticated user with admin role)
+  // 3. Protect /admin routes
   if (pathname.startsWith('/admin')) {
+    if (pathname === '/admin/login') {
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (profile?.role === 'admin') {
+          return NextResponse.redirect(new URL('/admin', request.url));
+        }
+      }
+      return response;
+    }
+
     if (!user) {
-      const redirectUrl = new URL('/login', request.url);
+      const redirectUrl = new URL('/admin/login', request.url);
       redirectUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(redirectUrl);
     }
@@ -69,7 +84,7 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (profile?.role !== 'admin') {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL('/dashboard?error=admin_privileges_required', request.url));
     }
   }
 

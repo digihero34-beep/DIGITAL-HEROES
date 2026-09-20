@@ -9,7 +9,7 @@ import VerificationQueueTable from '@/components/admin/VerificationQueueTable';
 import DrawCeremonyControl from '@/components/admin/DrawCeremonyControl';
 import SubscriberAuditTable from '@/components/admin/SubscriberAuditTable';
 import CharityGovernanceTable from '@/components/admin/CharityGovernanceTable';
-import styles from './admin.module.css';
+import styles from '../admin.module.css';
 
 export const metadata = {
   title: 'Admin Operations & Sovereign Trust Console | Digital Heroes',

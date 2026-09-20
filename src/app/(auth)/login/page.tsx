@@ -107,10 +107,18 @@ function LoginForm() {
       </form>
 
       <div className={styles.footerLinks}>
-        Don&apos;t have an active membership?{' '}
-        <Link href="/register" className={styles.linkAccent}>
-          Join Digital Heroes
-        </Link>
+        <div>
+          Don&apos;t have an active membership?{' '}
+          <Link href="/register" className={styles.linkAccent}>
+            Join Digital Heroes
+          </Link>
+        </div>
+        <div style={{ marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border-subtle)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          Sovereign Trustee?{' '}
+          <Link href="/admin/login" style={{ color: 'var(--gold-400)', textDecoration: 'underline' }}>
+            Access Operations Terminal →
+          </Link>
+        </div>
       </div>
     </div>
   );
