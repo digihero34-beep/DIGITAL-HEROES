@@ -73,4 +73,12 @@ describe('Password Strength & Verification Security Unit Tests', () => {
     expect(passA === passB).toBe(true);
     expect(passA === passC).toBe(false);
   });
+
+  it('should accept valid database charity UUIDs including seeded format', () => {
+    const UUID_FORMAT_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    expect(UUID_FORMAT_REGEX.test('c0000000-0000-0000-0000-000000000001')).toBe(true);
+    expect(UUID_FORMAT_REGEX.test('c0000000-0000-0000-0000-000000000002')).toBe(true);
+    expect(UUID_FORMAT_REGEX.test('c0000000-0000-0000-0000-000000000003')).toBe(true);
+    expect(UUID_FORMAT_REGEX.test('not-a-valid-uuid')).toBe(false);
+  });
 });

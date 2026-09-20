@@ -4,11 +4,13 @@ import { createServerSupabaseClient } from '@/infrastructure/database/supabase-s
 import { z } from 'zod';
 import { AuthUser } from './auth-types';
 
+const UUID_FORMAT_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
 const SignUpSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters long'),
   fullName: z.string().min(2, 'Name must be at least 2 characters').max(150),
-  charityId: z.string().uuid().optional(),
+  charityId: z.string().regex(UUID_FORMAT_REGEX, 'Invalid charity ID').optional().or(z.literal('')),
   contributionPercentage: z.number().int().min(10).max(100).default(10),
 });
 

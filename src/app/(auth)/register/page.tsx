@@ -11,17 +11,17 @@ import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
 const DEFAULT_CHARITIES = [
   {
     id: 'c0000000-0000-0000-0000-000000000001',
-    name: 'GreenGrass Youth Initiative',
+    name: 'Fairway Futures Foundation',
     category: 'Youth & Education',
   },
   {
     id: 'c0000000-0000-0000-0000-000000000002',
-    name: 'Veterans On The Green',
+    name: 'Adaptive Golf Alliance UK',
     category: 'Veterans & Mental Health',
   },
   {
     id: 'c0000000-0000-0000-0000-000000000003',
-    name: 'Fore The Planet Woodland Trust',
+    name: 'Coastal Links Ecology Trust',
     category: 'Conservation & Ecology',
   },
 ];
