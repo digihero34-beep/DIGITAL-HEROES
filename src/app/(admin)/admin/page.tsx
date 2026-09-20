@@ -25,12 +25,12 @@ export default async function AdminDashboardPage() {
   ]);
 
   const stats = statsRes.success && statsRes.data ? statsRes.data : {
-    merkleRoot: '0x8f04c7b12d3e9140e89b31ca',
-    merkleLockState: 'Committed 18:00 UTC',
+    merkleRoot: 'Genesis Protocol Root',
+    merkleLockState: 'Cycle Scheduled',
     dualEntropyBeacon: {
-      syncBlock: 842910,
+      syncBlock: 0,
       nistStatus: 'Healthy / Verified' as const,
-      latencyMs: 14,
+      latencyMs: 1,
     },
     pendingVerificationsCount: 0,
     ytdPhilanthropicYieldCents: 0,
@@ -144,7 +144,7 @@ export default async function AdminDashboardPage() {
           <div className={styles.vitalFooter}>
             <span className={styles.vitalFooterLabel}>Accredited Beneficiaries:</span>
             <span className={`${styles.vitalFooterValue} ${styles.goldValue}`}>
-              100% On-Chain Match
+              {charities.length} Active Partners
             </span>
           </div>
         </div>

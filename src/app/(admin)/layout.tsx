@@ -19,6 +19,34 @@ export default async function AdminLayout({
     redirect('/dashboard?error=admin_privileges_required');
   }
 
+  // Dynamic user avatar initials
+  const initials = user.fullName
+    ? user.fullName
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : (user.email.slice(0, 2).toUpperCase());
+
+  // Dynamic operator ID and session hash
+  const operatorId = `DIR-${user.id.slice(0, 8).toUpperCase()}`;
+  const sessionHashSuffix = user.id.replace(/-/g, '').slice(0, 6);
+  const sessionHashPrefix = user.id.replace(/-/g, '').slice(-4);
+
+  // Fetch active draw number dynamically
+  const { supabaseAdmin } = await import('@/infrastructure/database/supabase-admin');
+  const { data: latestDraw } = await supabaseAdmin
+    .from('draws')
+    .select('draw_number, status')
+    .order('scheduled_for', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const drawStatusText = latestDraw
+    ? `Draw #${latestDraw.draw_number} (${latestDraw.status.toUpperCase()})`
+    : 'Protocol Ready';
+
   return (
     <div className={styles.adminWrapper}>
       {/* Top Sovereign Bar */}
@@ -33,7 +61,7 @@ export default async function AdminLayout({
                 LEVEL 4 CLEARANCE
               </span>
               <span className={styles.sessionHash}>
-                SHA-256: 0x9f4a...d81e
+                SEC-ID: 0x{sessionHashSuffix}...{sessionHashPrefix}
               </span>
             </div>
           </div>
@@ -53,10 +81,10 @@ export default async function AdminLayout({
           <div className={styles.operatorCluster}>
             <div className={styles.liveDrawPill}>
               <span className={styles.pulseDot}></span>
-              <span>Live Draw #142 Active</span>
+              <span>{drawStatusText}</span>
             </div>
             <div className={styles.trusteeProfile}>
-              <div className={styles.trusteeAvatar}>AD</div>
+              <div className={styles.trusteeAvatar}>{initials}</div>
               <div className={styles.trusteeInfo}>
                 <div className={styles.trusteeName}>{user.fullName || user.email}</div>
                 <div className={styles.trusteeRole}>Sovereign Trustee</div>
@@ -79,9 +107,9 @@ export default async function AdminLayout({
             </span>
           </div>
           <div className={styles.trustBannerRight}>
-            <span>Operator ID: <strong className={styles.operatorId}>TRUST-DIR-009</strong></span>
+            <span>Operator ID: <strong className={styles.operatorId}>{operatorId}</strong></span>
             <span className={styles.latencyTag}>
-              <span className={styles.latencyDot}></span> 14ms Latency
+              <span className={styles.latencyDot}></span> Realtime Direct Connect
             </span>
           </div>
         </div>
