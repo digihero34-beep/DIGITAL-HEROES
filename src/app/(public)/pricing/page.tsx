@@ -139,7 +139,7 @@ export default function PricingPage() {
 
         {/* Annual Plan */}
         <div className={`${styles.planCard} ${interval === 'year' ? styles.planCardFeatured : ''}`}>
-          {interval === 'year' && <div className={styles.featuredTag}>Best Value • 2 Months Free</div>}
+          {interval === 'year' && <div className={styles.featuredTag}>Best Value • Save 20% (£48 Off)</div>}
           <div className={styles.planHeader}>
             <h2 className={styles.planName}>Annual Membership</h2>
             <p className={styles.planDesc}>Maximum commitment to your chosen charity with a 20% discount.</p>

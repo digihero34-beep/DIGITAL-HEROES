@@ -43,6 +43,7 @@ export default function RootLayout({
       lang="en"
       className={`${ebGaramond.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
       data-theme="spruce"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className={`bg-background text-on-surface antialiased min-h-screen flex flex-col`}>
