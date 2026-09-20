@@ -1,154 +1,205 @@
+/* ============================================================
+   FOOTER — Heritage & Fairway Ledger Design Language
+   Deep Augusta green inverse surface. Institutional.
+   ============================================================ */
+
 .footer {
-  background: #05080E;
-  border-top: 1px solid var(--border-subtle);
-  padding: var(--space-16) var(--space-6) var(--space-8);
-  color: var(--text-secondary);
+  background: var(--primary);
+  border-top: 1px solid rgba(194, 200, 195, 0.12);
+  color: var(--primary-fixed-dim);
+  margin-top: auto;
 }
 
 .inner {
   max-width: var(--container-max);
   margin: 0 auto;
+  padding: 4rem 1.5rem 0;
 }
 
+/* ── Top grid ── */
 .topGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: var(--space-12);
-  margin-bottom: var(--space-12);
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
 }
 
 .brandCol {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 1.25rem;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0.75rem;
   text-decoration: none;
 }
 
 .brandGem {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--accent-mint) 0%, #059669 100%);
+  width: 38px;
+  height: 38px;
+  background: var(--secondary-gold);
+  border: 1px solid var(--secondary-gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #080C14;
-  font-weight: 800;
-  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .brandName {
-  font-size: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 800;
-  color: var(--text-primary);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: var(--on-primary);
+  line-height: 1.2;
+}
+
+.brandTagline {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--secondary-gold);
+  line-height: 1.2;
 }
 
 .mission {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  max-width: 360px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--on-primary-container);
+  max-width: 320px;
+  margin: 0;
 }
 
 .charityPledgeBadge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34D399;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-full);
+  gap: 0.5rem;
+  background: rgba(197, 155, 39, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  padding: 0.35rem 0.75rem;
   width: fit-content;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary-gold);
 }
 
 .badgeDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-mint);
-  box-shadow: 0 0 8px var(--accent-mint);
+  background: var(--secondary-gold);
+  flex-shrink: 0;
 }
 
 .colTitle {
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
   font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--text-primary);
-  margin-bottom: var(--space-4);
+  color: var(--on-primary);
+  margin-bottom: 1.25rem;
 }
 
 .linkList {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0.75rem;
 }
 
 .linkItem a {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  transition: color var(--transition-fast);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--on-primary-container);
+  text-decoration: none;
+  transition: color 120ms ease;
 }
 
 .linkItem a:hover {
-  color: var(--accent-mint);
+  color: var(--secondary-gold);
 }
 
-.trustCol {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.trustText {
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--text-muted);
-}
-
+/* ── Bottom bar ── */
 .divider {
   height: 1px;
-  background: var(--border-subtle);
-  margin-bottom: var(--space-8);
+  background: rgba(194, 200, 195, 0.12);
 }
 
 .bottomRow {
+  padding: 1.25rem 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-4);
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  gap: 1rem;
 }
 
 .legalNotice {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--text-muted);
-  max-width: 800px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--on-primary-container);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Prize tier capsules */
+.tierCapsules {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tierCapsule {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(194, 200, 195, 0.15);
+  padding: 0.25rem 0.7rem;
+}
+
+.tierValue {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--secondary-gold);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.tierLabel {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-primary-container);
+  line-height: 1.2;
 }
 
 @media (max-width: 900px) {
   .topGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: 2rem;
   }
 
   .bottomRow {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tierCapsules {
+    flex-wrap: wrap;
   }
 }

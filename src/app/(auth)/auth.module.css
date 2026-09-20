@@ -1,3 +1,8 @@
+/* ============================================================
+   AUTH PAGES — Heritage & Fairway Ledger Design Language
+   Login & Registration surfaces. Institutional credibility.
+   ============================================================ */
+
 .authContainer {
   min-height: 100vh;
   display: flex;
@@ -5,12 +10,24 @@
   justify-content: center;
   align-items: center;
   padding: var(--space-8) var(--space-4);
-  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.15), transparent 70%),
-              radial-gradient(ellipse 60% 40% at 50% 120%, rgba(245, 158, 11, 0.08), transparent 60%),
-              var(--bg-primary);
+  background: var(--surface-container-low);
+  position: relative;
+}
+
+.authContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(194, 200, 195, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(194, 200, 195, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
 }
 
 .authWrapper {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 480px;
   display: flex;
@@ -31,53 +48,49 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-3);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  background: var(--status-active-bg);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-mint);
+  color: var(--primary-container);
   margin-bottom: var(--space-2);
 }
 
 .logoDot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-mint);
-  box-shadow: 0 0 8px var(--accent-mint);
+  background-color: var(--secondary-gold);
 }
 
 .title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--primary);
+  line-height: 1.2;
 }
 
 .subtitle {
+  font-family: var(--font-sans);
   font-size: 0.875rem;
   color: var(--text-secondary);
   max-width: 360px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .authCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
   padding: var(--space-8);
-  box-shadow: var(--shadow-lg);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .formGroup {
@@ -87,8 +100,11 @@
 }
 
 .label {
-  font-size: 0.8125rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-secondary);
 }
 
@@ -96,19 +112,18 @@
 .select {
   width: 100%;
   padding: 0.625rem 0.875rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
   color: var(--text-primary);
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .input:focus,
 .select:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: var(--shadow-glow-mint);
 }
 
 .select {
@@ -116,13 +131,15 @@
 }
 
 .select option {
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container-lowest);
   color: var(--text-primary);
 }
 
 .helperText {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
+  line-height: 1.5;
 }
 
 .charityBadge {
@@ -131,11 +148,11 @@
   gap: var(--space-2);
   margin-top: var(--space-1);
   padding: var(--space-2) var(--space-3);
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  border-radius: var(--radius-sm);
+  background: rgba(197, 155, 39, 0.06);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: var(--accent-gold);
+  color: var(--secondary);
 }
 
 .percentageButtons {
@@ -147,10 +164,10 @@
 
 .percentageBtn {
   padding: 0.5rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
   color: var(--text-secondary);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 600;
   text-align: center;
@@ -158,49 +175,51 @@
 }
 
 .percentageBtn:hover {
-  border-color: var(--accent-mint);
-  color: var(--text-primary);
+  border-color: var(--border-focus);
+  color: var(--primary);
 }
 
 .percentageBtnActive {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: var(--accent-mint);
-  color: var(--accent-mint);
+  background: var(--status-active-bg);
+  border-color: var(--primary-container);
+  color: var(--primary);
 }
 
 .submitBtn {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: #FFFFFF;
-  border-radius: var(--radius-md);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  padding: 0.8rem 1rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   margin-top: var(--space-2);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .submitBtn:hover:not(:disabled) {
-  box-shadow: var(--shadow-glow-mint);
-  transform: translateY(-1px);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .submitBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .alertError {
   padding: var(--space-3) var(--space-4);
-  background: var(--status-danger-bg);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--radius-md);
-  color: var(--status-danger-text);
+  background: var(--error-container);
+  border: 1px solid rgba(186, 26, 26, 0.25);
+  color: var(--on-error-container);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   display: flex;
   align-items: center;
@@ -209,12 +228,13 @@
 
 .footerLinks {
   text-align: center;
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   color: var(--text-muted);
 }
 
 .linkAccent {
-  color: var(--accent-mint);
+  color: var(--primary);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -222,16 +242,20 @@
 }
 
 .linkAccent:hover {
-  color: #34D399;
+  color: var(--primary-container);
 }
 
 .trustBanner {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-6);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  padding: var(--space-4) var(--space-4);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-container-lowest);
 }

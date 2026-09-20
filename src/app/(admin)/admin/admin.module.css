@@ -1,0 +1,242 @@
+.adminPage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8, 2rem);
+}
+
+.commandHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--color-border, rgba(242, 237, 228, 0.12));
+  padding-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.commandMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-gold, #C9A84C);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.pageTitle {
+  font-family: var(--font-serif, 'Times New Roman', serif);
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: var(--color-text, #F2EDE4);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.pageDesc {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted, #8E9BAE);
+  max-width: 680px;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.commandActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.manifestBtn {
+  background-color: var(--color-surface, #11171E);
+  border: 1px solid var(--color-border, rgba(242, 237, 228, 0.2));
+  color: var(--color-text, #F2EDE4);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.manifestBtn:hover {
+  border-color: var(--color-gold, #C9A84C);
+}
+
+.commitSigBtn {
+  background-color: var(--color-gold, #C9A84C);
+  border: 1px solid var(--color-gold, #C9A84C);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.commitSigBtn:hover {
+  opacity: 0.9;
+}
+
+/* Bento Grid */
+.vitalsBentoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1200px) {
+  .vitalsBentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .vitalsBentoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vitalCard {
+  background-color: var(--color-surface, #11171E);
+  border: 1px solid var(--color-border, rgba(242, 237, 228, 0.12));
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardTopAccentGold {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-gold, #C9A84C);
+}
+
+.cardTopAccentGreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #10B981;
+}
+
+.cardTopAccentBlue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #3B82F6;
+}
+
+.cardTopAccentAmber {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #F59E0B;
+}
+
+.vitalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-text-muted, #8E9BAE);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.vitalIcon {
+  font-size: 1.125rem;
+}
+
+.vitalMonoValue {
+  font-family: monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text, #F2EDE4);
+  background-color: #0E141B;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border, rgba(242, 237, 228, 0.08));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vitalMetricBig {
+  font-family: var(--font-serif, 'Times New Roman', serif);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--color-gold, #C9A84C);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.vitalMetricSub {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted, #8E9BAE);
+  margin-left: 0.25rem;
+}
+
+.vitalMetricHeading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text, #F2EDE4);
+  line-height: 1.2;
+}
+
+.vitalFooter {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border, rgba(242, 237, 228, 0.08));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.6875rem;
+}
+
+.vitalFooterLabel {
+  color: var(--color-text-muted, #8E9BAE);
+}
+
+.vitalFooterValue {
+  font-weight: 600;
+  color: var(--color-text, #F2EDE4);
+}
+
+.goldValue {
+  color: var(--color-gold, #C9A84C);
+}
+
+.statusTag {
+  padding: 0.15rem 0.45rem;
+  background-color: #141C25;
+  border: 1px solid var(--color-border, rgba(242, 237, 228, 0.1));
+  color: #10B981;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sectionsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}

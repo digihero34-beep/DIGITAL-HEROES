@@ -1,7 +1,12 @@
+/* ============================================================
+   HOW IT WORKS — Heritage & Fairway Ledger Design Language
+   Explainer page. Institutional. Educational.
+   ============================================================ */
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-16) var(--space-6) var(--space-24);
+  padding: var(--space-16) var(--space-6) var(--space-16);
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
@@ -15,6 +20,8 @@
   gap: var(--space-4);
   max-width: 800px;
   margin: 0 auto;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-12);
 }
 
 .badge {
@@ -22,35 +29,35 @@
   align-items: center;
   gap: var(--space-2);
   background: var(--status-active-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 0.35rem 0.9rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  border: 1px solid var(--border-subtle);
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
-  color: var(--accent-mint);
+  color: var(--primary-container);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.12em;
 }
 
 .badgeDot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: var(--accent-mint);
-  box-shadow: 0 0 8px var(--accent-mint);
+  background: var(--secondary-gold);
 }
 
 .title {
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
-  font-weight: 900;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--primary);
   line-height: 1.15;
-  letter-spacing: -1px;
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
-  font-size: 1.15rem;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.7;
   color: var(--text-secondary);
 }
 
@@ -58,10 +65,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-  background: var(--bg-secondary);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
-  padding: var(--space-12);
+  border-left: 3px solid var(--primary-container);
+  padding: var(--space-10) var(--space-12);
   position: relative;
   overflow: hidden;
 }
@@ -73,20 +80,24 @@
 }
 
 .sectionStep {
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--accent-mint);
+  letter-spacing: 0.14em;
+  color: var(--primary-container);
 }
 
 .sectionTitle {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
 }
 
 .sectionText {
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.7;
   color: var(--text-secondary);
@@ -95,44 +106,54 @@
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
 }
 
 .detailCard {
-  background: rgba(8, 12, 20, 0.6);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  background: var(--surface-container-low);
+  border-right: 1px solid var(--border-subtle);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
+.detailCard:last-child {
+  border-right: none;
+}
+
 .cardIcon {
+  font-family: var(--font-mono);
   font-size: 1.5rem;
+  color: var(--primary-container);
 }
 
 .cardTitle {
+  font-family: var(--font-serif);
   font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 500;
+  color: var(--primary);
 }
 
 .cardDesc {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text-secondary);
 }
 
+/* Prize formula ledger */
 .formulaBox {
-  background: #080C14;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: var(--radius-md);
+  background: var(--primary);
+  border: 1px solid var(--primary-container);
+  border-left: 3px solid var(--secondary-gold);
   padding: var(--space-6);
-  font-family: monospace;
-  font-size: 0.95rem;
-  color: #34D399;
-  line-height: 1.6;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--secondary-gold);
+  line-height: 1.8;
+  font-variant-numeric: tabular-nums;
 }
 
 .ctaArea {
@@ -142,16 +163,19 @@
   align-items: center;
   gap: var(--space-6);
   padding: var(--space-12) 0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .primaryBtn {
-  background: var(--accent-mint);
-  color: #080C14;
-  font-size: 1.1rem;
-  font-weight: 800;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   padding: 0.9rem 2.2rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow-mint);
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
@@ -159,16 +183,29 @@
 }
 
 .primaryBtn:hover {
-  background: #34D399;
-  transform: translateY(-2px);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 @media (max-width: 900px) {
   .section {
-    padding: var(--space-6);
+    padding: var(--space-6) var(--space-6);
   }
 
   .cardsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .detailCard {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .detailCard:last-child {
+    border-bottom: none;
+  }
+
+  .container {
+    padding: var(--space-8) var(--space-4) var(--space-12);
   }
 }

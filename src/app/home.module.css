@@ -1,386 +1,1394 @@
+/* ============================================================
+   HOME PAGE — Heritage & Fairway Ledger
+   APPROACH: Asymmetric Split-Grid hero (vs reference's centered column)
+   LEFT: Editorial proclamation + audit ledger strip
+   RIGHT: Live draw protocol panel + prize dossier
+   ============================================================ */
+
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
-  padding-bottom: var(--space-24);
+  background: var(--background);
 }
 
+/* ────────────────────────────────────────────────────────────
+   HERO — Full-bleed split grid, edge-to-edge within max-width
+   ──────────────────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────
+   HERO — Sovereign Broadsheet & Architectural Ledger Triptych
+   An authoritative, full-width masthead anchored by a three-pillar
+   rectilinear ledger triptych (Prize, Charity, Protocol).
+   ──────────────────────────────────────────────────────────── */
 .heroSection {
-  padding: var(--space-24) var(--space-6) var(--space-12);
+  width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  width: 100%;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-container-lowest);
+}
+
+/* ── Top Registry Bar (Archival band) ── */
+.registryBar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  position: relative;
-}
-
-.heroBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  background: var(--status-active-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--accent-mint);
-  margin-bottom: var(--space-6);
-}
-
-.badgeDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent-mint);
-  box-shadow: 0 0 10px var(--accent-mint);
-}
-
-.heroTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
-  color: var(--text-primary);
-  max-width: 920px;
-  margin-bottom: var(--space-6);
-}
-
-.highlightText {
-  background: linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-mint-hover) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.heroSubtitle {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  line-height: 1.65;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-container-low);
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
   color: var(--text-secondary);
-  max-width: 680px;
-  margin-bottom: var(--space-8);
+  overflow-x: auto;
+  gap: 1rem;
 }
 
-.heroCtas {
+.registryItem {
   display: flex;
-  gap: var(--space-4);
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: var(--space-16);
+  gap: 0.5rem;
+  white-space: nowrap;
 }
 
-.primaryCta {
-  background: var(--accent-mint);
-  color: var(--text-inverse);
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 800;
-  padding: 0.85rem 2.2rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow-mint);
-  transition: all var(--transition-fast);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
+.registryIcon {
+  color: var(--secondary);
+  flex-shrink: 0;
 }
 
-.primaryCta:hover {
-  background: var(--accent-mint-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 0 32px rgba(16, 185, 129, 0.45);
+.registryText {
+  letter-spacing: 0.04em;
 }
 
-.secondaryCta {
-  background: var(--bg-card);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  font-size: 1.05rem;
+.registryText strong {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.registryDivider {
+  width: 1px;
+  height: 14px;
+  background: var(--border-medium);
+  flex-shrink: 0;
+}
+
+.registryItemCenter {
+  gap: 0.6rem;
+}
+
+.registryLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.registryMono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 0.85rem 1.8rem;
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  color: var(--primary);
+  background: var(--surface-container);
+  border: 1px solid var(--border-subtle);
+  padding: 0.15rem 0.5rem;
 }
 
-.secondaryCta:hover {
-  background: var(--bg-elevated);
-  border-color: var(--border-hover);
+.registryItemRight {
+  gap: 0.6rem;
+  margin-left: auto;
 }
 
-.metricsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-4);
-  width: 100%;
-  max-width: 1040px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-4);
-  box-shadow: var(--shadow-card);
+.registryLiveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--secondary);
+  flex-shrink: 0;
+  animation: live-pulse 2s ease-in-out infinite;
 }
 
-.metricItem {
+.registryCountdown {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--secondary);
+  letter-spacing: 0.04em;
+  margin-left: 0.35rem;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── Broadsheet Masthead ── */
+.broadsheetMasthead {
+  padding: 3.75rem 2.5rem 3rem;
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  padding: 0 var(--space-4);
-  border-right: 1px solid var(--border-subtle);
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: var(--surface-container-lowest);
 }
 
-.metricItem:last-child {
+.mastheadProvenance {
+  display: inline-flex;
+  align-items: center;
+}
+
+.provenanceTag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--secondary);
+  background: rgba(197, 155, 39, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.35);
+  padding: 0.3rem 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mastheadTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--primary);
+  margin: 0;
+}
+
+.mastheadTitleItalic {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--primary-container);
+}
+
+.mastheadLede {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 740px;
+  margin: 0;
+}
+
+.mastheadActions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.85rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.ctaPrimary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(254, 206, 87, 0.35) 50%,
+    rgba(255, 255, 255, 0.6) 55%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 650ms ease;
+}
+
+.ctaPrimary:hover::after {
+  transform: translateX(100%);
+}
+
+.ctaPrimary:hover {
+  background: var(--primary-container);
+  border-color: var(--primary-container);
+}
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1px solid var(--border-medium);
+  padding: 0.9rem 1.6rem;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.ctaGhost:hover {
+  border-color: var(--primary);
+  background: var(--surface-container-low);
+}
+
+.trustBadgeInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary-container);
+  padding-left: 0.5rem;
+}
+
+.trustBadgeInline svg {
+  color: var(--primary-container);
+}
+
+/* ── Three-Pillar Architectural Ledger Triptych ── */
+.triptychGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.triptychPlate {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-container-lowest);
+  padding: 2.25rem 2rem 2rem;
+  border-right: 1px solid var(--border-subtle);
+  position: relative;
+  transition: background 140ms ease;
+}
+
+.triptychPlate:last-child {
   border-right: none;
 }
 
-.metricValue {
-  font-family: var(--font-display);
-  font-variant-numeric: tabular-nums;
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--accent-mint);
-  letter-spacing: -0.02em;
+.triptychPlate:hover {
+  background: rgba(242, 252, 246, 0.5);
 }
 
-.metricLabel {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-muted);
+/* Gold Shine Sweep Animation */
+@keyframes goldShineSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  30%, 100% {
+    transform: translateX(250%);
+  }
+}
+
+/* Top colored accent rules */
+.plateTopRuleGold {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--secondary);
+  overflow: hidden;
+}
+
+.plateTopRuleGold::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #c59b27 40%,
+    #ffffff 70%,
+    #fece57 90%,
+    transparent 100%
+  );
+  animation: goldShineSweep 3.5s ease-in-out infinite;
+}
+
+.plateTopRuleGreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+}
+
+.plateTopRuleSpruce {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #234e3e;
+}
+
+.plateHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.plateBadgeGold {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: var(--secondary);
 }
 
-.contentContainer {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
+.plateBadgeGreen {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.plateBadgeSpruce {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #234e3e;
+}
+
+.plateValuePill {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--primary);
+  color: var(--on-primary);
+  padding: 0.2rem 0.65rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--secondary-gold);
+}
+
+.plateValuePill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(197, 155, 39, 0.4) 40%,
+    rgba(255, 255, 255, 0.9) 70%,
+    transparent 100%
+  );
+  animation: goldShineSweep 4s ease-in-out infinite;
+}
+
+/* Image Frames in Hero & Spotlight */
+.plateImageFrame {
+  width: 100%;
+  height: 165px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 1.25rem;
+}
+
+.plateImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.plateImageFrame:hover .plateImage {
+  transform: scale(1.04);
+}
+
+.plateImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 25, 16, 0.75) 0%, transparent 60%);
+}
+
+.plateImageTag {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(0, 25, 16, 0.85);
+  border: 1px solid rgba(197, 155, 39, 0.5);
+  padding: 0.2rem 0.5rem;
+  letter-spacing: 0.06em;
+}
+
+.spotlightImageFrame {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+}
+
+.spotlightImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.spotlightImageFrame:hover .spotlightImage {
+  transform: scale(1.03);
+}
+
+.spotlightImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 25, 16, 0.8) 0%, transparent 65%);
+}
+
+.spotlightImageCaption {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(0, 25, 16, 0.9);
+  border: 1px solid rgba(197, 155, 39, 0.5);
+  padding: 0.25rem 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+.plateGuaranteePill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(197, 155, 39, 0.12);
+  border: 1px solid rgba(197, 155, 39, 0.4);
+  color: var(--secondary);
+  padding: 0.2rem 0.55rem;
+  letter-spacing: 0.04em;
+}
+
+.plateAuditPill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(35, 78, 62, 0.1);
+  border: 1px solid rgba(35, 78, 62, 0.3);
+  color: #234e3e;
+  padding: 0.2rem 0.55rem;
+  letter-spacing: 0.04em;
+}
+
+.plateTitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.plateDesc {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0 0 1.25rem 0;
+}
+
+.plateMetricRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.25rem;
+}
+
+.plateMetricBig {
+  font-family: var(--font-mono);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.plateMetricLabel {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.plateCheckList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.25rem;
+  flex: 1;
+}
+
+.plateCheckItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.checkIconGold {
+  color: var(--secondary);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.checkIconGreen {
+  color: var(--primary-container);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.checkIconSpruce {
+  color: #234e3e;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.plateFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: auto;
+}
+
+.plateLink {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.plateLink:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.plateMetaMono {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── 4-Column Audit Metrology Strip ── */
+.auditStrip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--surface-container-low);
   width: 100%;
 }
 
-.sectionHeader {
-  text-align: center;
-  margin-bottom: var(--space-12);
+.auditItem {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
+  gap: 0.25rem;
+  padding: 1.25rem 1.75rem;
 }
 
-.sectionBadge {
-  font-size: 0.75rem;
+.auditLabel {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
   font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--accent-mint);
-  background: var(--status-active-bg);
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-full);
-}
-
-.sectionTitle {
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -1px;
-}
-
-.sectionSubtitle {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  max-width: 620px;
-  line-height: 1.6;
-}
-
-/* 4-Step Narrative Flow */
-.stepsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-6);
-}
-
-.stepCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8) var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  position: relative;
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-card);
-}
-
-.stepCard:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-elevated);
-}
-
-.stepNumber {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: rgba(16, 185, 129, 0.3);
+  color: var(--text-muted);
   line-height: 1;
 }
 
-.stepTitle {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text-primary);
+.auditValue {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
   letter-spacing: -0.02em;
-}
-
-.stepDesc {
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
-}
-
-/* Spotlight Section */
-.spotlightCard {
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-primary) 100%);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
-  padding: var(--space-12);
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: var(--space-12);
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-elevated);
-}
-
-.spotlightCard::before {
-  content: '';
-  position: absolute;
-  bottom: -100px;
-  left: -100px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--accent-gold-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.spotlightContent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.spotlightStats {
-  display: flex;
-  gap: var(--space-8);
-  margin-top: var(--space-4);
-}
-
-.spotlightStatItem {
-  display: flex;
-  flex-direction: column;
-}
-
-.spotlightStatVal {
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: var(--accent-gold);
-}
-
-.spotlightStatLbl {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-/* Trust Architecture Grid */
-.trustGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
-.trustCard {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.trustCardTitle {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.45rem;
 }
 
-.trustCardText {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
+.auditValueGold {
+  color: var(--secondary);
 }
 
-/* Bottom CTA Banner */
-.ctaBanner {
-  background: linear-gradient(135deg, #0F172A 0%, #064E3B 100%);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  border-radius: var(--radius-xl);
-  padding: var(--space-16) var(--space-8);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-6);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+.auditValueGreen {
+  color: var(--primary-container);
 }
 
-.ctaTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -1px;
+.auditRule {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border-subtle);
+  flex-shrink: 0;
 }
 
-.ctaSubtitle {
-  font-size: 1.1rem;
-  color: #D1FAE5;
-  max-width: 600px;
-  line-height: 1.6;
+.liveIndicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary-container);
+  flex-shrink: 0;
+  animation: live-pulse 2s ease-in-out infinite;
 }
 
+/* Responsive adjustments */
 @media (max-width: 1024px) {
-  .stepsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .trustGrid {
+  .triptychGrid {
     grid-template-columns: 1fr;
   }
 
-  .spotlightCard {
-    grid-template-columns: 1fr;
+  .triptychPlate {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .triptychPlate:last-child {
+    border-bottom: none;
+  }
+
+  .auditStrip {
+    flex-wrap: wrap;
+  }
+
+  .auditItem {
+    flex: 1 1 45%;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .auditRule {
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .metricsGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
+  .broadsheetMasthead {
+    padding: 2.5rem 1.25rem 2rem;
   }
 
-  .metricItem {
+  .registryBar {
+    padding: 0.6rem 1rem;
+    font-size: 0.65rem;
+  }
+
+  .triptychPlate {
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+
+  .auditItem {
+    flex: 1 1 100%;
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   CONTENT SECTIONS — shared shell
+   ──────────────────────────────────────────────────────────── */
+.contentSection {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  width: 100%;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Section intro — centered */
+.sectionIntro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.875rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Section intro — horizontal split (eyebrow+title LEFT, lede RIGHT) */
+.sectionIntroRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 2rem;
+}
+
+.sectionEyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--primary-container);
+  border: 1px solid var(--border-subtle);
+  background: var(--status-active-bg);
+  padding: 0.25rem 0.65rem;
+  display: inline-block;
+  width: fit-content;
+}
+
+.sectionHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.sectionLede {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.sectionLedeRight {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 380px;
+  margin: 0;
+}
+
+/* ────────────────────────────────────────────────────────────
+   THREE-PHASE DRAW ARCHITECTURE CARDS
+   ──────────────────────────────────────────────────────────── */
+.phaseGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+}
+
+.phaseCard {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--surface-container-low);
+  transition: background 120ms ease;
+}
+
+.phaseCard:last-child {
+  border-right: none;
+}
+
+.phaseCard:hover {
+  background: var(--surface-container);
+}
+
+.phaseLabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.phaseTitle {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.phaseDesc {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+
+.phaseCode {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--primary);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
+  padding: 0.6rem 0.75rem;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+/* ────────────────────────────────────────────────────────────
+   FOUR-STEP JOURNEY
+   ──────────────────────────────────────────────────────────── */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+}
+
+.stepCard {
+  padding: 2.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--surface-container-lowest);
+  transition: background 120ms ease;
+  position: relative;
+}
+
+.stepCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 120ms ease;
+}
+
+.stepCard:hover::before {
+  background: var(--secondary-gold);
+}
+
+.stepCard:hover {
+  background: var(--surface-container-low);
+}
+
+.stepCard:last-child {
+  border-right: none;
+}
+
+.stepNumber {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 400;
+  color: var(--border-subtle);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  display: block;
+}
+
+.stepTitle {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--primary);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.stepDesc {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ────────────────────────────────────────────────────────────
+   FEATURED CHARITY SPOTLIGHT — Inverse slab with trust pillars
+   ──────────────────────────────────────────────────────────── */
+.spotlightSection {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.spotlightSlab {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 480px;
+}
+
+.spotlightLeft {
+  background: var(--primary);
+  padding: 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 1px solid rgba(194, 200, 195, 0.1);
+}
+
+.spotlightEyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--secondary-gold);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  background: rgba(197, 155, 39, 0.08);
+  padding: 0.25rem 0.65rem;
+  display: inline-block;
+  width: fit-content;
+}
+
+.spotlightTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  color: var(--on-primary);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.spotlightBody {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--primary-fixed-dim);
+  max-width: 460px;
+  margin: 0;
+}
+
+.spotlightStats {
+  display: flex;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(194, 200, 195, 0.15);
+}
+
+.spotlightStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.spotlightStatValue {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--secondary-gold);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.spotlightStatLabel {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary-fixed-dim);
+}
+
+.spotlightActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.spotlightCta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--secondary-gold);
+  color: var(--primary);
+  border: 1px solid var(--secondary-gold);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  transition: background 120ms ease;
+}
+
+.spotlightCta:hover {
+  background: var(--secondary-fixed-dim);
+  border-color: var(--secondary-fixed-dim);
+}
+
+.spotlightCtaGhost {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: var(--primary-fixed-dim);
+  border: 1px solid rgba(194, 200, 195, 0.3);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  transition: border-color 120ms ease;
+}
+
+.spotlightCtaGhost:hover {
+  border-color: rgba(194, 200, 195, 0.6);
+}
+
+/* Trust pillars — right side of spotlight */
+.spotlightRight {
+  background: var(--surface-container-lowest);
+  padding: 4rem 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.trustPillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  border: 1px solid var(--border-subtle);
+}
+
+.trustPillar {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  align-items: flex-start;
+  transition: background 120ms ease;
+}
+
+.trustPillar:last-child {
+  border-bottom: none;
+}
+
+.trustPillar:hover {
+  background: var(--surface-container-low);
+}
+
+.trustMark {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  line-height: 1;
+}
+
+.trustTitle {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.trustBody {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ────────────────────────────────────────────────────────────
+   FINAL CTA — Full-bleed dark green split
+   ──────────────────────────────────────────────────────────── */
+.finalCta {
+  background: var(--surface-container-lowest);
+}
+
+.finalCtaInner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+}
+
+.finalCtaLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.finalCtaTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.finalCtaBody {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.finalCtaActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.ctaPrestige {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--secondary-gold);
+  color: var(--primary);
+  border: 1px solid var(--secondary-gold);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.975rem 2rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 120ms ease;
+}
+
+.ctaPrestige:hover {
+  background: var(--secondary-fixed-dim);
+  border-color: var(--secondary-fixed-dim);
+}
+
+.ctaGhostInverse {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-medium);
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.ctaGhostInverse:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ────────────────────────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroLeft {
     border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 3rem 2rem 2.5rem;
+  }
+
+  .heroRight {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .drawCountdownBlock {
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: none;
+  }
+
+  .phaseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .phaseCard {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .phaseCard:last-child {
+    border-bottom: none;
+  }
+
+  .stepsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stepCard:nth-child(2) {
+    border-right: none;
+  }
+
+  .stepCard:nth-child(2),
+  .stepCard:nth-child(3),
+  .stepCard:nth-child(4) {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .spotlightSlab {
+    grid-template-columns: 1fr;
+  }
+
+  .spotlightRight {
+    padding: 3rem 2rem;
+  }
+
+  .finalCtaInner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroLeft {
+    padding: 2.5rem 1.5rem 2rem;
+  }
+
+  .heroRight {
+    grid-template-columns: 1fr;
+  }
+
+  .drawCountdownBlock {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .auditStrip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .auditRule {
+    display: none;
+  }
+
+  .auditItem:nth-child(-n+3) {
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .stepsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .stepCard {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .stepCard:last-child {
+    border-bottom: none;
+  }
+
+  .sectionIntroRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionLedeRight {
+    max-width: 100%;
+  }
+
+  .contentSection {
+    padding: 3.5rem 1.25rem;
+    gap: 2rem;
+  }
+
+  .spotlightLeft {
+    padding: 3rem 1.5rem;
+  }
+
+  .spotlightStats {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .finalCtaInner {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .countdownDigit {
+    font-size: 2rem;
   }
 }

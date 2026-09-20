@@ -1,149 +1,414 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+
+// Inline SVG icons — no external font dependency
+function IconMenu() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+
+function IconClose() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
+      <line x1="4" y1="4" x2="20" y2="20" />
+      <line x1="20" y1="4" x2="4" y2="20" />
+    </svg>
+  );
+}
+
+function IconLock() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline', verticalAlign: 'middle' }}>
+      <rect x="5" y="11" width="14" height="11" rx="0" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" fill="none" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
+// Heritage brand mark — a crisp monogram in a square
+function BrandMark() {
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        background: 'var(--primary)',
+        border: '1px solid var(--primary)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+      }}
+      aria-hidden="true"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        {/* Simplified trophy / award silhouette */}
+        <path
+          d="M7 3h10v8a5 5 0 0 1-10 0V3Z"
+          fill="none"
+          stroke="#c59b27"
+          strokeWidth="1.5"
+        />
+        <path d="M3 3h4v5a2 2 0 0 1-4 0V3Z" fill="none" stroke="#c59b27" strokeWidth="1.5" />
+        <path d="M17 3h4v5a2 2 0 0 1-4 0V3Z" fill="none" stroke="#c59b27" strokeWidth="1.5" />
+        <path d="M12 16v4" stroke="#c59b27" strokeWidth="1.5" />
+        <path d="M8 20h8" stroke="#c59b27" strokeWidth="1.5" />
+      </svg>
+    </div>
+  );
+}
+
+const NAV_ITEMS = [
+  { href: '/', label: 'Home' },
+  { href: '/how-it-works', label: 'How It Works' },
+  { href: '/charities', label: 'Charities' },
+  { href: '/pricing', label: 'Plans' },
+  { href: '/dashboard', label: 'My Portal' },
+  { href: '/scores', label: 'Scorecard' },
+  { href: '/design-system', label: 'Themes' },
+];
+
+const ADMIN_ITEM = { href: '/admin', label: 'Admin' };
 
 export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // In auth pages (login/register), we don't show navigation clutter
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const isAuthPage = pathname === '/login' || pathname === '/register';
+  if (isAuthPage) return null;
 
-  if (isAuthPage) {
-    return null;
-  }
-
-  const navItems = [
-    { href: '/', label: 'Public View' },
-    { href: '/dashboard', label: 'Subscriber Portal' },
-    { href: '/scores', label: 'Scorecard' },
-    { href: '/charities', label: 'Charities' },
-    { href: '/winnings', label: 'Verification' },
-    { href: '/admin', label: 'Admin Operations' },
-  ];
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <header className="w-full bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
-      <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-7xl mx-auto h-20">
-        {/* Brand Anchor */}
-        <div className="flex items-center gap-4">
+    <header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        width: '100%',
+        background: 'var(--surface-container-lowest)',
+        borderBottom: scrolled
+          ? '1px solid var(--border-medium)'
+          : '1px solid var(--border-subtle)',
+        transition: 'border-color 200ms ease, box-shadow 200ms ease',
+        boxShadow: scrolled ? '0 1px 8px rgba(0,0,0,0.06)' : 'none',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 'var(--container-max)',
+          margin: '0 auto',
+          padding: '0 1.5rem',
+          height: 68,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+        }}
+      >
+        {/* ── Brand ── */}
+        <Link
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            textDecoration: 'none',
+            flexShrink: 0,
+          }}
+          onClick={() => setMobileOpen(false)}
+          aria-label="Digital Heroes — Home"
+        >
+          <BrandMark />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.875rem',
+                fontWeight: 800,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: 'var(--primary)',
+                lineHeight: 1.15,
+              }}
+            >
+              Digital Heroes
+            </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--text-muted)',
+                lineHeight: 1,
+              }}
+            >
+              Charity Trust Protocol
+            </span>
+          </div>
+        </Link>
+
+        {/* ── Desktop Navigation ── */}
+        <nav
+          aria-label="Main navigation"
+          style={{
+            display: 'none',
+            alignItems: 'center',
+            gap: '0.25rem',
+            height: '100%',
+          }}
+          className="header-nav-desktop"
+        >
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                height: '100%',
+                padding: '0 0.75rem',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.8125rem',
+                fontWeight: isActive(item.href) ? 700 : 500,
+                color: isActive(item.href) ? 'var(--primary)' : 'var(--text-secondary)',
+                borderBottom: isActive(item.href) ? '2px solid var(--secondary-gold)' : '2px solid transparent',
+                transition: 'color 120ms ease, border-color 120ms ease',
+                textDecoration: 'none',
+                letterSpacing: '0.02em',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
           <Link
-            href="/"
-            className="flex items-center gap-3 text-headline-md font-headline-md tracking-wider font-semibold text-primary"
-            onClick={() => setMobileOpen(false)}
+            href={ADMIN_ITEM.href}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+              height: '100%',
+              padding: '0 0.75rem',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.8125rem',
+              fontWeight: isActive(ADMIN_ITEM.href) ? 700 : 500,
+              color: isActive(ADMIN_ITEM.href) ? 'var(--primary)' : 'var(--text-muted)',
+              borderBottom: isActive(ADMIN_ITEM.href) ? '2px solid var(--secondary-gold)' : '2px solid transparent',
+              transition: 'color 120ms ease, border-color 120ms ease',
+              textDecoration: 'none',
+              letterSpacing: '0.02em',
+            }}
           >
-            <div className="w-9 h-9 border border-primary flex items-center justify-center bg-primary-container text-secondary-fixed">
-              <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                military_tech
-              </span>
-            </div>
-            <span>DIGITAL HEROES</span>
+            <IconLock />
+            <span>Admin</span>
           </Link>
-          <span className="hidden lg:inline-block border-l border-outline-variant pl-3 font-label-sm text-label-sm text-outline uppercase tracking-widest">
-            Charity Trust Protocol
-          </span>
-        </div>
-
-        {/* Navigation Links */}
-        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-6 lg:gap-8 h-full">
-          {navItems.map((item) => {
-            const isActive =
-              item.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`transition-all pb-1 font-label-lg text-label-lg flex items-center gap-1.5 ${
-                  isActive
-                    ? 'border-b-2 border-secondary text-secondary font-bold tracking-wide'
-                    : 'text-on-surface-variant hover:text-primary'
-                }`}
-              >
-                <span>{item.label}</span>
-                {item.href === '/admin' && (
-                  <span className="material-symbols-outlined text-xs text-error">lock</span>
-                )}
-              </Link>
-            );
-          })}
         </nav>
 
-        {/* Trailing Action Cluster */}
-        <div className="flex items-center gap-3">
-          {/* Live Countdown Indicator */}
-          <div className="hidden sm:flex items-center gap-2 border border-secondary bg-surface-container-lowest px-3 py-1.5">
-            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            <div className="flex flex-col">
-              <span className="font-label-sm text-[10px] uppercase text-on-surface-variant leading-none">
-                Live Draw Protocol
+        {/* ── Trailing Actions ── */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            flexShrink: 0,
+          }}
+        >
+          {/* Theme Switcher */}
+          <ThemeSwitcher />
+          {/* Draw countdown pill */}
+          <div
+            className="header-countdown"
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '0.6rem',
+              border: '1px solid var(--border-subtle)',
+              padding: '0.4rem 0.875rem',
+              background: 'var(--surface-container-low)',
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: 'var(--secondary-gold)',
+                flexShrink: 0,
+                animation: 'pulse 2s infinite',
+              }}
+            />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.6rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: 'var(--text-muted)',
+                  lineHeight: 1.2,
+                }}
+              >
+                Next Draw
               </span>
-              <span className="font-mono text-label-lg font-bold text-primary leading-tight">
-                02h 14m 39s
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  color: 'var(--primary)',
+                  lineHeight: 1.2,
+                  fontVariantNumeric: 'tabular-nums',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                14d 02h 39m
               </span>
             </div>
           </div>
 
+          {/* CTA button */}
           <Link
             href="/pricing"
-            className="hidden sm:inline-block bg-primary hover:bg-primary-container text-on-primary px-5 py-2.5 font-label-lg text-label-lg tracking-wide border border-primary transition-colors uppercase font-bold"
+            className="header-cta"
+            style={{
+              display: 'none',
+              background: 'var(--primary)',
+              color: 'var(--on-primary)',
+              border: '1px solid var(--primary)',
+              padding: '0.55rem 1.25rem',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.8rem',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              transition: 'background 120ms ease',
+              whiteSpace: 'nowrap',
+            }}
           >
             Enter Draw
           </Link>
 
-          <div className="w-9 h-9 border border-outline-variant bg-surface-container flex items-center justify-center font-serif text-primary font-bold ml-1" title="Patron profile badge">
-            DH
-          </div>
-
-          {/* Mobile menu toggle */}
+          {/* Mobile toggle */}
           <button
             type="button"
-            className="md:hidden p-2 text-primary border border-outline-variant"
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label={mobileOpen ? 'Close Menu' : 'Open Menu'}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="header-mobile-toggle"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 40,
+              height: 40,
+              border: '1px solid var(--border-subtle)',
+              background: 'transparent',
+              color: 'var(--primary)',
+              cursor: 'pointer',
+            }}
           >
-            <span className="material-symbols-outlined">
-              {mobileOpen ? 'close' : 'menu'}
-            </span>
+            {mobileOpen ? <IconClose /> : <IconMenu />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Sub-Bar */}
+      {/* ── Mobile Menu ── */}
       {mobileOpen && (
-        <div className="md:hidden flex flex-col border-t border-outline-variant bg-surface-container-lowest px-4 py-4 space-y-3 text-label-sm font-label-sm uppercase">
-          {navItems.map((item) => {
-            const isActive =
-              item.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`py-1.5 ${
-                  isActive ? 'text-secondary font-bold' : 'text-on-surface-variant'
-                }`}
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+        <div
+          style={{
+            borderTop: '1px solid var(--border-subtle)',
+            background: 'var(--surface-container-lowest)',
+            padding: '1rem 1.5rem 1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+          }}
+        >
+          {[...NAV_ITEMS, ADMIN_ITEM].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMobileOpen(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.7rem 0',
+                borderBottom: '1px solid var(--border-subtle)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.9375rem',
+                fontWeight: isActive(item.href) ? 700 : 500,
+                color: isActive(item.href) ? 'var(--primary)' : 'var(--text-secondary)',
+                textDecoration: 'none',
+                letterSpacing: '0.02em',
+              }}
+            >
+              {item.href === '/admin' && (
+                <span style={{ color: 'var(--text-muted)', display: 'inline-flex' }}>
+                  <IconLock />
+                </span>
+              )}
+              {item.label}
+            </Link>
+          ))}
           <Link
             href="/pricing"
-            className="w-full text-center bg-primary text-on-primary py-2.5 uppercase font-bold mt-2"
             onClick={() => setMobileOpen(false)}
+            style={{
+              display: 'block',
+              marginTop: '1rem',
+              padding: '0.875rem 1rem',
+              background: 'var(--primary)',
+              color: 'var(--on-primary)',
+              border: '1px solid var(--primary)',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+              textDecoration: 'none',
+            }}
           >
             Enter Draw
           </Link>
         </div>
       )}
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        @media (min-width: 768px) {
+          .header-nav-desktop { display: flex !important; }
+          .header-cta { display: inline-block !important; }
+          .header-countdown { display: flex !important; }
+          .header-mobile-toggle { display: none !important; }
+        }
+      `}</style>
     </header>
   );
 }

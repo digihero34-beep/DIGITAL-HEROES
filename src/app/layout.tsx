@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ToastProvider } from '@/components/ui/toast';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
 const ebGaramond = EB_Garamond({
   subsets: ['latin'],
@@ -41,15 +42,18 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${ebGaramond.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      data-theme="spruce"
     >
-      <body className="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-secondary-fixed selection:text-primary">
-        <ToastProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ToastProvider>
+      <body className={`bg-background text-on-surface antialiased min-h-screen flex flex-col`}>
+        <ThemeProvider>
+          <ToastProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

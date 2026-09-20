@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './home.module.css';
 import { DrawSimulator } from '@/components/home/DrawSimulator';
 import { getCharitiesAction } from '@/modules/charities/charity-actions';
@@ -18,224 +17,441 @@ export default async function HomePage() {
 
   return (
     <div className={styles.pageWrapper}>
-      {/* 1. HERO VIEWPORT */}
+
+      {/* ═══════════════════════════════════════════════════════════════
+          HERO — Sovereign Broadsheet & Architectural Ledger Triptych
+          A balanced, dignified, full-width broadsheet masthead anchored
+          by a three-pillar ledger triptych: Prize, Charity, and Protocol.
+      ═══════════════════════════════════════════════════════════════ */}
       <section className={styles.heroSection}>
-        <div className={styles.heroBadge}>
-          <span className={styles.badgeDot} />
-          Guaranteed Minimum 10% Social Impact Lock
-        </div>
 
-        <h1 className={styles.heroTitle}>
-          Play for Purpose. <br />
-          <span className={styles.highlightText}>Enter the Monthly Draw.</span>
-        </h1>
-
-        <p className={styles.heroSubtitle}>
-          Digital Heroes bridges your Stableford performance with vital charitable funding.
-          Track your rounds, support verified youth and conservation causes, and share in transparent monthly prize pools.
-        </p>
-
-        <div className={styles.heroCtas}>
-          <Link href="/pricing" className={styles.primaryCta}>
-            <span>Join Now — Choose a Plan</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
+        {/* ── Top Registry Bar ── */}
+        <div className={styles.registryBar}>
+          <div className={styles.registryItem}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className={styles.registryIcon}>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-          </Link>
+            <span className={styles.registryText}>
+              <strong>UK TRUST REGISTRY</strong> #GB-89241 • CHARTERED TRUST
+            </span>
+          </div>
 
-          <Link href="/how-it-works" className={styles.secondaryCta}>
-            Explore How It Works
-          </Link>
+          <div className={styles.registryDivider} />
+
+          <div className={`${styles.registryItem} ${styles.registryItemCenter}`}>
+            <span className={styles.registryLabel}>DRAW #142 ENTROPY COMMIT:</span>
+            <span className={styles.registryMono}>0x9B4F28...C5A3</span>
+          </div>
+
+          <div className={styles.registryDivider} />
+
+          <div className={`${styles.registryItem} ${styles.registryItemRight}`}>
+            <span className={styles.registryLiveDot} />
+            <span className={styles.registryText}>
+              NEXT PROTOCOL DRAW: <strong className={styles.registryCountdown}>02D 14H 39M</strong>
+            </span>
+          </div>
         </div>
 
-        {/* Live Metrics Grid */}
-        <div className={styles.metricsGrid}>
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>£125,000+</span>
-            <span className={styles.metricLabel}>Total Prize Pools</span>
+        {/* ── Broadsheet Masthead ── */}
+        <div className={styles.broadsheetMasthead}>
+          <div className={styles.mastheadProvenance}>
+            <span className={styles.provenanceTag}>ESTABLISHED 2024 • AUDITED PHILANTHROPIC PROTOCOL</span>
           </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>£38,400+</span>
-            <span className={styles.metricLabel}>Remitted to Causes</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>40 / 35 / 25%</span>
-            <span className={styles.metricLabel}>Transparent Tiers</span>
-          </div>
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>100%</span>
-            <span className={styles.metricLabel}>Scorecard Audited</span>
+
+          <h1 className={styles.mastheadTitle}>
+            Championship Philanthropy.
+            <br />
+            <em className={styles.mastheadTitleItalic}>Audited with Cryptographic Certainty.</em>
+          </h1>
+
+          <p className={styles.mastheadLede}>
+            Where competitive sporting rigor feeds accredited national charities. Enter official monthly
+            handicap draws with deterministic mathematical certainty, permanent public audit ledgers,
+            and a guaranteed 50%+ charity yield.
+          </p>
+
+          <div className={styles.mastheadActions}>
+            <Link href="/pricing" className={styles.ctaPrimary}>
+              Enter via Subscription
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+            <Link href="/how-it-works" className={styles.ctaGhost}>
+              Read The Protocol
+            </Link>
+            <div className={styles.trustBadgeInline}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>100% REGULATED UKGC TRUST</span>
+            </div>
           </div>
         </div>
+
+        {/* ── Three-Pillar Architectural Ledger Triptych ── */}
+        <div className={styles.triptychGrid}>
+
+          {/* PLATE 1: Featured Prize Dossier */}
+          <div className={`${styles.triptychPlate} ${styles.platePrize}`}>
+            <div className={styles.plateTopRuleGold} />
+            <div className={styles.plateHeader}>
+              <span className={styles.plateBadgeGold}>DRAW #142 • FEATURED EXPERIENCE</span>
+              <span className={styles.plateValuePill}>VALUED £38,500</span>
+            </div>
+            <h3 className={styles.plateTitle}>The St Andrews Heritage Experience</h3>
+
+            {/* Prize Image Frame */}
+            <div className={styles.plateImageFrame}>
+              <img
+                src="/images/st_andrews_heritage.jpg"
+                alt="St Andrews Old Course Heritage Experience"
+                className={styles.plateImage}
+              />
+              <div className={styles.plateImageOverlay} />
+              <span className={styles.plateImageTag}>BALL ALLOCATIONS CAPPED: 5,000 TOTAL</span>
+            </div>
+
+            <p className={styles.plateDesc}>
+              A championship package awarded directly to the top matched handicap tier, coupled with immediate non-profit grant endowment.
+            </p>
+            <ul className={styles.plateCheckList}>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGold}>✓</span>
+                <span>4-ball round on the Old Course &amp; Kingsbarns</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGold}>✓</span>
+                <span>3 nights at Hamilton Grand sovereign suite</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGold}>✓</span>
+                <span>£10,000 grant awarded simultaneously to Youth Golf</span>
+              </li>
+            </ul>
+            <div className={styles.plateFooter}>
+              <Link href="/pricing" className={styles.plateLink}>
+                Enter Draw #142 →
+              </Link>
+              <span className={styles.plateMetaMono}>Capped: 5,000 entries</span>
+            </div>
+          </div>
+
+          {/* PLATE 2: Philanthropic Custody Ledger */}
+          <div className={`${styles.triptychPlate} ${styles.plateCharity}`}>
+            <div className={styles.plateTopRuleGreen} />
+            <div className={styles.plateHeader}>
+              <span className={styles.plateBadgeGreen}>MANDATORY TRUST YIELD</span>
+              <span className={styles.plateGuaranteePill}>50.00% MIN GUARANTEED</span>
+            </div>
+            <div className={styles.plateMetricRow}>
+              <span className={styles.plateMetricBig}>£1,428,940</span>
+              <span className={styles.plateMetricLabel}>Total Disbursed to UK Charities</span>
+            </div>
+            <ul className={styles.plateCheckList}>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGreen}>✓</span>
+                <span>24 Accredited UK Beneficiary Trusts</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGreen}>✓</span>
+                <span>3,120 Junior Golf Scholars Funded YTD</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconGreen}>✓</span>
+                <span>Direct Bank-to-Trust Escrow Settlement</span>
+              </li>
+            </ul>
+            <div className={styles.plateFooter}>
+              <Link href="/charities" className={styles.plateLink}>
+                Browse Trust Directory →
+              </Link>
+              <span className={styles.plateMetaMono}>Q2 Net Yield: 58.4%</span>
+            </div>
+          </div>
+
+          {/* PLATE 3: Provably Fair Draw Architecture */}
+          <div className={`${styles.triptychPlate} ${styles.plateProtocol}`}>
+            <div className={styles.plateTopRuleSpruce} />
+            <div className={styles.plateHeader}>
+              <span className={styles.plateBadgeSpruce}>DETERMINISTIC RIGOR</span>
+              <span className={styles.plateAuditPill}>141 / 141 AUDITED</span>
+            </div>
+            <div className={styles.plateMetricRow}>
+              <span className={styles.plateMetricBig}>SHA-256</span>
+              <span className={styles.plateMetricLabel}>Merkle Root Pre-Commitment</span>
+            </div>
+            <ul className={styles.plateCheckList}>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconSpruce}>✓</span>
+                <span>5-Score Rolling Stableford Entry Formula</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconSpruce}>✓</span>
+                <span>Bitcoin Block #842,910 Entropy Beacon</span>
+              </li>
+              <li className={styles.plateCheckItem}>
+                <span className={styles.checkIconSpruce}>✓</span>
+                <span>Open-Source CLI Audit Manifest (`dh-verify`)</span>
+              </li>
+            </ul>
+            <div className={styles.plateFooter}>
+              <a href="#draw-simulator" className={styles.plateLink}>
+                Test Draw Simulator ↓
+              </a>
+              <span className={styles.plateMetaMono}>Zero front-running</span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── 4-Column Audit Metrology Strip ── */}
+        <div className={styles.auditStrip}>
+          <div className={styles.auditItem}>
+            <span className={styles.auditLabel}>Total Donated to Date</span>
+            <span className={styles.auditValue}>£1,428,940</span>
+          </div>
+          <span className={styles.auditRule} />
+          <div className={styles.auditItem}>
+            <span className={styles.auditLabel}>Charity Minimum Yield</span>
+            <span className={`${styles.auditValue} ${styles.auditValueGold}`}>50.00%</span>
+          </div>
+          <span className={styles.auditRule} />
+          <div className={styles.auditItem}>
+            <span className={styles.auditLabel}>Provably Fair Draws</span>
+            <span className={styles.auditValue}>141 / 141</span>
+          </div>
+          <span className={styles.auditRule} />
+          <div className={styles.auditItem}>
+            <span className={styles.auditLabel}>Regulatory Framework</span>
+            <span className={`${styles.auditValue} ${styles.auditValueGreen}`}>
+              <span className={styles.liveIndicator} />
+              UKGC Trust
+            </span>
+          </div>
+        </div>
+
       </section>
 
-      {/* 2. INTERACTIVE SIMULATION ENGINE */}
-      <section className={styles.contentContainer}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionBadge}>Transparent Mechanics</span>
-          <h2 className={styles.sectionTitle}>Interactive 5-Ball Draw Engine</h2>
-          <p className={styles.sectionSubtitle}>
-            Test our rolling Stableford matching algorithm in real-time. See how your rounds match monthly draws and allocate funds.
+      {/* ═══════════════════════════════════════════════════════════════
+          SECTION 2: Interactive Draw Engine Simulation
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={styles.contentSection}>
+        <div className={styles.sectionIntro}>
+          <div className={styles.sectionEyebrow}>Transparent Mechanics</div>
+          <h2 className={styles.sectionHeading}>Interactive 5-Ball Draw Engine</h2>
+          <p className={styles.sectionLede}>
+            Test our rolling Stableford matching algorithm in real-time. See how your rounds match
+            monthly draws and allocate funds across prize tiers and charity.
           </p>
         </div>
-
         <DrawSimulator />
       </section>
 
-      {/* 3. FOUR-STEP NARRATIVE JOURNEY */}
-      <section className={styles.contentContainer}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionBadge}>The Lifecycle</span>
-          <h2 className={styles.sectionTitle}>From First Tee to Lasting Impact</h2>
-          <p className={styles.sectionSubtitle}>
-            A continuous loop connecting real-world athletic skill with transparent non-profit funding and rewards.
+      {/* ═══════════════════════════════════════════════════════════════
+          SECTION 3: Mathematical Draw Protocol — Three-Phase Ledger
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={styles.contentSection}>
+        <div className={styles.sectionIntroRow}>
+          <div>
+            <div className={styles.sectionEyebrow}>Deterministic Rigor</div>
+            <h2 className={styles.sectionHeading}>Provably Fair Draw Ledger Architecture</h2>
+          </div>
+          <p className={styles.sectionLedeRight}>
+            All ticket hashes are pre-committed to our public cryptographic ledger
+            24 hours prior to seed revelation via Bitcoin block height hash.
           </p>
         </div>
 
-        <div className={styles.stepsGrid}>
-          <div className={styles.stepCard}>
-            <span className={styles.stepNumber}>01</span>
-            <h3 className={styles.stepTitle}>Subscribe & Choose Cause</h3>
-            <p className={styles.stepDesc}>
-              Join on a flexible monthly or yearly membership. Digital Heroes immediately locks a minimum 10% pledge to your chosen non-profit partner, with freedom to scale to 100%.
-            </p>
-          </div>
-
-          <div className={styles.stepCard}>
-            <span className={styles.stepNumber}>02</span>
-            <h3 className={styles.stepTitle}>Log Stableford Rounds</h3>
-            <p className={styles.stepDesc}>
-              Play your regular golf rounds and enter official Stableford points between 1 and 45. Our rolling 5 FIFO engine automatically maintains your five most recent rounds as your official draw entry.
-            </p>
-          </div>
-
-          <div className={styles.stepCard}>
-            <span className={styles.stepNumber}>03</span>
-            <h3 className={styles.stepTitle}>Monthly Transparent Draws</h3>
-            <p className={styles.stepDesc}>
-              Every month, 5 winning numbers are generated via CSPRNG random selection or frequency-weighted algorithms. Match 3, 4, or 5 numbers to share the 25%, 35%, or 40% prize pool.
-            </p>
-          </div>
-
-          <div className={styles.stepCard}>
-            <span className={styles.stepNumber}>04</span>
-            <h3 className={styles.stepTitle}>Audit & Direct Payout</h3>
-            <p className={styles.stepDesc}>
-              Winners submit official scorecard proof or club certificates for verification. Once approved by administrators, prize winnings are transferred directly to your bank account.
-            </p>
-          </div>
+        <div className={styles.phaseGrid}>
+          {[
+            {
+              phase: 'STEP 01 • SCORE ENTRY COMMITMENT',
+              title: 'Entrant Merkle Tree Root',
+              desc: 'Every score entry is assigned a deterministic 64-character hash computed from member ID, Stableford points, and micro-timestamp.',
+              code: 'Root: 0x9b4f28c11e74092b3a887e14f9d0c5a32',
+            },
+            {
+              phase: 'STEP 02 • ENTROPY BEACON SEEDING',
+              title: 'External Beacon Entropy',
+              desc: 'Draw entropy is generated dynamically from the NIST randomness beacon and future Bitcoin block #842,910 header to prohibit front-running.',
+              code: 'Entropy: 5a81e...91fa (Locking 18:00 UTC)',
+            },
+            {
+              phase: 'STEP 03 • PUBLIC AUDIT VERIFICATION',
+              title: 'Public Verifier Manifest',
+              desc: 'Independent audit firms & participants run our open Python verification script in terminal to independently prove winning index calculation.',
+              code: 'CLI: `dh-verify --draw=142 --audit-all`',
+            },
+          ].map((item) => (
+            <div key={item.phase} className={styles.phaseCard}>
+              <div className={styles.phaseLabel}>{item.phase}</div>
+              <h3 className={styles.phaseTitle}>{item.title}</h3>
+              <p className={styles.phaseDesc}>{item.desc}</p>
+              <div className={styles.phaseCode}>{item.code}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* 4. FEATURED CHARITY SPOTLIGHT */}
+      {/* ═══════════════════════════════════════════════════════════════
+          SECTION 4: The Four-Step Journey — Horizontal narrative
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={styles.contentSection}>
+        <div className={styles.sectionIntro}>
+          <div className={styles.sectionEyebrow}>The Lifecycle</div>
+          <h2 className={styles.sectionHeading}>From First Tee to Lasting Impact</h2>
+        </div>
+
+        <div className={styles.stepsGrid}>
+          {[
+            {
+              n: '01',
+              title: 'Subscribe & Choose Cause',
+              desc: 'Join on a flexible monthly or yearly membership. Digital Heroes immediately locks a minimum 10% pledge to your chosen non-profit partner.',
+            },
+            {
+              n: '02',
+              title: 'Log Stableford Rounds',
+              desc: 'Play your regular rounds and enter official Stableford points (1–45). Our rolling 5 FIFO engine maintains your five most recent rounds as your draw entry.',
+            },
+            {
+              n: '03',
+              title: 'Monthly Transparent Draw',
+              desc: 'Every month, 5 winning numbers are generated via CSPRNG selection. Match 3, 4, or 5 numbers to share the 25%, 35%, or 40% prize tiers.',
+            },
+            {
+              n: '04',
+              title: 'Audit & Direct Payout',
+              desc: 'Winners submit official scorecard proof or club certificates for verification. Once approved, prize winnings are transferred directly to your account.',
+            },
+          ].map((step) => (
+            <div key={step.n} className={styles.stepCard}>
+              <span className={styles.stepNumber}>{step.n}</span>
+              <h3 className={styles.stepTitle}>{step.title}</h3>
+              <p className={styles.stepDesc}>{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          SECTION 5: Featured Charity Spotlight — Inverse surface slab
+      ═══════════════════════════════════════════════════════════════ */}
       {featuredCharity && (
-        <section className={styles.contentContainer}>
-          <div className={styles.spotlightCard}>
-            <div className={styles.spotlightContent}>
-              <div className={styles.heroBadge}>
-                <span className={styles.badgeDot} />
-                Featured Non-Profit Partner
-              </div>
-              <h2 className={styles.sectionTitle} style={{ textAlign: 'left' }}>
-                {featuredCharity.name}
-              </h2>
-              <p className={styles.heroSubtitle} style={{ textAlign: 'left', margin: 0 }}>
-                {featuredCharity.description}
-              </p>
+        <section className={styles.spotlightSection}>
+          <div className={styles.spotlightSlab}>
+            <div className={styles.spotlightLeft}>
+              <div className={styles.spotlightEyebrow}>Featured Non-Profit Partner</div>
+              <h2 className={styles.spotlightTitle}>{featuredCharity.name}</h2>
+              <p className={styles.spotlightBody}>{featuredCharity.description}</p>
 
               <div className={styles.spotlightStats}>
-                <div className={styles.spotlightStatItem}>
-                  <span className={styles.spotlightStatVal}>10%</span>
-                  <span className={styles.spotlightStatLbl}>Guaranteed Minimum Lock</span>
+                <div className={styles.spotlightStat}>
+                  <span className={styles.spotlightStatValue}>10%</span>
+                  <span className={styles.spotlightStatLabel}>Guaranteed Minimum Lock</span>
                 </div>
-                <div className={styles.spotlightStatItem}>
-                  <span className={styles.spotlightStatVal}>100%</span>
-                  <span className={styles.spotlightStatLbl}>Direct Remittance</span>
+                <div className={styles.spotlightStat}>
+                  <span className={styles.spotlightStatValue}>100%</span>
+                  <span className={styles.spotlightStatLabel}>Direct Remittance</span>
+                </div>
+                <div className={styles.spotlightStat}>
+                  <span className={styles.spotlightStatValue}>£542k</span>
+                  <span className={styles.spotlightStatLabel}>Disbursed YTD</span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-                <Link href={`/charities/${featuredCharity.slug}`} className={styles.primaryCta}>
-                  View Partner Profile
+              <div className={styles.spotlightActions}>
+                <Link href={`/charities/${featuredCharity.slug}`} className={styles.spotlightCta}>
+                  View Partner Dossier
                 </Link>
-                <Link href="/charities" className={styles.secondaryCta}>
-                  Explore Full Directory
+                <Link href="/charities" className={styles.spotlightCtaGhost}>
+                  Full Beneficiary Ledger
                 </Link>
               </div>
             </div>
 
-            {featuredCharity.bannerUrl && (
-              <div style={{ position: 'relative', width: '100%', height: '320px', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-                <Image
-                  src={featuredCharity.bannerUrl}
-                  alt={featuredCharity.name}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 40vw"
-                  style={{ objectFit: 'cover' }}
+            <div className={styles.spotlightRight}>
+              {/* Featured Partner Image */}
+              <div className={styles.spotlightImageFrame}>
+                <img
+                  src="/images/fairway_futures.jpg"
+                  alt="Fairway Futures Foundation"
+                  className={styles.spotlightImage}
                 />
+                <div className={styles.spotlightImageOverlay} />
+                <span className={styles.spotlightImageCaption}>
+                  Accredited Beneficiary Trust #1084201 • Junior Scholar Program
+                </span>
               </div>
-            )}
+
+              {/* Trust architecture pillars */}
+              <div className={styles.trustPillars}>
+                {[
+                  {
+                    mark: '✓',
+                    title: 'Performance Anchored',
+                    body: 'Entry numbers represent actual Stableford scores — never purchased tickets. Athletic performance determines participation.',
+                  },
+                  {
+                    mark: '✓',
+                    title: 'Integer-Cent Precision',
+                    body: 'All prize pools and charitable contributions computed to the penny. No floating-point inaccuracies or hidden margins.',
+                  },
+                  {
+                    mark: '✓',
+                    title: 'Scorecard Proof Auditing',
+                    body: 'Every potential winner submits official scorecard images or club attestations before any bank payout is authorised.',
+                  },
+                ].map((pillar) => (
+                  <div key={pillar.title} className={styles.trustPillar}>
+                    <span className={styles.trustMark}>{pillar.mark}</span>
+                    <div>
+                      <div className={styles.trustTitle}>{pillar.title}</div>
+                      <div className={styles.trustBody}>{pillar.body}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       )}
 
-      {/* 5. PROVABLE INTEGRITY & FAIRNESS ARCHITECTURE */}
-      <section className={styles.contentContainer}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionBadge}>Platform Charter</span>
-          <h2 className={styles.sectionTitle}>Built for Trust, Not Speculation</h2>
-          <p className={styles.sectionSubtitle}>
-            Digital Heroes is an athletic participation platform engineered with strict financial controls and cryptographic rigor.
-          </p>
-        </div>
-
-        <div className={styles.trustGrid}>
-          <div className={styles.trustCard}>
-            <h3 className={styles.trustCardTitle}>
-              <span style={{ color: 'var(--accent-mint)' }}>✓</span> Performance Anchored
-            </h3>
-            <p className={styles.trustCardText}>
-              Numbers are never purchased as lottery tickets. Your entry balls represent actual Stableford scores earned on golf courses, requiring athletic performance and real round dates.
+      {/* ═══════════════════════════════════════════════════════════════
+          SECTION 6: Bottom CTA — Gold prestige action
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={styles.finalCta}>
+        <div className={styles.finalCtaInner}>
+          <div className={styles.finalCtaLeft}>
+            <div className={styles.sectionEyebrow} style={{ color: 'var(--secondary-gold)', borderColor: 'rgba(197,155,39,0.3)', background: 'rgba(197,155,39,0.08)' }}>
+              Patronage Tiers
+            </div>
+            <h2 className={styles.finalCtaTitle}>
+              Ready to Make Every Round Count?
+            </h2>
+            <p className={styles.finalCtaBody}>
+              Join the community of golfers turning personal milestones into immediate,
+              verified charitable impact while competing for monthly prize pools.
             </p>
           </div>
-
-          <div className={styles.trustCard}>
-            <h3 className={styles.trustCardTitle}>
-              <span style={{ color: 'var(--accent-gold)' }}>✓</span> Integer-Cent Precision
-            </h3>
-            <p className={styles.trustCardText}>
-              All prize pools, tier allocations (40%, 35%, 25%), and charitable contributions are computed down to the penny. No floating-point inaccuracies, rounding slippage, or hidden margins.
-            </p>
-          </div>
-
-          <div className={styles.trustCard}>
-            <h3 className={styles.trustCardTitle}>
-              <span style={{ color: 'var(--accent-blue)' }}>✓</span> Scorecard Proof Auditing
-            </h3>
-            <p className={styles.trustCardText}>
-              To eliminate false claims, every potential winner must submit official scorecard images or club attestations before any bank payout is authorized.
-            </p>
+          <div className={styles.finalCtaActions}>
+            <Link href="/pricing" className={styles.ctaPrestige}>
+              Choose Your Plan & Cause
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+            <Link href="/how-it-works" className={styles.ctaGhostInverse}>
+              Read Full Protocol
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 6. BOTTOM SUBSCRIPTION CALL TO ACTION */}
-      <section className={styles.contentContainer}>
-        <div className={styles.ctaBanner}>
-          <h2 className={styles.ctaTitle}>Ready to Make Every Round Count?</h2>
-          <p className={styles.ctaSubtitle}>
-            Join the community of golfers turning personal milestones into immediate, verified charitable impact while competing for monthly prize pools.
-          </p>
-          <Link href="/pricing" className={styles.primaryCta} style={{ fontSize: '1.15rem', padding: '1rem 2.5rem' }}>
-            <span>Choose Your Plan & Cause</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

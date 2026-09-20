@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Operations | DIGITAL HEROES Trust &amp; Philanthropic Archive</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#735700",
+            "tertiary-fixed-dim": "#a3d0bb",
+            "surface-variant": "#dbe5e0",
+            "tertiary-fixed": "#beedd7",
+            "secondary-fixed": "#ffdf98",
+            "inverse-surface": "#29322f",
+            "on-primary-fixed": "#042017",
+            "secondary-container": "#fece57",
+            "outline": "#727974",
+            "on-tertiary-fixed-variant": "#244e3e",
+            "primary-fixed": "#cbeada",
+            "secondary-fixed-dim": "#eec14b",
+            "background": "#f2fcf6",
+            "on-secondary": "#ffffff",
+            "surface": "#f2fcf6",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#dbe5e0",
+            "inverse-on-surface": "#e9f3ee",
+            "on-tertiary-container": "#6e9a86",
+            "error": "#ba1a1a",
+            "tertiary-container": "#003022",
+            "on-secondary-fixed-variant": "#5a4300",
+            "on-tertiary-fixed": "#002116",
+            "on-background": "#141d1a",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#424845",
+            "tertiary": "#001910",
+            "secondary": "#775a00",
+            "inverse-primary": "#afcdbe",
+            "outline-variant": "#c2c8c3",
+            "surface-bright": "#f2fcf6",
+            "surface-container-high": "#e0eae5",
+            "surface-container-low": "#ecf6f1",
+            "on-secondary-fixed": "#251a00",
+            "on-primary": "#ffffff",
+            "primary": "#001910",
+            "primary-fixed-dim": "#afcdbe",
+            "surface-container": "#e6f0eb",
+            "on-primary-fixed-variant": "#314c41",
+            "primary-container": "#132e24",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-dim": "#d2dcd7",
+            "on-surface": "#141d1a",
+            "surface-tint": "#496458",
+            "on-primary-container": "#7a9789",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "margin": "2rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "body-md": ["Manrope"],
+            "headline-lg-mobile": ["EB Garamond"],
+            "headline-sm": ["EB Garamond"],
+            "label-sm": ["Manrope"],
+            "headline-lg": ["EB Garamond"],
+            "display-lg-mobile": ["EB Garamond"],
+            "display-lg": ["EB Garamond"],
+            "headline-md": ["EB Garamond"],
+            "label-lg": ["Manrope"],
+            "metric-display": ["Manrope"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+            "headline-lg": ["38px", {"lineHeight": "46px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "display-lg-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+            "headline-md": ["26px", {"lineHeight": "34px", "fontWeight": "500"}],
+            "label-lg": ["13px", {"lineHeight": "18px", "letterSpacing": "0.06em", "fontWeight": "600"}],
+            "metric-display": ["44px", {"lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Institutional grid pattern */
+    .archival-grid {
+      background-image: linear-gradient(to right, rgba(194, 200, 195, 0.25) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(194, 200, 195, 0.25) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    /* Monospace tabular numbers override for precision */
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-secondary selection:text-on-secondary font-body-md min-h-screen flex flex-col">
+<!-- ================= TOP NAV BAR (SHARED COMPONENT) ================= -->
+<header class="w-full bg-surface-container-lowest dark:bg-primary-container border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-space-lg md:px-margin max-w-7xl mx-auto h-20">
+<!-- Logo & Clearance Title -->
+<div class="flex items-center gap-space-lg">
+<span class="text-headline-md font-headline-md tracking-wider font-semibold text-primary dark:text-on-primary">
+          DIGITAL HEROES
+        </span>
+<div class="hidden lg:flex items-center gap-2 border-l border-outline-variant dark:border-outline pl-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-label-sm font-label-sm uppercase tracking-widest bg-primary-container text-on-primary border border-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">security</span>
+            Level 4 Clearance
+          </span>
+<span class="text-label-sm font-label-sm text-on-surface-variant dark:text-primary-fixed-dim tabular-numbers">
+            SHA-256: 0x9f4a...d81e
+          </span>
+</div>
+</div>
+<!-- Navigation Links from JSON (Exact casing) -->
+<nav class="hidden md:flex items-center gap-space-lg">
+<a class="text-on-surface-variant dark:text-primary-fixed-dim hover:text-primary dark:hover:text-on-primary transition-colors pb-1 text-label-lg font-label-lg" href="#">
+          Public View
+        </a>
+<a class="text-on-surface-variant dark:text-primary-fixed-dim hover:text-primary dark:hover:text-on-primary transition-colors pb-1 text-label-lg font-label-lg" href="#">
+          Subscriber Portal
+        </a>
+<!-- ACTIVE NAVIGATION ITEM (Admin Operations) -->
+<a class="border-b-2 border-secondary text-secondary dark:text-secondary-fixed font-bold pb-1 tracking-wide text-label-lg font-label-lg flex items-center gap-1" href="#">
+          Admin Operations
+        </a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-space-md">
+<!-- Live Draw Pill -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-secondary bg-surface-bright text-on-secondary-container text-label-sm font-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Live Draw: 02h 14m</span>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Audit Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Cryptographic Attestation">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</button>
+</div>
+<!-- Patron Benefactor Crest Profile -->
+<div class="flex items-center gap-3 border-l border-outline-variant pl-space-sm">
+<div class="w-10 h-10 border border-primary bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[22px]">shield_person</span>
+</div>
+<div class="hidden xl:block text-left">
+<div class="text-label-sm font-label-sm text-primary font-bold">Col. E. Vance-Smythe</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-wider">Master Trustee</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= SUB-BANNER: TRUST REGULATORY STATUS ================= -->
+<div class="bg-primary-container text-on-primary text-body-sm font-body-sm border-b border-primary">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin py-2 flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 text-secondary-fixed text-label-sm font-label-sm uppercase font-semibold">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+          SESSION ENCRYPTED (ECDSA-SECP256K1)
+        </span>
+<span class="hidden md:inline text-on-primary-container">|</span>
+<span class="hidden md:inline text-primary-fixed-dim text-body-sm font-body-sm">UK Gambling Commission License: Trust Protocol #084-ARC-2024</span>
+</div>
+<div class="flex items-center gap-4 text-label-sm font-label-sm">
+<span class="text-on-primary-container">Audit Operator ID: <span class="text-on-primary font-mono font-bold">TRUST-DIR-009</span></span>
+<span class="text-secondary-fixed flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span> Node Latency: 14ms
+        </span>
+</div>
+</div>
+</div>
+<!-- ================= MAIN OPERATIONAL CANVAS ================= -->
+<main class="flex-1 max-w-7xl w-full mx-auto px-space-lg md:px-margin py-space-xl space-y-space-xl archival-grid">
+<!-- SECTION 1: COMMAND HEADER & SYSTEM VITALS -->
+<section class="space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-end justify-between border-b border-outline-variant pb-space-md gap-4">
+<div>
+<div class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mb-1 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+            SOVEREIGN PHILANTHROPIC ARCHIVE
+          </div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">
+            Trust Operations &amp; Cryptographic Oversight
+          </h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-2xl mt-1">
+            Real-time multi-signature ledger control, verifiable randomness validation, and regulatory prize dispersal authorization.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline text-primary text-label-lg font-label-lg uppercase tracking-wider hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+            Export Audit Manifest
+          </button>
+<button class="px-5 py-2 bg-primary-container text-on-primary border border-primary-container text-label-lg font-label-lg uppercase tracking-wider hover:bg-tertiary-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+            Commit Trust Sig
+          </button>
+</div>
+</div>
+<!-- Vitals Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Vital 1: Merkle Root -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary"></div>
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider font-semibold">Active Merkle Tree Root</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">account_tree</span>
+</div>
+<div class="font-mono text-body-sm font-bold text-primary truncate bg-surface-container-low p-2 border border-outline-variant">
+              0x8f04c...e89b31ca
+            </div>
+</div>
+<div class="mt-4 pt-2 border-t border-outline-variant flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Lock State:</span>
+<span class="inline-flex items-center gap-1 text-primary font-bold">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Committed 18:00 UTC
+            </span>
+</div>
+</div>
+<!-- Vital 2: NIST Beacon & Block Seed -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider font-semibold">Dual Entropy Beacon</span>
+<span class="material-symbols-outlined text-[18px] text-primary">sensors</span>
+</div>
+<div class="text-headline-sm font-headline-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary">token</span>
+              Syncing Block #842,910
+            </div>
+</div>
+<div class="mt-4 pt-2 border-t border-outline-variant flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">NIST Randomness:</span>
+<span class="px-2 py-0.5 bg-surface-container-low border border-outline-variant text-primary font-semibold uppercase">
+              Healthy / Verified
+            </span>
+</div>
+</div>
+<!-- Vital 3: Pending Verifications -->
+<div class="bg-surface-container-lowest border border-outline-variant p-space-md flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary-container"></div>
+<div>
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider font-semibold">Scorecard Verifications</span>
+<span class="material-symbols-outlined text-[18px] text-on-secondary-container">pending_actions</span>
+</div>
+<div class="text-metric-display font-metric-display text-primary tabular-numbers">
+              03 <span class="text-body-sm font-body-sm font-normal text-on-surface-variant">Patrons</span>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-outline-variant flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Status:</span>
+<span class="text-on-secondary-container font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-secondary"></span> Awaiting Audit
+            </span>
+</div>
+</div>
+<!-- Vital 4: YTD Charity Yield -->
+<div class="bg-primary-container border border-primary-container p-space-md flex flex-col justify-between text-on-primary relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary-fixed"></div>
+<div>
+<div class="flex items-center justify-between text-on-primary-container mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider font-semibold">YTD Philanthropic Yield</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-fixed">volunteer_activism</span>
+</div>
+<div class="text-metric-display font-metric-display text-secondary-fixed tabular-numbers">
+              £1,428,940
+            </div>
+</div>
+<div class="mt-4 pt-2 border-t border-primary flex items-center justify-between text-label-sm font-label-sm text-primary-fixed-dim">
+<span>Accredited Beneficiaries:</span>
+<span class="font-bold text-on-primary">100% On-Chain Match</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: WINNER VERIFICATION QUEUE -->
+<section class="bg-surface-container-lowest border border-outline-variant shadow-none">
+<!-- Section Header -->
+<div class="p-space-lg border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-bright">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-headline-sm font-headline-sm text-primary">Winner Verification &amp; Attestation Queue</span>
+<span class="px-2 py-0.5 text-label-sm font-label-sm bg-primary-container text-on-primary">3 PENDING</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+            Dual-custody handicap validation protocol. All grand-tier payouts require signed marker scorecards &amp; World Handicap System API checks.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<input class="bg-surface-container-lowest border border-outline text-body-sm font-body-sm px-3 py-1.5 pl-8 w-60 focus:border-primary focus:ring-0 text-primary" placeholder="Search Dossier or Patron..." type="text"/>
+<span class="material-symbols-outlined text-[16px] text-outline absolute left-2.5 top-2.5">search</span>
+</div>
+<button class="px-3 py-1.5 border border-outline text-primary text-label-sm font-label-sm uppercase hover:bg-surface-container-low transition-colors">
+            Filter: Tier 1
+          </button>
+</div>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">
+<th class="py-3 px-space-md">Dossier ID</th>
+<th class="py-3 px-space-md">Patron Benefactor</th>
+<th class="py-3 px-space-md">Draw #</th>
+<th class="py-3 px-space-md">Prize Tier &amp; Allocation</th>
+<th class="py-3 px-space-md">WHS Handicap Differential</th>
+<th class="py-3 px-space-md">Scorecard Attestation</th>
+<th class="py-3 px-space-md text-right">Audit Determination</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm font-body-sm">
+<!-- Row 1: Alistair Finch (Ready for Approval) -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-4 px-space-md font-mono text-label-sm font-bold text-primary">
+                DOS-2024-0981
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">Major Alistair Finch</div>
+<div class="text-on-surface-variant text-[12px]">Muirfield Club #44021 • Tier Gold</div>
+</td>
+<td class="py-4 px-space-md font-mono font-bold text-on-surface-variant">
+                #141-B
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">£50,000 Sovereign Purse</div>
+<div class="text-on-surface-variant text-[12px]">Charity Match: £25,000</div>
+</td>
+<td class="py-4 px-space-md">
+<div class="flex items-center gap-1.5 text-primary font-mono">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>4.2 (Delta: +0.1)</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">WHS API Sync: 10 mins ago</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-container text-on-primary text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[13px]">description</span>
+                  Scorecard Verified
+                </span>
+</td>
+<td class="py-4 px-space-md text-right space-x-1">
+<button class="px-3 py-1 bg-primary text-on-primary text-label-sm font-label-sm uppercase hover:bg-tertiary-container transition-colors">
+                  Approve Payout
+                </button>
+<button class="px-2 py-1 border border-outline text-on-surface-variant text-label-sm font-label-sm uppercase hover:text-error hover:border-error transition-colors" title="Flag Discrepancy">
+<span class="material-symbols-outlined text-[16px]">flag</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Lady Eleanor Montagu (Scorecard Pending Inspection) -->
+<tr class="hover:bg-surface-bright transition-colors bg-surface-container-low/30">
+<td class="py-4 px-space-md font-mono text-label-sm font-bold text-primary">
+                DOS-2024-0982
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">Lady Eleanor Montagu</div>
+<div class="text-on-surface-variant text-[12px]">Sunningdale Golf #8819 • Tier Silver</div>
+</td>
+<td class="py-4 px-space-md font-mono font-bold text-on-surface-variant">
+                #141-B
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">St Andrews Patron Experience</div>
+<div class="text-on-surface-variant text-[12px]">Charity Match: £10,000</div>
+</td>
+<td class="py-4 px-space-md">
+<div class="flex items-center gap-1.5 text-on-secondary-container font-mono">
+<span class="material-symbols-outlined text-[16px] text-secondary">pending</span>
+<span>12.8 (Delta: -1.4)</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">Marker Sig Hash: Pending</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-highest text-on-surface-variant border border-outline-variant text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[13px]">pending</span>
+                  Pending Review
+                </span>
+</td>
+<td class="py-4 px-space-md text-right space-x-1">
+<button class="px-3 py-1 border border-primary text-primary text-label-sm font-label-sm uppercase hover:bg-surface-container-high transition-colors">
+                  Request Resubmit
+                </button>
+<button class="px-2 py-1 border border-outline text-error hover:bg-error-container hover:text-on-error-container transition-colors" title="Flag Inconsistency">
+<span class="material-symbols-outlined text-[16px]">error_outline</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Dr. Arthur Pendelton (Handicap differential alert) -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-4 px-space-md font-mono text-label-sm font-bold text-primary">
+                DOS-2024-0985
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">Dr. Arthur Pendelton</div>
+<div class="text-on-surface-variant text-[12px]">Royal Birkdale #1094 • Tier Platinum</div>
+</td>
+<td class="py-4 px-space-md font-mono font-bold text-on-surface-variant">
+                #141-A
+              </td>
+<td class="py-4 px-space-md">
+<div class="font-bold text-primary">The Masters Memorial Fellowship</div>
+<div class="text-on-surface-variant text-[12px]">Charity Match: £50,000</div>
+</td>
+<td class="py-4 px-space-md">
+<div class="flex items-center gap-1.5 text-error font-mono font-bold">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>18.0 (Differential Alert)</span>
+</div>
+<div class="text-[11px] text-error">Attested card indicates 14.2</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-error-container text-on-error-container text-label-sm font-label-sm font-bold">
+<span class="material-symbols-outlined text-[13px]">flag</span>
+                  Discrepancy Flag
+                </span>
+</td>
+<td class="py-4 px-space-md text-right space-x-1">
+<button class="px-3 py-1 bg-error text-on-error text-label-sm font-label-sm uppercase hover:opacity-90 transition-opacity">
+                  Audit Hold
+                </button>
+<button class="px-3 py-1 border border-outline text-on-surface text-label-sm font-label-sm uppercase hover:bg-surface-container-low transition-colors">
+                  Inspect Dossier
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Verification Rules Callout -->
+<div class="px-space-lg py-3 bg-surface-container-low border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">gavel</span>
+          Section 8.2 Protocol: Uncontested scorecards must be audited within 48 hours of ball lock.
+        </span>
+<a class="text-primary font-bold hover:underline" href="#">View Full Verification Queue (28 Archived) →</a>
+</div>
+</section>
+<!-- SECTION 3 & 4: DUAL PANE ARCHITECTURE (SIMULATOR & BENEFICIARY LEDGER) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- SECTION 3: CRYPTOGRAPHIC DRAW SIMULATOR & EXECUTION CONSOLE (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant p-space-lg flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm">
+<div>
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-widest">Pre-Execution Testbed</span>
+<h2 class="text-headline-sm font-headline-sm text-primary">Cryptographic Draw Simulator #142</h2>
+</div>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline text-primary text-label-sm font-label-sm font-mono uppercase">
+              DRW-EXEC-142-DEV
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-3">
+            Deterministic entropy preview using SHA-256 combined seed: <code class="text-primary font-mono text-[12px] bg-surface-container-low px-1 py-0.5 border border-outline-variant">NIST_BEACON + BTC_BLOCK_HASH(TARGET)</code>. Zero front-running guaranteed.
+          </p>
+<!-- Simulator Control Matrix -->
+<div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+<div class="p-3 bg-surface-container-low border border-outline-variant">
+<span class="text-[11px] uppercase tracking-wider text-on-surface-variant block mb-1">Target Ball Count</span>
+<span class="font-mono text-headline-sm font-bold text-primary tabular-numbers">25,000</span>
+<span class="text-[11px] text-on-surface-variant block mt-1">100% Minted</span>
+</div>
+<div class="p-3 bg-surface-container-low border border-outline-variant">
+<span class="text-[11px] uppercase tracking-wider text-on-surface-variant block mb-1">Front-Running Salt</span>
+<span class="font-mono text-body-sm font-bold text-primary truncate block">0xca88...411e</span>
+<span class="text-[11px] text-secondary font-bold block mt-1">Proof Committed</span>
+</div>
+<div class="p-3 bg-surface-container-low border border-outline-variant">
+<span class="text-[11px] uppercase tracking-wider text-on-surface-variant block mb-1">Chi-Square Variance</span>
+<span class="font-mono text-headline-sm font-bold text-primary tabular-numbers">0.0014</span>
+<span class="text-[11px] text-primary font-bold block mt-1">Perfect Uniformity</span>
+</div>
+</div>
+<!-- Entropy Seed Execution Visualizer -->
+<div class="mt-5 space-y-2">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Entropy Combination Sequence</span>
+<span class="font-mono text-primary">Formula: HMAC-SHA256(NIST, BTC)</span>
+</div>
+<div class="p-3 bg-primary-container text-on-primary font-mono text-[12px] space-y-1.5 border border-primary">
+<div class="text-primary-fixed-dim">&gt;&gt; [SYSTEM] Ingesting NIST Pulse: 0x55b1f89aa091...</div>
+<div class="text-primary-fixed-dim">&gt;&gt; [SYSTEM] Target Bitcoin Block #842,912: Awaiting broadcast...</div>
+<div class="text-secondary-fixed">&gt;&gt; [SIMULATOR] Ball Range Index: 00001 to 25000 | Deterministic PRNG Seed Ready</div>
+</div>
+</div>
+<!-- Ball Distribution Curve Metric Graph Mock -->
+<div class="mt-5 border border-outline-variant p-3 bg-surface-bright">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-primary font-bold">Simulated Ball Distribution Uniformity Curve</span>
+<span class="text-[11px] text-on-surface-variant">25,000 Iterations</span>
+</div>
+<!-- Geometric bar representation for pristine institutional fintech look -->
+<div class="flex items-end gap-1 h-16 w-full pt-2">
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[85%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[88%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[84%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[89%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[86%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[87%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[85%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[88%] transition-all"></div>
+<div class="flex-1 bg-secondary hover:bg-secondary-fixed-dim h-[92%] transition-all" title="Target Draw Tier Median"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[86%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[87%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[85%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[84%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[87%] transition-all"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary h-[86%] transition-all"></div>
+</div>
+<div class="flex justify-between text-[10px] text-outline font-mono mt-1">
+<span>Bin 001 (Ball 1-1600)</span>
+<span>Median (Sigma: 0.02)</span>
+<span>Bin 015 (Ball 23400-25000)</span>
+</div>
+</div>
+</div>
+<!-- Simulator Execution Trigger -->
+<div class="pt-space-md border-t border-outline-variant flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="text-label-sm font-label-sm text-primary font-bold">Simulator Armed: Ready for Test Cycle</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 border border-outline text-primary text-label-sm font-label-sm uppercase hover:bg-surface-container-low transition-colors">
+              Reset Entropy Parameters
+            </button>
+<button class="px-5 py-2 bg-secondary text-on-secondary text-label-sm font-label-sm uppercase tracking-wider font-bold hover:bg-on-secondary-container transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+              Run Trial Verification
+            </button>
+</div>
+</div>
+</div>
+<!-- SECTION 4: BENEFICIARY CHARITY DISBURSAL LEDGER (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant p-space-lg flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm">
+<div>
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-widest">Philanthropic Allocation</span>
+<h2 class="text-headline-sm font-headline-sm text-primary">Beneficiary Disbursal Ledger</h2>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">assured_workload</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-3">
+            Governed under UK Trust Deed. Disbursals are wired directly to audited beneficiary escrows upon dual trustee sign-off.
+          </p>
+<!-- Beneficiary Cards List -->
+<div class="mt-4 space-y-3">
+<!-- Charity 1: Fairway Futures -->
+<div class="p-3 border border-outline-variant bg-surface-container-low/40 space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<div class="font-bold text-primary text-body-md font-body-md">The Fairway Futures Foundation</div>
+<div class="text-[11px] text-on-surface-variant">Registered Charity #1194820 • Youth Development</div>
+</div>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary text-[10px] uppercase font-bold">
+                  Audit Passed
+                </span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm pt-2 border-t border-outline-variant/60">
+<div>
+<span class="text-on-surface-variant text-[11px] block">YTD Allocation:</span>
+<span class="font-mono font-bold text-primary text-body-md tabular-numbers">£642,500</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Scheduled Wire:</span>
+<span class="font-mono text-secondary font-bold">£50,000 (Batch 42)</span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="text-[11px] text-on-surface-variant">Governance Manifest: Verified Q3</span>
+<button class="text-label-sm font-label-sm text-primary font-bold hover:underline flex items-center gap-0.5">
+                  Authorize Batch <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Charity 2: Adaptive Golf Alliance -->
+<div class="p-3 border border-outline-variant bg-surface-container-low/40 space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<div class="font-bold text-primary text-body-md font-body-md">Adaptive Golf Alliance</div>
+<div class="text-[11px] text-on-surface-variant">Registered Charity #1087422 • Veterans &amp; Para-Sports</div>
+</div>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary text-[10px] uppercase font-bold">
+                  Audit Passed
+                </span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm pt-2 border-t border-outline-variant/60">
+<div>
+<span class="text-on-surface-variant text-[11px] block">YTD Allocation:</span>
+<span class="font-mono font-bold text-primary text-body-md tabular-numbers">£491,240</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Scheduled Wire:</span>
+<span class="font-mono text-secondary font-bold">£35,000 (Batch 42)</span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="text-[11px] text-on-surface-variant">Governance Manifest: Verified Q3</span>
+<button class="text-label-sm font-label-sm text-primary font-bold hover:underline flex items-center gap-0.5">
+                  Authorize Batch <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Charity 3: Coastal Links Trust -->
+<div class="p-3 border border-outline-variant bg-surface-container-low/40 space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<div class="font-bold text-primary text-body-md font-body-md">Coastal Links Environmental Trust</div>
+<div class="text-[11px] text-on-surface-variant">Registered Charity #1220911 • Dunes &amp; Ecology Preservation</div>
+</div>
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] uppercase font-bold">
+                  Annual Review
+                </span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm pt-2 border-t border-outline-variant/60">
+<div>
+<span class="text-on-surface-variant text-[11px] block">YTD Allocation:</span>
+<span class="font-mono font-bold text-primary text-body-md tabular-numbers">£295,200</span>
+</div>
+<div>
+<span class="text-on-surface-variant text-[11px] block">Scheduled Wire:</span>
+<span class="font-mono text-secondary font-bold">£22,500 (Batch 42)</span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between">
+<span class="text-[11px] text-on-surface-variant">Governance Manifest: Pending Officer Co-Sign</span>
+<button class="text-label-sm font-label-sm text-outline font-bold cursor-not-allowed flex items-center gap-0.5">
+                  Awaiting Co-Sign <span class="material-symbols-outlined text-[14px]">lock</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Ledger Action Tray -->
+<div class="pt-space-sm border-t border-outline-variant flex items-center justify-between">
+<span class="text-[12px] text-on-surface-variant">Total Pending Disbursal: <strong class="text-primary font-mono">£107,500</strong></span>
+<button class="px-4 py-2 bg-primary text-on-primary text-label-sm font-label-sm uppercase hover:bg-tertiary-container transition-colors">
+            Batch Wire Approval
+          </button>
+</div>
+</div>
+</div>
+<!-- SECTION 5: REAL-TIME AUDIT & COMPLIANCE LOG -->
+<section class="bg-surface-container-lowest border border-outline-variant">
+<div class="p-space-lg border-b border-outline-variant flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-surface-bright">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">Immutable Audit &amp; Event Stream</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Cryptographic append-only journal. All operator actions are broadcast to secondary archive nodes.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-label-sm font-label-sm bg-surface-container-high border border-outline text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span> Live Listener Connected
+          </span>
+<button class="px-3 py-1 bg-surface-container-lowest border border-primary text-primary text-label-sm font-label-sm uppercase hover:bg-surface-container-low transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">download</span>
+            UKGC Compliance Export
+          </button>
+</div>
+</div>
+<!-- Event Stream Log List -->
+<div class="divide-y divide-outline-variant font-mono text-body-sm font-body-sm">
+<!-- Log Entry 1 -->
+<div class="px-space-lg py-3 hover:bg-surface-bright transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="text-outline text-label-sm tabular-numbers">18:42:10 UTC</span>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary text-[10px] font-bold uppercase tracking-wider">SCORE_APPROVED</span>
+<span class="text-primary font-sans text-body-sm">Patron Dossier <strong class="font-mono">DOS-2024-0980</strong> handicap certified by Trustee Vance-Smythe.</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">Tx: 0x4f19b299e01...88c</div>
+</div>
+<!-- Log Entry 2 -->
+<div class="px-space-lg py-3 hover:bg-surface-bright transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="text-outline text-label-sm tabular-numbers">18:30:00 UTC</span>
+<span class="px-2 py-0.5 bg-secondary text-on-secondary text-[10px] font-bold uppercase tracking-wider">ROOT_COMMITTED</span>
+<span class="text-primary font-sans text-body-sm">Merkle root for Draw #141-B synchronized with London cold-storage ledger.</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">Tx: 0xaa201f820c...10f</div>
+</div>
+<!-- Log Entry 3 -->
+<div class="px-space-lg py-3 hover:bg-surface-bright transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="text-outline text-label-sm tabular-numbers">18:14:22 UTC</span>
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">BEACON_BEAT</span>
+<span class="text-primary font-sans text-body-sm">NIST Randomness Beacon pulse #1,940,211 ingested. SHA-512 state valid.</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">Tx: 0xee482811a...33d</div>
+</div>
+<!-- Log Entry 4 -->
+<div class="px-space-lg py-3 hover:bg-surface-bright transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<span class="text-outline text-label-sm tabular-numbers">17:55:04 UTC</span>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary text-[10px] font-bold uppercase tracking-wider">DISBURSAL_AUTH</span>
+<span class="text-primary font-sans text-body-sm">Wire batch #41 cleared to The Fairway Futures Foundation (£120,000).</span>
+</div>
+<div class="text-[11px] text-on-surface-variant">Tx: 0x110bc8221...99e</div>
+</div>
+</div>
+<!-- Log Terminal Controls -->
+<div class="p-space-md bg-surface-container-low border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span>Filter event classes:</span>
+<label class="inline-flex items-center gap-1 cursor-pointer">
+<input checked="" class="text-primary focus:ring-0 rounded-none" type="checkbox"/> Root Locks
+          </label>
+<label class="inline-flex items-center gap-1 cursor-pointer ml-2">
+<input checked="" class="text-primary focus:ring-0 rounded-none" type="checkbox"/> Verifications
+          </label>
+<label class="inline-flex items-center gap-1 cursor-pointer ml-2">
+<input checked="" class="text-primary focus:ring-0 rounded-none" type="checkbox"/> Wire Disbursals
+          </label>
+</div>
+<div class="text-[11px]">Showing last 4 of 12,492 immutable trust entries</div>
+</div>
+</section>
+</main>
+<!-- ================= FOOTER (SHARED COMPONENT) ================= -->
+<footer class="w-full border-t border-primary-container dark:border-outline-variant bg-primary dark:bg-surface-container-lowest text-on-primary dark:text-primary mt-auto">
+<div class="w-full py-space-xl px-space-lg md:px-margin max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Brand & Regulatory Copyright from JSON -->
+<div class="space-y-1 text-center md:text-left">
+<div class="text-headline-md font-headline-md text-on-primary dark:text-primary tracking-widest uppercase">
+          DIGITAL HEROES
+        </div>
+<div class="text-body-sm font-body-sm text-on-primary-container dark:text-on-surface-variant">
+          © 2024 Digital Heroes Trust &amp; Philanthropic Archive. Regulated &amp; Cryptographically Verified.
+        </div>
+</div>
+<!-- Mandatory Links from JSON (Exact casing) -->
+<nav class="flex flex-wrap justify-center md:justify-end items-center gap-x-space-md gap-y-2 text-label-sm font-label-sm">
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors hover:text-secondary-fixed dark:hover:text-secondary underline underline-offset-4" href="#">
+          Audit Manifest
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors hover:text-secondary-fixed dark:hover:text-secondary underline underline-offset-4" href="#">
+          Charter &amp; Governance
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors hover:text-secondary-fixed dark:hover:text-secondary underline underline-offset-4" href="#">
+          Handicap Protocol
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors hover:text-secondary-fixed dark:hover:text-secondary underline underline-offset-4" href="#">
+          Charity Allocation Ledger
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors hover:text-secondary-fixed dark:hover:text-secondary underline underline-offset-4" href="#">
+          Terms of Trust
+        </a>
+</nav>
+</div>
+</footer>
+</body></html>

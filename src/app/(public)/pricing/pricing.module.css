@@ -1,145 +1,168 @@
+/* ============================================================
+   PRICING PAGE — Heritage & Fairway Ledger Design Language
+   Subscription plans. Institutional. No casino patterns.
+   ============================================================ */
+
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-12) var(--space-4) var(--space-24);
-  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12), transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.06), transparent 40%),
-              var(--bg-primary);
+  padding: var(--space-12) var(--space-4) var(--space-16);
+  background: var(--surface-container-low);
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(194, 200, 195, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(194, 200, 195, 0.18) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
 }
 
 .header {
+  position: relative;
   text-align: center;
   max-width: 680px;
   margin-bottom: var(--space-12);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-1) var(--space-3);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  background: var(--status-active-bg);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-mint);
+  color: var(--primary-container);
 }
 
 .badgeDot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-mint);
-  box-shadow: 0 0 8px var(--accent-mint);
+  background-color: var(--secondary-gold);
 }
 
 .title {
-  font-size: 2.75rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 400;
+  color: var(--primary);
   line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
-  font-size: 1.0625rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
+/* Billing cycle toggle */
 .toggleWrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-bottom: var(--space-8);
-  background: var(--bg-secondary);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-full);
+  background: var(--surface-container-lowest);
+  padding: 3px;
   border: 1px solid var(--border-subtle);
 }
 
 .toggleBtn {
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--text-secondary);
   transition: all var(--transition-fast);
+  letter-spacing: 0.04em;
 }
 
 .toggleBtnActive {
-  background: var(--accent-mint);
-  color: #080C14;
+  background: var(--primary);
+  color: var(--on-primary);
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
 }
 
 .savingsBadge {
   padding: 2px 8px;
-  border-radius: var(--radius-full);
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  color: var(--accent-gold);
-  font-size: 0.6875rem;
+  background: rgba(197, 155, 39, 0.1);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  color: var(--secondary);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin-left: 4px;
 }
 
+/* Plan cards */
 .pricingGrid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--space-8);
+  gap: 0;
   width: 100%;
-  max-width: 960px;
+  max-width: 860px;
   margin-bottom: var(--space-16);
+  border: 1px solid var(--border-subtle);
 }
 
 .planCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+  border-right: 1px solid var(--border-subtle);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform var(--transition-normal), border-color var(--transition-normal);
+  transition: background var(--transition-fast);
+}
+
+.planCard:last-child {
+  border-right: none;
 }
 
 .planCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(16, 185, 129, 0.4);
+  background: var(--surface-container-low);
 }
 
 .planCardFeatured {
-  border-color: var(--accent-mint);
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+  background: var(--primary);
+}
+
+.planCardFeatured:hover {
+  background: var(--primary-container);
 }
 
 .featuredTag {
   position: absolute;
-  top: -12px;
+  top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: #FFFFFF;
-  font-size: 0.75rem;
+  background: var(--secondary-gold);
+  color: var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 4px 16px;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.05em;
+  padding: 3px 14px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -148,42 +171,77 @@
 }
 
 .planName {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--primary);
   margin-bottom: var(--space-1);
 }
 
+.planCardFeatured .planName {
+  color: var(--on-primary);
+}
+
 .planDesc {
+  font-family: var(--font-sans);
   font-size: 0.875rem;
   color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.planCardFeatured .planDesc {
+  color: var(--primary-fixed-dim);
 }
 
 .priceBox {
   display: flex;
   align-items: baseline;
-  gap: var(--space-2);
+  gap: var(--space-1);
   margin-bottom: var(--space-6);
   padding-bottom: var(--space-6);
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.planCardFeatured .priceBox {
+  border-bottom-color: rgba(194, 200, 195, 0.2);
+}
+
 .currency {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary);
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.planCardFeatured .currency {
+  color: var(--primary-fixed-dim);
 }
 
 .amount {
+  font-family: var(--font-mono);
   font-size: 3rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.03em;
-  color: var(--text-primary);
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.planCardFeatured .amount {
+  color: var(--on-primary);
 }
 
 .interval {
-  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
   color: var(--text-secondary);
+  align-self: flex-end;
+  padding-bottom: 0.4rem;
+}
+
+.planCardFeatured .interval {
+  color: var(--primary-fixed-dim);
 }
 
 .featureList {
@@ -199,73 +257,106 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
+  font-family: var(--font-sans);
   font-size: 0.875rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }
 
+.planCardFeatured .featureItem {
+  color: var(--primary-fixed-dim);
+}
+
 .checkIcon {
-  color: var(--accent-mint);
-  font-size: 1rem;
+  color: var(--primary-container);
   font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.planCardFeatured .checkIcon {
+  color: var(--secondary-gold);
 }
 
 .ctaBtn {
   width: 100%;
   padding: 0.875rem 1.25rem;
-  border-radius: var(--radius-md);
-  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: center;
   transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
+  border: 1px solid;
 }
 
 .ctaBtnPrimary {
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: #FFFFFF;
+  background: var(--secondary-gold);
+  border-color: var(--secondary-gold);
+  color: var(--primary);
 }
 
 .ctaBtnPrimary:hover:not(:disabled) {
-  box-shadow: var(--shadow-glow-mint);
-  transform: translateY(-2px);
+  background: var(--secondary-fixed-dim);
+  border-color: var(--secondary-fixed-dim);
 }
 
 .ctaBtnSecondary {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
 }
 
 .ctaBtnSecondary:hover:not(:disabled) {
-  border-color: var(--accent-mint);
-  color: var(--accent-mint);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .ctaBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* Trust bar */
 .trustBar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-8);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   color: var(--text-muted);
   margin-top: var(--space-8);
   padding: var(--space-4) var(--space-8);
-  border-radius: var(--radius-lg);
-  background: var(--bg-secondary);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
+  max-width: 860px;
+  width: 100%;
 }
 
 .trustItem {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+}
+
+@media (max-width: 700px) {
+  .pricingGrid {
+    grid-template-columns: 1fr;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .planCard {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .planCard:last-child {
+    border-bottom: none;
+  }
 }

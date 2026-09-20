@@ -1,37 +1,105 @@
 import React from 'react';
 import Link from 'next/link';
+import styles from '../layout/footer.module.css';
+
+const PLATFORM_LINKS = [
+  { href: '/how-it-works', label: 'How It Works' },
+  { href: '/charities', label: 'Charity Directory' },
+  { href: '/pricing', label: 'Subscription Plans' },
+  { href: '/scores', label: 'Handicap Protocol' },
+];
+
+const GOVERNANCE_LINKS = [
+  { href: '/how-it-works#audit', label: 'Audit Manifest' },
+  { href: '/how-it-works#charter', label: 'Charter & Governance' },
+  { href: '/pricing', label: 'Terms of Trust' },
+  { href: '/charities', label: 'Allocation Ledger' },
+];
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="w-full bg-primary border-t border-primary-container text-on-primary mt-16">
-      <div className="w-full py-10 px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <div className="text-headline-md font-headline-md text-on-primary tracking-widest uppercase mb-1">
-            DIGITAL HEROES
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        {/* ── Top grid ── */}
+        <div className={styles.topGrid}>
+          {/* Brand column */}
+          <div className={styles.brandCol}>
+            <div className={styles.brand}>
+              {/* Gold brand mark */}
+              <div className={styles.brandGem} aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 3h10v8a5 5 0 0 1-10 0V3Z" stroke="var(--primary)" strokeWidth="1.5" />
+                  <path d="M3 3h4v5a2 2 0 0 1-4 0V3Z" stroke="var(--primary)" strokeWidth="1.5" />
+                  <path d="M17 3h4v5a2 2 0 0 1-4 0V3Z" stroke="var(--primary)" strokeWidth="1.5" />
+                  <line x1="12" y1="16" x2="12" y2="20" stroke="var(--primary)" strokeWidth="1.5" />
+                  <line x1="8" y1="20" x2="16" y2="20" stroke="var(--primary)" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div>
+                <div className={styles.brandName}>Digital Heroes</div>
+                <div className={styles.brandTagline}>Charity Trust Protocol</div>
+              </div>
+            </div>
+
+            <p className={styles.mission}>
+              A philanthropic golf trust connecting Stableford performance with verified charitable giving and transparent monthly prize draws.
+            </p>
+
+            <div className={styles.charityPledgeBadge}>
+              <span className={styles.badgeDot} />
+              <span>Minimum 10% Social Impact Lock</span>
+            </div>
           </div>
-          <p className="text-body-sm font-body-sm text-on-primary-container max-w-md">
-            &copy; {new Date().getFullYear()} Digital Heroes Trust &amp; Philanthropic Archive. Regulated &amp; Cryptographically Verified.
-          </p>
+
+          {/* Platform links */}
+          <div>
+            <div className={styles.colTitle}>Platform</div>
+            <ul className={styles.linkList}>
+              {PLATFORM_LINKS.map((link) => (
+                <li key={link.href} className={styles.linkItem}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Governance links */}
+          <div>
+            <div className={styles.colTitle}>Governance</div>
+            <ul className={styles.linkList}>
+              {GOVERNANCE_LINKS.map((link) => (
+                <li key={link.href} className={styles.linkItem}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Mandatory Governance & Legal Navigation */}
-        <nav aria-label="Governance and Legal Navigation" className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-label-sm font-label-sm uppercase tracking-wider">
-          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/how-it-works#audit">
-            Audit Manifest
-          </Link>
-          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/how-it-works#charter">
-            Charter &amp; Governance
-          </Link>
-          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/scores">
-            Handicap Protocol
-          </Link>
-          <Link className="text-secondary-fixed font-semibold underline underline-offset-4" href="/charities">
-            Charity Allocation Ledger
-          </Link>
-          <Link className="text-on-primary-container hover:text-secondary-fixed transition-colors" href="/pricing">
-            Terms of Trust
-          </Link>
-        </nav>
+        <div className={styles.divider} />
+
+        {/* ── Bottom bar ── */}
+        <div className={styles.bottomRow}>
+          <p className={styles.legalNotice}>
+            &copy; {year} Digital Heroes Trust &amp; Philanthropic Archive. Regulated &amp; Cryptographically Verified.
+          </p>
+
+          {/* Prize tier capsules */}
+          <div className={styles.tierCapsules}>
+            {[
+              { label: '5-match', value: '40%' },
+              { label: '4-match', value: '35%' },
+              { label: '3-match', value: '25%' },
+            ].map((tier) => (
+              <div key={tier.label} className={styles.tierCapsule}>
+                <span className={styles.tierValue}>{tier.value}</span>
+                <span className={styles.tierLabel}>{tier.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );

@@ -1,28 +1,17 @@
-/* Domain Components Shared Styling */
+/* Domain Components Shared Styling — Heritage & Fairway Ledger */
 
 .bannerCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--secondary-gold);
   padding: var(--space-6) var(--space-8);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-6);
-  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
-}
-
-.bannerCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--accent-mint);
 }
 
 .bannerInfo {
@@ -42,53 +31,57 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.08em;
+  border: 1px solid;
 }
 
 .statusActive {
   background: var(--status-active-bg);
   color: var(--status-active-text);
-  border: 1px solid var(--status-active-border);
+  border-color: rgba(19, 46, 36, 0.2);
 }
 
 .statusWarning {
   background: var(--status-warning-bg);
   color: var(--status-warning-text);
-  border: 1px solid var(--status-warning-border);
+  border-color: rgba(197, 155, 39, 0.25);
 }
 
 .statusDanger {
-  background: var(--status-danger-bg);
-  color: var(--status-danger-text);
-  border: 1px solid var(--status-danger-border);
+  background: var(--error-container);
+  color: var(--on-error-container);
+  border-color: rgba(186, 26, 26, 0.2);
 }
 
 .bannerTitle {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
 }
 
 .bannerSubtitle {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .portalBtn {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
+  background: var(--surface-container-low);
+  color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
-  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
   padding: 0.6rem 1.25rem;
-  border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
@@ -96,38 +89,37 @@
 }
 
 .portalBtn:hover {
-  background: var(--bg-quaternary);
-  border-color: var(--border-hover);
-  color: var(--accent-mint);
+  background: var(--surface-container);
+  border-color: var(--border-focus);
+  color: var(--primary);
 }
 
 .subscribeBtn {
-  background: var(--accent-mint);
-  color: var(--text-inverse);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 800;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   padding: 0.65rem 1.4rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow-mint);
   transition: all var(--transition-fast);
 }
 
 .subscribeBtn:hover {
-  background: var(--accent-mint-hover);
-  transform: translateY(-1px);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
-/* ScoreCardGrid */
+/* ScoreCard Grid */
 .gridCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  box-shadow: var(--shadow-card);
 }
 
 .cardHeader {
@@ -145,30 +137,34 @@
 }
 
 .cardTitle {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: var(--primary);
+  letter-spacing: -0.01em;
 }
 
 .cardSubtitle {
-  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
 .manageLink {
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--accent-mint);
+  color: var(--primary-container);
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  transition: all var(--transition-fast);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
 }
 
 .manageLink:hover {
-  text-decoration: underline;
+  color: var(--primary);
 }
 
 .scoreSlotsRow {
@@ -177,58 +173,55 @@
   gap: var(--space-4);
 }
 
+/* Heritage square score tiles */
 .scoreSlot {
-  background: var(--bg-secondary);
+  background: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: var(--space-2);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .scoreSlot:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
+  border-color: var(--border-focus);
 }
 
 .slotBall {
   width: 54px;
   height: 54px;
-  border-radius: 50%;
-  background: var(--bg-elevated);
-  border: 2px solid var(--accent-mint);
-  color: var(--text-primary);
-  font-family: var(--font-display);
+  background: var(--primary);
+  border: 1px solid var(--primary-container);
+  color: var(--on-primary);
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 1.3rem;
-  font-weight: 800;
+  font-size: 1.35rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-glow-mint);
 }
 
 .slotPoints {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
 .slotDate {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 .slotEmpty {
-  background: rgba(11, 16, 24, 0.4);
+  background: var(--surface-container-low);
   border: 1px dashed var(--border-subtle);
-  border-radius: var(--radius-lg);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -236,29 +229,29 @@
   justify-content: center;
   text-align: center;
   gap: var(--space-2);
-  min-height: 120px;
+  min-height: 110px;
 }
 
 .slotEmptyIcon {
+  font-family: var(--font-sans);
   font-size: 1.2rem;
   color: var(--text-muted);
 }
 
 .slotEmptyText {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-/* Charity Card */
+/* Charity Selection */
 .charityCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  box-shadow: var(--shadow-card);
 }
 
 .charityHeader {
@@ -270,7 +263,6 @@
 .charityLogo {
   width: 54px;
   height: 54px;
-  border-radius: var(--radius-md);
   object-fit: cover;
   border: 1px solid var(--border-subtle);
 }
@@ -282,26 +274,26 @@
 }
 
 .charityName {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-weight: 400;
+  color: var(--primary);
 }
 
 .charityCategory {
-  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
-  color: var(--accent-gold);
+  color: var(--secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1em;
 }
 
 .sliderContainer {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
+  background: var(--surface-container-low);
   padding: var(--space-4) var(--space-6);
   border: 1px solid var(--border-subtle);
 }
@@ -310,36 +302,37 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
 
 .sliderBadge {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--accent-mint);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--secondary);
 }
 
 .rangeInput {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 6px;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-full);
+  height: 3px;
+  background: var(--surface-container-high);
   outline: none;
+  border: none;
 }
 
 .rangeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent-mint);
+  width: 16px;
+  height: 16px;
+  background: var(--secondary-gold);
   cursor: pointer;
-  box-shadow: var(--shadow-glow-mint);
+  border: 1px solid var(--secondary);
 }
 
 /* Upcoming Draw & Winnings */
@@ -349,24 +342,23 @@
   gap: var(--space-6);
 }
 
-.drawWidget, .winningsWidget {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-xl);
+.drawWidget,
+.winningsWidget {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-6);
-  box-shadow: var(--shadow-card);
 }
 
 .highlightAmount {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: 2.3rem;
-  font-weight: 900;
-  color: var(--accent-mint);
+  font-weight: 600;
+  color: var(--primary);
   letter-spacing: -0.03em;
 }
 
@@ -375,11 +367,13 @@
   align-items: center;
   gap: var(--space-3);
   background: var(--status-warning-bg);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  border-left: 3px solid var(--secondary-gold);
   color: var(--status-warning-text);
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {

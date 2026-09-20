@@ -1,7 +1,12 @@
+/* ============================================================
+   CHARITIES DIRECTORY — Heritage & Fairway Ledger Design
+   Philanthropic directory. Cause discovery. Gold accents.
+   ============================================================ */
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-8) var(--space-4) var(--space-24);
+  padding: var(--space-8) var(--space-6) var(--space-16);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -14,44 +19,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-1) var(--space-3);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  background: rgba(197, 155, 39, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-gold);
+  color: var(--secondary);
 }
 
 .badgeDot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-gold);
-  box-shadow: 0 0 8px var(--accent-gold);
+  background-color: var(--secondary-gold);
 }
 
 .title {
-  font-size: 2.75rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
-  line-height: 1.15;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 400;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
+  font-family: var(--font-sans);
   font-size: 1rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* Search & Filter Controls */
@@ -62,10 +69,8 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-4);
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
 }
 
 .searchBox {
@@ -77,18 +82,17 @@
 .searchInput {
   width: 100%;
   padding: 0.625rem 1rem 0.625rem 2.25rem;
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
   color: var(--text-primary);
+  font-family: var(--font-sans);
   font-size: 0.875rem;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: var(--accent-gold);
-  box-shadow: var(--shadow-glow-gold);
+  border-color: var(--border-focus);
 }
 
 .searchIcon {
@@ -107,38 +111,37 @@
 }
 
 .categoryBtn {
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: 0.8125rem;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   font-weight: 600;
-  background: var(--bg-secondary);
+  letter-spacing: 0.04em;
+  background: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
 
 .categoryBtn:hover {
-  border-color: var(--accent-gold);
-  color: var(--text-primary);
+  border-color: var(--border-focus);
+  color: var(--primary);
 }
 
 .categoryBtnActive {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
+  background: rgba(197, 155, 39, 0.08);
+  border-color: rgba(197, 155, 39, 0.4);
+  color: var(--secondary);
   font-weight: 700;
 }
 
 /* Featured Charity Spotlight */
 .featuredCard {
   position: relative;
-  border-radius: var(--radius-xl);
   overflow: hidden;
-  background: var(--bg-glass);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.12);
+  background: var(--primary);
+  border: 1px solid var(--primary);
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
   min-height: 360px;
 }
 
@@ -146,11 +149,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container);
 }
 
 .featuredContent {
-  padding: var(--space-8);
+  padding: var(--space-10) var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -161,41 +164,57 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--accent-gold);
-  font-size: 0.75rem;
+  color: var(--secondary-gold);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.featuredContent h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 400;
+  color: var(--on-primary);
+  line-height: 1.2;
+}
+
+.featuredContent p {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--primary-fixed-dim);
+  line-height: 1.7;
 }
 
 /* Charity Grid */
 .charityGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 0;
+  border: 1px solid var(--border-subtle);
 }
 
 .charityCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  background: var(--surface-container-lowest);
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: background var(--transition-fast);
 }
 
 .charityCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(245, 158, 11, 0.4);
+  background: var(--surface-container-low);
 }
 
 .cardBanner {
   height: 160px;
   width: 100%;
   object-fit: cover;
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-container);
+  display: block;
 }
 
 .cardBody {
@@ -207,24 +226,27 @@
 }
 
 .cardCategory {
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
-  color: var(--accent-gold);
+  color: var(--secondary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .cardName {
+  font-family: var(--font-serif);
   font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 400;
+  color: var(--primary);
   line-height: 1.3;
 }
 
 .cardTagline {
+  font-family: var(--font-sans);
   font-size: 0.875rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   flex-grow: 1;
 }
 
@@ -233,17 +255,17 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: var(--radius-sm);
+  background: var(--status-active-bg);
+  border: 1px solid rgba(19, 46, 36, 0.15);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: var(--accent-mint);
+  color: var(--primary-container);
   margin-top: var(--space-2);
 }
 
 .cardActions {
   display: flex;
-  gap: var(--space-2);
+  gap: 0;
   margin-top: var(--space-4);
   padding-top: var(--space-4);
   border-top: 1px solid var(--border-subtle);
@@ -251,42 +273,46 @@
 
 .btnPrimary {
   flex: 1;
-  padding: 0.625rem 1rem;
-  background: linear-gradient(135deg, #F59E0B, #D97706);
-  color: #FFFFFF;
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
+  padding: 0.6rem 1rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-align: center;
   transition: all var(--transition-fast);
 }
 
 .btnPrimary:hover {
-  box-shadow: var(--shadow-glow-gold);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .btnSecondary {
-  padding: 0.625rem 1rem;
-  background: var(--bg-secondary);
+  padding: 0.6rem 0.9rem;
+  background: transparent;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  font-size: 0.8125rem;
+  border-left: none;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   text-align: center;
   transition: all var(--transition-fast);
 }
 
 .btnSecondary:hover {
-  border-color: var(--accent-mint);
-  color: var(--accent-mint);
+  border-color: var(--border-focus);
+  color: var(--primary);
 }
 
-/* Profile Detail Layout */
+/* Charity Profile Detail */
 .profileHero {
   position: relative;
   min-height: 320px;
-  border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -299,7 +325,7 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(8, 12, 20, 0.95) 10%, rgba(8, 12, 20, 0.4) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 25, 16, 0.95) 10%, rgba(0, 25, 16, 0.4) 60%, transparent 100%);
 }
 
 .heroContent {
@@ -313,14 +339,13 @@
 
 .profileGrid {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 360px;
   gap: var(--space-8);
 }
 
 .detailCard {
-  background: var(--bg-glass);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -329,9 +354,8 @@
 
 .eventCard {
   padding: var(--space-4);
-  background: var(--bg-secondary);
+  background: var(--surface-container-low);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -341,10 +365,20 @@
   .featuredCard {
     grid-template-columns: 1fr;
   }
+
   .featuredImage {
     height: 220px;
   }
+
   .profileGrid {
     grid-template-columns: 1fr;
+  }
+
+  .charityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .charityCard {
+    border-right: none;
   }
 }

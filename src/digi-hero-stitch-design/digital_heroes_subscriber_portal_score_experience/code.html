@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DIGITAL HEROES — Subscriber Portal</title>
+<!-- Google Fonts: Manrope & EB Garamond -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#735700",
+            "tertiary-fixed-dim": "#a3d0bb",
+            "surface-variant": "#dbe5e0",
+            "tertiary-fixed": "#beedd7",
+            "secondary-fixed": "#ffdf98",
+            "inverse-surface": "#29322f",
+            "on-primary-fixed": "#042017",
+            "secondary-container": "#fece57",
+            "outline": "#727974",
+            "on-tertiary-fixed-variant": "#244e3e",
+            "primary-fixed": "#cbeada",
+            "secondary-fixed-dim": "#eec14b",
+            "background": "#f2fcf6",
+            "on-secondary": "#ffffff",
+            "surface": "#f2fcf6",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#dbe5e0",
+            "inverse-on-surface": "#e9f3ee",
+            "on-tertiary-container": "#6e9a86",
+            "error": "#ba1a1a",
+            "tertiary-container": "#003022",
+            "on-secondary-fixed-variant": "#5a4300",
+            "on-tertiary-fixed": "#002116",
+            "on-background": "#141d1a",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#424845",
+            "tertiary": "#001910",
+            "secondary": "#775a00",
+            "inverse-primary": "#afcdbe",
+            "outline-variant": "#c2c8c3",
+            "surface-bright": "#f2fcf6",
+            "surface-container-high": "#e0eae5",
+            "surface-container-low": "#ecf6f1",
+            "on-secondary-fixed": "#251a00",
+            "on-primary": "#ffffff",
+            "primary": "#001910",
+            "primary-fixed-dim": "#afcdbe",
+            "surface-container": "#e6f0eb",
+            "on-primary-fixed-variant": "#314c41",
+            "primary-container": "#132e24",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-dim": "#d2dcd7",
+            "on-surface": "#141d1a",
+            "surface-tint": "#496458",
+            "on-primary-container": "#7a9789",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "margin": "2rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "body-md": ["Manrope"],
+            "headline-lg-mobile": ["EB Garamond"],
+            "headline-sm": ["EB Garamond"],
+            "label-sm": ["Manrope"],
+            "headline-lg": ["EB Garamond"],
+            "display-lg-mobile": ["EB Garamond"],
+            "display-lg": ["EB Garamond"],
+            "headline-md": ["EB Garamond"],
+            "label-lg": ["Manrope"],
+            "metric-display": ["Manrope"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+            "headline-lg": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-md": ["26px", { "lineHeight": "34px", "fontWeight": "500" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "metric-display": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-secondary-fixed selection:text-primary">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-container-lowest dark:bg-primary-container border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-space-lg md:px-margin max-w-7xl mx-auto h-20">
+<!-- Brand Logo Anchor -->
+<div class="flex items-center gap-space-md">
+<span class="text-headline-md font-headline-md tracking-wider font-semibold text-primary dark:text-on-primary">
+          DIGITAL HEROES
+        </span>
+<span class="hidden lg:inline-block border-l border-outline-variant pl-space-sm font-label-sm text-label-sm text-outline uppercase tracking-widest">
+          Trust Register
+        </span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-space-lg">
+<a class="text-on-surface-variant dark:text-primary-fixed-dim hover:text-primary dark:hover:text-on-primary transition-colors pb-1 font-label-lg text-label-lg" href="#">
+          Public View
+        </a>
+<a class="border-b-2 border-secondary text-secondary dark:text-secondary-fixed font-bold pb-1 tracking-wide font-label-lg text-label-lg" href="#">
+          Subscriber Portal
+        </a>
+<a class="text-on-surface-variant dark:text-primary-fixed-dim hover:text-primary dark:hover:text-on-primary transition-colors pb-1 font-label-lg text-label-lg" href="#">
+          Admin Operations
+        </a>
+</nav>
+<!-- Trailing Actions & Benefactor Badge -->
+<div class="flex items-center gap-space-md">
+<!-- Live Countdown Indicator Pill -->
+<div class="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-surface-container-low border border-secondary-fixed-dim">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary font-bold tracking-wider">
+            Live Draw: 02h 14m
+          </span>
+</div>
+<!-- Notification Icon -->
+<button aria-label="Notifications" class="text-primary hover:bg-surface-container-low p-2 transition-colors duration-150 focus:outline-none" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<!-- Verified Patron Profile Badge -->
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant">
+<div class="w-9 h-9 bg-primary-container text-secondary-fixed flex items-center justify-center font-serif text-headline-sm font-bold border border-secondary">
+            DH
+          </div>
+<div class="hidden xl:flex flex-col text-left">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-primary font-bold">Sir R. Vance</span>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Member #0482</span>
+</div>
+</div>
+<!-- Primary CTA Button -->
+<button class="hidden lg:block bg-primary-container text-on-primary border border-primary-container px-space-lg py-2.5 font-label-lg text-label-lg uppercase tracking-wider hover:bg-tertiary-container transition-all active:scale-[0.99]">
+          Enter Draw
+        </button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 max-w-7xl w-full mx-auto px-space-lg md:px-margin py-space-xl space-y-space-xl">
+<!-- Patron Institutional Header Bar -->
+<section class="bg-surface-container-lowest border border-outline-variant p-space-lg md:p-space-xl">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg pb-space-lg border-b border-surface-container-high">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest border border-secondary px-2 py-0.5">Patron Tier</span>
+<span class="font-label-sm text-label-sm text-outline tracking-wide">Charter Verified • Non-Custodial Vault</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Club Champion Sovereign Ledger</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
+            Patron credentials active for official World Handicap System (WHS) attestation and cryptographic allocation in the Philanthropic Draw Registry.
+          </p>
+</div>
+<!-- Key Metrics Triad -->
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 border-t lg:border-t-0 pt-4 lg:pt-0 border-surface-container-high">
+<div class="border-l-2 border-primary-container pl-3">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Current Handicap</div>
+<div class="font-metric-display text-metric-display text-primary font-bold">8.4</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Differential: <span class="font-semibold text-primary">+6.8</span></div>
+</div>
+<div class="border-l-2 border-secondary pl-3">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Charity Allocation</div>
+<div class="font-metric-display text-metric-display text-secondary font-bold">60%</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Fairway Futures Trust</div>
+</div>
+<div class="border-l-2 border-outline-variant pl-3 col-span-2 sm:col-span-1">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Draw Validity</div>
+<div class="font-headline-sm text-headline-sm text-primary font-semibold mt-2.5">Compliant</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">5/5 Rounds Active</div>
+</div>
+</div>
+</div>
+<!-- Trust Assurance Strip -->
+<div class="pt-space-md flex flex-wrap items-center justify-between gap-y-2 text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary-container" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+            WHS SHA-256 Oracle Connected
+          </span>
+<span class="hidden sm:inline text-outline-variant">|</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Audited by Sovereign Charity Commission UK
+          </span>
+</div>
+<div class="text-outline">
+          Last Synced: Today at 14:02:11 UTC
+        </div>
+</div>
+</section>
+<!-- SECTION 1 & 2: Stableford Entry Form + 5-Score Rolling Window (Asymmetric 12-Col Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Stableford Score Entry & Validation (5 Columns) -->
+<section class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant p-space-lg relative">
+<div class="border-t-2 border-secondary absolute top-0 left-0 right-0"></div>
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Scorecard Input</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Stableford Attestation</h2>
+</div>
+<span class="material-symbols-outlined text-primary-container" data-icon="sports_golf">sports_golf</span>
+</div>
+<form class="space-y-space-md" onsubmit="event.preventDefault();">
+<!-- Numeric Score Input with Scale -->
+<div>
+<div class="flex justify-between items-baseline mb-1">
+<label class="font-label-lg text-label-lg text-primary" for="stableford-score">Stableford Points</label>
+<span class="font-label-sm text-label-sm text-outline">Standard range: 1–45</span>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant p-3 font-headline-sm text-headline-sm text-primary focus:border-primary-container focus:ring-0" id="stableford-score" max="45" min="1" placeholder="36" type="number" value="38"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-label-sm font-label-sm text-outline">PTS</div>
+</div>
+<!-- Range Visual Gauge -->
+<div class="mt-2 w-full bg-surface-container-high h-1.5 flex">
+<div class="bg-outline-variant h-full w-1/3" title="Sub-par buffer"></div>
+<div class="bg-secondary h-full w-1/3" title="Buffer Zone (32-38)"></div>
+<div class="bg-primary-container h-full w-1/3" title="Exceptional Differential"></div>
+</div>
+<div class="flex justify-between text-label-sm font-label-sm text-outline mt-1">
+<span>1</span>
+<span class="text-secondary font-semibold">36 (Standard Net)</span>
+<span>45</span>
+</div>
+</div>
+<!-- Date & Course Slope Grid -->
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="font-label-sm text-label-sm text-primary block mb-1" for="round-date">Date of Play</label>
+<input class="w-full text-body-sm font-body-sm bg-surface-container-lowest border border-outline-variant p-2.5 focus:border-primary-container focus:ring-0" id="round-date" type="date" value="2024-10-24"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-primary block mb-1" for="slope-rating">Slope / Rating</label>
+<input class="w-full text-body-sm font-body-sm bg-surface-container-lowest border border-outline-variant p-2.5 focus:border-primary-container focus:ring-0" id="slope-rating" type="text" value="132 / 72.4"/>
+</div>
+</div>
+<!-- Course Name -->
+<div>
+<label class="font-label-sm text-label-sm text-primary block mb-1" for="course-name">Authorized Club / Course</label>
+<input class="w-full text-body-sm font-body-sm bg-surface-container-lowest border border-outline-variant p-2.5 focus:border-primary-container focus:ring-0" id="course-name" type="text" value="Sunningdale Golf Club (Old Course)"/>
+</div>
+<!-- Marker Attestation Toggle -->
+<div class="p-3 bg-surface-container-low border border-outline-variant flex items-start gap-3">
+<input checked="" class="mt-1 h-4 w-4 rounded-none border-outline text-primary-container focus:ring-0" id="marker-attest" type="checkbox"/>
+<label class="text-body-sm font-body-sm text-on-surface" for="marker-attest">
+<span class="font-semibold text-primary block">Official Marker Attestation</span>
+              Certified by Capt. H. Sterling (Member #0199) via digital Clubhouse signature.
+            </label>
+</div>
+<!-- Real-Time Handicap Differential Projection -->
+<div class="border-t border-surface-container-high pt-3 flex items-center justify-between">
+<span class="text-body-sm font-body-sm text-outline">Projected Round Differential:</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">+5.9</span>
+</div>
+<!-- Submit CTA -->
+<button class="w-full bg-primary-container hover:bg-tertiary-container text-on-primary border border-primary-container py-3 font-label-lg text-label-lg uppercase tracking-wider transition-colors duration-150" type="submit">
+            Transmit &amp; Sign Score
+          </button>
+</form>
+</section>
+<!-- Five-Score Rolling Window & Trend (7 Columns) -->
+<section class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant p-space-lg flex flex-col justify-between h-full">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md border-b border-surface-container-high gap-2">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Regulatory Compliance</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Five-Score Rolling Window</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 bg-surface-container-low border border-primary-container text-primary font-label-sm text-label-sm font-bold">
+                ELIGIBLE FOR DRAW #142
+              </span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant my-space-md">
+            Under Rule 4.2 of the Philanthropic Gaming Accord, your draw quota relies on the variance across your most recent 5 certified rounds. Current rolling average: <strong class="text-primary font-semibold">37.6 pts</strong>.
+          </p>
+<!-- Five Score Cards Sequence -->
+<div class="grid grid-cols-5 gap-2 md:gap-3 my-space-lg">
+<!-- Score 1 -->
+<div class="border border-outline-variant p-3 bg-surface-container-low text-center">
+<span class="text-label-sm font-label-sm text-outline block mb-1">R-05</span>
+<div class="font-headline-md text-headline-md font-bold text-primary">38</div>
+<span class="text-label-sm font-label-sm text-secondary font-semibold block mt-1">+6.2</span>
+<span class="text-[10px] text-outline block mt-0.5">14 Oct</span>
+</div>
+<!-- Score 2 (Peak) -->
+<div class="border-2 border-secondary p-3 bg-surface-container-lowest text-center relative">
+<span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary font-label-sm text-[9px] px-1 uppercase tracking-tighter">Peak</span>
+<span class="text-label-sm font-label-sm text-outline block mb-1">R-04</span>
+<div class="font-headline-md text-headline-md font-bold text-secondary">41</div>
+<span class="text-label-sm font-label-sm text-secondary font-semibold block mt-1">+4.8</span>
+<span class="text-[10px] text-outline block mt-0.5">17 Oct</span>
+</div>
+<!-- Score 3 -->
+<div class="border border-outline-variant p-3 bg-surface-container-low text-center">
+<span class="text-label-sm font-label-sm text-outline block mb-1">R-03</span>
+<div class="font-headline-md text-headline-md font-bold text-primary">34</div>
+<span class="text-label-sm font-label-sm text-outline font-semibold block mt-1">+8.1</span>
+<span class="text-[10px] text-outline block mt-0.5">19 Oct</span>
+</div>
+<!-- Score 4 -->
+<div class="border border-outline-variant p-3 bg-surface-container-low text-center">
+<span class="text-label-sm font-label-sm text-outline block mb-1">R-02</span>
+<div class="font-headline-md text-headline-md font-bold text-primary">39</div>
+<span class="text-label-sm font-label-sm text-secondary font-semibold block mt-1">+5.4</span>
+<span class="text-[10px] text-outline block mt-0.5">21 Oct</span>
+</div>
+<!-- Score 5 (Current) -->
+<div class="border-2 border-primary-container p-3 bg-primary-container text-center text-on-primary">
+<span class="text-label-sm font-label-sm text-primary-fixed-dim block mb-1">Latest</span>
+<div class="font-headline-md text-headline-md font-bold text-on-primary">36</div>
+<span class="text-label-sm font-label-sm text-secondary-fixed font-semibold block mt-1">+6.8</span>
+<span class="text-[10px] text-primary-fixed-dim block mt-0.5">24 Oct</span>
+</div>
+</div>
+<!-- Trend Trajectory Line Visual -->
+<div class="p-3 bg-surface-container-low border border-outline-variant flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="trending_up">trending_up</span>
+<span>Rolling Differential Stability: <strong class="text-primary font-semibold">Low Variance (σ = 2.4)</strong></span>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">No Handicap Penalty</span>
+</div>
+</div>
+<div class="pt-space-md border-t border-surface-container-high mt-space-md flex items-center justify-between text-body-sm font-body-sm text-outline">
+<span>Next window recalculation: Round 6 submission</span>
+<a class="text-primary font-semibold hover:underline" href="#history">Inspect Full Telemetry →</a>
+</div>
+</section>
+</div>
+<!-- SECTION 3: Active Draw Allocation & Cryptographic Balls -->
+<section class="bg-primary-container text-on-primary p-space-lg md:p-space-xl border border-tertiary-container relative overflow-hidden">
+<!-- Watermark Crest Background -->
+<div class="absolute -right-12 -bottom-12 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[240px]" data-icon="military_tech">military_tech</span>
+</div>
+<div class="relative z-10">
+<!-- Header Strip -->
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-md border-b border-primary-fixed-variant gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-secondary text-primary font-label-sm text-label-sm font-bold uppercase tracking-widest px-2 py-0.5">
+                Active Philanthropic Vault
+              </span>
+<span class="text-label-sm font-label-sm text-primary-fixed-dim tracking-wider">BTC Height #867,492 Lock</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-primary">Quarterly Draw #142 Allocation</h2>
+</div>
+<!-- Block Height Countdown -->
+<div class="bg-tertiary-container border border-primary-fixed-variant p-3 flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="timer">timer</span>
+<div>
+<div class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-wider">Freeze Countdown</div>
+<div class="font-metric-display text-2xl md:text-3xl text-secondary-fixed font-bold tracking-tight">02h : 14m : 38s</div>
+</div>
+</div>
+</div>
+<!-- Allocation Body Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mt-space-lg items-center">
+<!-- Cryptographic Ball Dossiers (7 Cols) -->
+<div class="lg:col-span-7 space-y-3">
+<div class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-wider mb-2">
+              Assigned Sovereign Draw Entries (3 Pre-Committed Balls)
+            </div>
+<!-- Ball 1 -->
+<div class="bg-surface-container-lowest text-on-surface p-3.5 border border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container text-secondary-fixed flex items-center justify-center font-metric-display text-lg font-bold border border-secondary">
+                  01
+                </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">Ball #1,402</div>
+<div class="font-mono text-xs text-outline truncate max-w-xs md:max-w-sm">
+                    SHA-256: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f...
+                  </div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider border border-secondary-fixed-dim px-2 py-1 self-start sm:self-center">
+                Anchored
+              </span>
+</div>
+<!-- Ball 2 -->
+<div class="bg-surface-container-lowest text-on-surface p-3.5 border border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container text-secondary-fixed flex items-center justify-center font-metric-display text-lg font-bold border border-secondary">
+                  02
+                </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">Ball #3,891</div>
+<div class="font-mono text-xs text-outline truncate max-w-xs md:max-w-sm">
+                    SHA-256: 9b2cf481a8f93e6201e74a87c1265db209e8601a...
+                  </div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider border border-secondary-fixed-dim px-2 py-1 self-start sm:self-center">
+                Anchored
+              </span>
+</div>
+<!-- Ball 3 -->
+<div class="bg-surface-container-lowest text-on-surface p-3.5 border border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container text-secondary-fixed flex items-center justify-center font-metric-display text-lg font-bold border border-secondary">
+                  03
+                </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">Ball #4,115</div>
+<div class="font-mono text-xs text-outline truncate max-w-xs md:max-w-sm">
+                    SHA-256: 3c8e4d20917f8a31b402f74619d08e51b2a9918c...
+                  </div>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider border border-secondary-fixed-dim px-2 py-1 self-start sm:self-center">
+                Anchored
+              </span>
+</div>
+</div>
+<!-- Prize Tier Preview (5 Cols) -->
+<div class="lg:col-span-5 bg-tertiary-container p-space-md border border-primary-fixed-variant">
+<div class="border-b border-primary-fixed-variant pb-2 mb-3 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary-fixed uppercase tracking-widest">Grand Prize Tier Preview</span>
+<span class="text-label-sm font-label-sm text-primary-fixed-dim">Draw Valuation</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-primary mb-1">
+              £38,500
+            </div>
+<div class="font-headline-sm text-headline-sm text-secondary-fixed font-semibold mb-2">
+              The 153rd Open at St Andrews Patron Experience
+            </div>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim mb-4">
+              Includes 4 nights at the Old Course Hotel, private clubhouse dining hospitality, and a guaranteed patron foursome on the historic links.
+            </p>
+<div class="flex items-center justify-between pt-2 border-t border-primary-fixed-variant text-label-sm font-label-sm text-primary-fixed-dim">
+<span>Audited Charitable Pool: £231,000</span>
+<button class="text-secondary-fixed hover:underline flex items-center gap-1 font-semibold">
+                View Proof Ledger
+                <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: Patron Philanthropic Yield & Impact Summary -->
+<section class="bg-surface-container-lowest border border-outline-variant p-space-lg md:p-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-lg border-b border-surface-container-high gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest">Endowment Stewardship</span>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Philanthropic Yield &amp; Impact Archive</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+            100% of draw participant stakes are strictly partitioned between the philanthropic beneficiary endowment and reserve jackpot trust.
+          </p>
+</div>
+<!-- Download Tax Receipt Button -->
+<button class="inline-flex items-center justify-center gap-2 border border-primary-container text-primary-container px-space-lg py-3 font-label-lg text-label-lg uppercase tracking-wider hover:bg-surface-container-low transition-colors duration-150 whitespace-nowrap">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+          Download 2023-24 Gift Aid Receipt
+        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg mt-space-lg">
+<!-- Total Donated Metric -->
+<div class="p-space-md border border-outline-variant bg-surface-container-low">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Patron Lifetime Yield</div>
+<div class="font-metric-display text-metric-display text-primary font-bold my-1">£468.00</div>
+<div class="font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Gift Aid Claimed (+25% HMRC Match)
+          </div>
+</div>
+<!-- Recipient Trusts Breakdown -->
+<div class="p-space-md border border-outline-variant bg-surface-container-low space-y-2">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-2">Recipient Trusts Split</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm text-primary mb-1">
+<span>Fairway Futures Foundation (60%)</span>
+<span class="font-bold">£280.80</span>
+</div>
+<div class="w-full bg-surface-container-high h-2">
+<div class="bg-primary-container h-full" style="width: 60%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm text-primary mb-1">
+<span>Junior Caddie Scholarship Fund (40%)</span>
+<span class="font-bold">£187.20</span>
+</div>
+<div class="w-full bg-surface-container-high h-2">
+<div class="bg-secondary h-full" style="width: 40%;"></div>
+</div>
+</div>
+</div>
+<!-- Impact Milestones Achieved -->
+<div class="p-space-md border border-outline-variant bg-surface-container-low">
+<div class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-2">Impact Milestones Attained</div>
+<ul class="space-y-2 text-body-sm font-body-sm text-on-surface">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="school">school</span>
+<span><strong>14 Youth Bursaries</strong> partially endowed</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="park">park</span>
+<span><strong>3 Grassroots Links</strong> turf maintenance grants</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="history_edu">history_edu</span>
+<span>Charter Benefactor Recognition 2024</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- SECTION 5: Score History Ledger Table -->
+<section class="bg-surface-container-lowest border border-outline-variant p-space-lg md:p-space-xl" id="history">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md border-b border-surface-container-high gap-2">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Permanent Audit Trail</span>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Attested Round Ledger</h2>
+</div>
+<div class="text-label-sm font-label-sm text-outline">
+          Showing 5 most recent verified attestations
+        </div>
+</div>
+<div class="overflow-x-auto mt-space-md">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<th class="py-3 px-4">Date</th>
+<th class="py-3 px-4">Sanctioned Course</th>
+<th class="py-3 px-4 text-center">Stableford Pts</th>
+<th class="py-3 px-4 text-center">Differential</th>
+<th class="py-3 px-4">Audit Status</th>
+<th class="py-3 px-4 text-right">Cryptographic Proof</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-mono text-outline">2024-10-24</td>
+<td class="py-3.5 px-4 font-medium text-primary">Sunningdale Golf Club (Old)</td>
+<td class="py-3.5 px-4 text-center font-bold text-primary font-headline-sm text-base">36</td>
+<td class="py-3.5 px-4 text-center font-mono text-secondary font-semibold">+6.8</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 font-label-sm text-[10px] text-primary bg-surface-container-high px-2 py-0.5 border border-outline">
+<span class="material-symbols-outlined text-[12px] text-primary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+                  Verified
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<a class="text-secondary font-label-sm text-label-sm font-bold hover:underline" href="#">Inspect Block #867104</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-mono text-outline">2024-10-21</td>
+<td class="py-3.5 px-4 font-medium text-primary">Royal St George's Links</td>
+<td class="py-3.5 px-4 text-center font-bold text-primary font-headline-sm text-base">39</td>
+<td class="py-3.5 px-4 text-center font-mono text-secondary font-semibold">+5.4</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 font-label-sm text-[10px] text-primary bg-surface-container-high px-2 py-0.5 border border-outline">
+<span class="material-symbols-outlined text-[12px] text-primary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+                  Verified
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<a class="text-secondary font-label-sm text-label-sm font-bold hover:underline" href="#">Inspect Block #866890</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-mono text-outline">2024-10-19</td>
+<td class="py-3.5 px-4 font-medium text-primary">Wentworth Club (West Course)</td>
+<td class="py-3.5 px-4 text-center font-bold text-primary font-headline-sm text-base">34</td>
+<td class="py-3.5 px-4 text-center font-mono text-outline font-semibold">+8.1</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 font-label-sm text-[10px] text-primary bg-surface-container-high px-2 py-0.5 border border-outline">
+<span class="material-symbols-outlined text-[12px] text-primary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+                  Verified
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<a class="text-secondary font-label-sm text-label-sm font-bold hover:underline" href="#">Inspect Block #866421</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-mono text-outline">2024-10-17</td>
+<td class="py-3.5 px-4 font-medium text-primary">Muirfield (The Honourable Company)</td>
+<td class="py-3.5 px-4 text-center font-bold text-secondary font-headline-sm text-base">41</td>
+<td class="py-3.5 px-4 text-center font-mono text-secondary font-semibold">+4.8</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 font-label-sm text-[10px] text-primary bg-surface-container-high px-2 py-0.5 border border-outline">
+<span class="material-symbols-outlined text-[12px] text-primary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+                  Verified
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<a class="text-secondary font-label-sm text-label-sm font-bold hover:underline" href="#">Inspect Block #866112</a>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-mono text-outline">2024-10-14</td>
+<td class="py-3.5 px-4 font-medium text-primary">Walton Heath Golf Club</td>
+<td class="py-3.5 px-4 text-center font-bold text-primary font-headline-sm text-base">38</td>
+<td class="py-3.5 px-4 text-center font-mono text-secondary font-semibold">+6.2</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 font-label-sm text-[10px] text-outline bg-surface-container-low px-2 py-0.5 border border-outline-variant">
+<span class="material-symbols-outlined text-[12px] text-secondary" data-icon="hourglass_top">hourglass_top</span>
+                  Settled
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<a class="text-secondary font-label-sm text-label-sm font-bold hover:underline" href="#">Inspect Block #865780</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-primary dark:bg-surface-container-lowest border-t border-primary-container dark:border-outline-variant text-on-primary dark:text-primary mt-space-xl">
+<div class="w-full py-space-xl px-space-lg md:px-margin max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Brand Logo & Copyright -->
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="text-headline-md font-headline-md text-on-primary dark:text-primary tracking-widest uppercase">
+          DIGITAL HEROES
+        </span>
+<p class="text-body-sm font-body-sm text-on-primary-container dark:text-on-surface-variant text-center md:text-left">
+          © 2024 Digital Heroes Trust &amp; Philanthropic Archive. Regulated &amp; Cryptographically Verified.
+        </p>
+</div>
+<!-- Governance Links -->
+<nav class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-label-sm font-label-sm">
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors focus:outline-none" href="#">
+          Audit Manifest
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors focus:outline-none" href="#">
+          Charter &amp; Governance
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors focus:outline-none" href="#">
+          Handicap Protocol
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors focus:outline-none" href="#">
+          Charity Allocation Ledger
+        </a>
+<a class="text-on-primary-container dark:text-on-surface-variant hover:text-on-primary dark:hover:text-primary transition-colors focus:outline-none" href="#">
+          Terms of Trust
+        </a>
+</nav>
+</div>
+</footer>
+</body></html>

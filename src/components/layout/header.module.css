@@ -1,10 +1,15 @@
+/* ============================================================
+   HEADER — Heritage & Fairway Ledger Design Language
+   Institutional navigation. Archival surface. Augusta green.
+   NOTE: Header.tsx uses Tailwind utility classes directly.
+         This file is kept for legacy module references only.
+   ============================================================ */
+
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--surface-container-lowest);
   border-bottom: 1px solid var(--border-subtle);
   transition: background var(--transition-normal);
 }
@@ -13,7 +18,7 @@
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
-  height: 74px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,16 +34,15 @@
 .brandGem {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--accent-mint) 0%, var(--accent-mint-deep) 100%);
+  background: var(--primary);
+  border: 1px solid var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-glow-mint);
-  color: var(--text-inverse);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.05rem;
+  color: var(--on-primary);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1rem;
   letter-spacing: -0.5px;
 }
 
@@ -48,18 +52,20 @@
 }
 
 .brandName {
-  font-size: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text-primary);
+  letter-spacing: 0.1em;
+  color: var(--primary);
   text-transform: uppercase;
 }
 
 .brandTagline {
-  font-size: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
   font-weight: 600;
-  letter-spacing: 1.5px;
-  color: var(--accent-mint);
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
   text-transform: uppercase;
 }
 
@@ -70,21 +76,23 @@
 }
 
 .navLink {
-  font-size: 0.92rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
   transition: color var(--transition-fast);
   padding: var(--space-2) var(--space-1);
   position: relative;
+  letter-spacing: 0.02em;
 }
 
 .navLink:hover {
-  color: var(--text-primary);
+  color: var(--primary);
 }
 
 .navLinkActive {
-  color: var(--accent-mint);
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .navLinkActive::after {
@@ -94,55 +102,56 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--accent-mint);
-  border-radius: var(--radius-full);
+  background: var(--secondary-gold);
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .signInBtn {
-  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-secondary);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
+  border: 1px solid transparent;
   transition: all var(--transition-fast);
 }
 
 .signInBtn:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--primary);
+  border-color: var(--border-subtle);
 }
 
 .joinBtn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--accent-mint);
-  color: #080C14;
-  font-size: 0.9rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   padding: 0.6rem 1.25rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow-mint);
+  border: 1px solid var(--primary);
   transition: all var(--transition-fast);
 }
 
 .joinBtn:hover {
-  background: #34D399;
-  transform: translateY(-1px);
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .mobileToggle {
   display: none;
   background: none;
-  border: none;
-  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  color: var(--primary);
   padding: var(--space-2);
   cursor: pointer;
 }
@@ -152,7 +161,8 @@
 }
 
 @media (max-width: 900px) {
-  .nav, .actions {
+  .nav,
+  .actions {
     display: none;
   }
 
@@ -164,7 +174,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    background: var(--bg-secondary);
+    background: var(--surface-container-lowest);
     border-bottom: 1px solid var(--border-subtle);
     padding: var(--space-6);
     position: absolute;
@@ -172,43 +182,54 @@
     left: 0;
     right: 0;
     box-shadow: var(--shadow-lg);
+    z-index: 49;
   }
 
   .mobileNavLink {
-    font-size: 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-secondary);
     padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .mobileNavLink:hover {
-    color: var(--accent-mint);
+    color: var(--primary);
   }
 
   .mobileActions {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    margin-top: var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--border-subtle);
+    margin-top: var(--space-2);
   }
 
   .mobileJoinBtn {
     text-align: center;
-    background: var(--accent-mint);
-    color: #080C14;
+    background: var(--primary);
+    color: var(--on-primary);
+    border: 1px solid var(--primary);
+    font-family: var(--font-sans);
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    font-size: 0.875rem;
   }
 
   .mobileSignInBtn {
     text-align: center;
     border: 1px solid var(--border-subtle);
-    color: var(--text-primary);
+    color: var(--primary);
+    font-family: var(--font-sans);
     font-weight: 600;
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .mobileSignInBtn:hover {
+    border-color: var(--border-focus);
   }
 }

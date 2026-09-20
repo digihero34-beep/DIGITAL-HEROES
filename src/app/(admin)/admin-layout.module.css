@@ -1,0 +1,245 @@
+.adminWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg, #0B1015);
+  color: var(--color-text, #F2EDE4);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+.adminHeader {
+  width: 100%;
+  background-color: var(--color-surface, #11171E);
+  border-bottom: 1px solid var(--color-border, rgba(242, 237, 228, 0.12));
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--space-6, 1.5rem);
+  height: 72px;
+}
+
+.brandCluster {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 1rem);
+}
+
+.brandTitle {
+  font-family: var(--font-serif, 'Times New Roman', serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-gold, #C9A84C);
+  text-decoration: none;
+}
+
+.clearanceBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-left: 1px solid var(--color-border, rgba(242, 237, 228, 0.15));
+  padding-left: 0.75rem;
+}
+
+.clearanceTag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.5rem;
+  background-color: rgba(201, 168, 76, 0.15);
+  color: var(--color-gold, #C9A84C);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  text-transform: uppercase;
+}
+
+.sessionHash {
+  font-family: monospace;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #8E9BAE);
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLink {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #8E9BAE);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  padding: 0.25rem 0;
+}
+
+.navLink:hover {
+  color: var(--color-text, #F2EDE4);
+}
+
+.navLinkActive {
+  color: var(--color-gold, #C9A84C);
+  border-bottom: 2px solid var(--color-gold, #C9A84C);
+}
+
+.operatorCluster {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.liveDrawPill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #10B981;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pulseDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10B981;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.trusteeProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-left: 1px solid var(--color-border, rgba(242, 237, 228, 0.15));
+  padding-left: 1rem;
+}
+
+.trusteeAvatar {
+  width: 34px;
+  height: 34px;
+  background-color: var(--color-surface-elevated, #1A222C);
+  border: 1px solid var(--color-gold, #C9A84C);
+  color: var(--color-gold, #C9A84C);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.trusteeInfo {
+  text-align: left;
+}
+
+.trusteeName {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text, #F2EDE4);
+  line-height: 1.2;
+}
+
+.trusteeRole {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold, #C9A84C);
+  line-height: 1.2;
+}
+
+.trustBanner {
+  background-color: #0E141B;
+  border-bottom: 1px solid var(--color-border, rgba(242, 237, 228, 0.1));
+  font-size: 0.75rem;
+  padding: 0.5rem var(--space-6, 1.5rem);
+}
+
+.trustBannerContent {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.trustBannerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.trustEncryptedTag {
+  color: var(--color-gold, #C9A84C);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.trustDivider {
+  color: var(--color-border, rgba(242, 237, 228, 0.2));
+}
+
+.trustLicense {
+  color: var(--color-text-muted, #8E9BAE);
+}
+
+.trustBannerRight {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--color-text-muted, #8E9BAE);
+}
+
+.operatorId {
+  font-family: monospace;
+  color: var(--color-text, #F2EDE4);
+}
+
+.latencyTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-gold, #C9A84C);
+  font-weight: 600;
+}
+
+.latencyDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-gold, #C9A84C);
+}
+
+.adminMain {
+  flex: 1;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-8, 2rem) var(--space-6, 1.5rem);
+}
+
+@media (max-width: 900px) {
+  .headerNav, .sessionHash, .trustLicense {
+    display: none;
+  }
+}

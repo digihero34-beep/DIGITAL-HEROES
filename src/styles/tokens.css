@@ -1,10 +1,10 @@
 :root {
   /* ============================================================
      DIGITAL HEROES — HERITAGE & FAIRWAY LEDGER DESIGN TOKENS
-     Source: src/digi-hero-stitch-design/heritage_fairway_ledger
+     Palette: Sovereign Augusta Greens & Championship Ochre Gold
      ============================================================ */
 
-  /* Palette: Sovereign Augusta Greens & Championship Ochre Gold */
+  /* Primary — Deep Augusta Green */
   --primary: #001910;
   --on-primary: #ffffff;
   --primary-container: #132e24;
@@ -14,6 +14,7 @@
   --on-primary-fixed: #042017;
   --on-primary-fixed-variant: #314c41;
 
+  /* Secondary — Championship Ochre Gold */
   --secondary: #775a00;
   --secondary-gold: #c59b27;
   --on-secondary: #ffffff;
@@ -24,6 +25,7 @@
   --on-secondary-fixed: #251a00;
   --on-secondary-fixed-variant: #5a4300;
 
+  /* Tertiary — Deep Forest */
   --tertiary: #001910;
   --on-tertiary: #ffffff;
   --tertiary-container: #003022;
@@ -33,7 +35,7 @@
   --on-tertiary-fixed: #002116;
   --on-tertiary-fixed-variant: #244e3e;
 
-  /* Archival Vellum & Layered Surface Containers */
+  /* Archival Vellum Surface */
   --background: #f2fcf6;
   --on-background: #141d1a;
   --surface: #f2fcf6;
@@ -56,6 +58,7 @@
   --border-medium: #727974;
   --border-focus: #132e24;
   --border-gold: #c59b27;
+  --border-hover: #001910;
 
   /* Semantic Statuses */
   --error: #ba1a1a;
@@ -70,6 +73,55 @@
   --inverse-surface: #29322f;
   --inverse-on-surface: #e9f3ee;
   --inverse-primary: #afcdbe;
+
+  /* ============================================================
+     HERITAGE SEMANTIC ALIASES
+     These map page-level CSS modules to the canonical palette
+     ============================================================ */
+
+  /* Text Hierarchy */
+  --text-primary: #141d1a;
+  --text-secondary: #424845;
+  --text-muted: #727974;
+  --text-inverse: #ffffff;
+
+  /* Accent colours */
+  --accent-gold: #c59b27;
+  --accent-gold-glow: rgba(197, 155, 39, 0.15);
+  --accent-green: #132e24;
+
+  /* Surface / Background aliases */
+  --bg-primary: #f2fcf6;
+  --bg-secondary: #ecf6f1;
+  --bg-tertiary: #e6f0eb;
+  --bg-card: #ffffff;
+  --bg-elevated: #ecf6f1;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-inverse: #001910;
+
+  /* Border aliases */
+  --border-card: #c2c8c3;
+
+  /* Status — Active (uses heritage green) */
+  --status-active-bg: rgba(19, 46, 36, 0.08);
+  --status-active-text: #132e24;
+
+  /* Status — Warning (uses championship gold) */
+  --status-warning-bg: rgba(197, 155, 39, 0.1);
+  --status-warning-text: #775a00;
+
+  /* Status — Danger */
+  --status-danger-bg: #ffdad6;
+  --status-danger-text: #ba1a1a;
+
+  /* Status — Info */
+  --status-info-bg: rgba(19, 46, 36, 0.06);
+  --status-info-text: #132e24;
+
+  /* Typography */
+  --font-serif: var(--font-eb-garamond), 'EB Garamond', Georgia, serif;
+  --font-sans: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
 
   /* Spacing Scale */
   --space-xs: 0.25rem;
@@ -90,29 +142,37 @@
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
+  --space-24: 6rem;
 
-  /* Architectural Sharp Geometry */
+  /* Layout */
+  --container-max: 1440px;
+
+  /* Geometry — rectilinear by default, subtle rounding permitted */
   --radius-sharp: 0px;
   --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
-  /* Typography Fonts */
-  --font-serif: var(--font-eb-garamond), 'EB Garamond', Georgia, serif;
-  --font-sans: var(--font-manrope), 'Manrope', -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-full: 2px;
 
   /* Elevation */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+  --shadow-elevated: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
 
   /* Transitions */
   --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --container-max: 1600px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -120,4 +180,116 @@
     --transition-fast: 0ms;
     --transition-normal: 0ms;
   }
+}
+
+/* ============================================================
+   THEME 02 — ROYAL NAVY & SOVEREIGN GOLD
+   Championship R&A Charter: Midnight Navy & Brass Gold
+   ============================================================ */
+[data-theme="navy"] {
+  --primary: #08192d;
+  --on-primary: #ffffff;
+  --primary-container: #0f2b48;
+  --on-primary-container: #7a97ba;
+  --primary-fixed: #cbd8ea;
+  --primary-fixed-dim: #afc0d9;
+
+  --secondary: #8a6d00;
+  --secondary-gold: #d4af37;
+  --on-secondary: #ffffff;
+  --secondary-container: #dfb838;
+  --on-secondary-container: #5c4700;
+
+  --tertiary: #08192d;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #0f2b48;
+  --on-tertiary-container: #7a97ba;
+
+  --background: #f4f6f9;
+  --on-background: #0b1521;
+  --surface: #f4f6f9;
+  --surface-bright: #f4f6f9;
+  --surface-dim: #d0d7e2;
+  --surface-variant: #d8e0ec;
+  --on-surface: #0b1521;
+  --on-surface-variant: #3a4958;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #e8edf3;
+  --surface-container: #dee4ed;
+  --surface-container-high: #d4dce7;
+  --surface-container-highest: #cad4e1;
+
+  --outline: #607080;
+  --outline-variant: #c0cbd8;
+  --border-subtle: #c0cbd8;
+  --border-medium: #607080;
+  --border-focus: #0f2b48;
+  --border-gold: #d4af37;
+  --border-hover: #08192d;
+
+  --text-primary: #0b1521;
+  --text-secondary: #3a4958;
+  --text-muted: #607080;
+  --accent-gold: #d4af37;
+  --accent-green: #0f2b48;
+  --bg-primary: #f4f6f9;
+  --bg-secondary: #e8edf3;
+  --bg-tertiary: #dee4ed;
+  --bg-inverse: #08192d;
+}
+
+/* ============================================================
+   THEME 03 — HIGHLAND TARTAN SLATE & SAGE
+   Modern Cryptographic Sovereign: Obsidian Slate & Algorithmic Mint
+   ============================================================ */
+[data-theme="slate"] {
+  --primary: #141a18;
+  --on-primary: #ffffff;
+  --primary-container: #222c29;
+  --on-primary-container: #85a399;
+  --primary-fixed: #cbe0d8;
+  --primary-fixed-dim: #a3c4b7;
+
+  --secondary: #059669;
+  --secondary-gold: #10b981;
+  --on-secondary: #ffffff;
+  --secondary-container: #34d399;
+  --on-secondary-container: #064e3b;
+
+  --tertiary: #141a18;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #222c29;
+  --on-tertiary-container: #85a399;
+
+  --background: #eef2f0;
+  --on-background: #0f1412;
+  --surface: #eef2f0;
+  --surface-bright: #eef2f0;
+  --surface-dim: #c8d3ce;
+  --surface-variant: #d3ded9;
+  --on-surface: #0f1412;
+  --on-surface-variant: #3d4a45;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #e1e8e5;
+  --surface-container: #d6e0db;
+  --surface-container-high: #ccd6d1;
+  --surface-container-highest: #c2ccc7;
+
+  --outline: #667570;
+  --outline-variant: #b8c5c0;
+  --border-subtle: #b8c5c0;
+  --border-medium: #667570;
+  --border-focus: #222c29;
+  --border-gold: #10b981;
+  --border-hover: #141a18;
+
+  --text-primary: #0f1412;
+  --text-secondary: #3d4a45;
+  --text-muted: #667570;
+  --accent-gold: #10b981;
+  --accent-green: #222c29;
+  --bg-primary: #eef2f0;
+  --bg-secondary: #e1e8e5;
+  --bg-tertiary: #d6e0db;
+  --bg-inverse: #141a18;
 }

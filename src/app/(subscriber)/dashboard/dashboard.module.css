@@ -1,7 +1,11 @@
+/* ============================================================
+   SUBSCRIBER DASHBOARD — Heritage & Fairway Ledger Design
+   ============================================================ */
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-12) var(--space-6) var(--space-24);
+  padding: var(--space-12) var(--space-6) var(--space-16);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -20,34 +24,38 @@
 .welcomeArea {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--accent-mint);
+  letter-spacing: 0.12em;
+  color: var(--primary-container);
   background: var(--status-active-bg);
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  padding: 0.25rem 0.65rem;
   width: fit-content;
 }
 
 .title {
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -0.5px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
-  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
   color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .quickActions {
@@ -58,13 +66,14 @@
 }
 
 .actionBtn {
-  background: var(--bg-secondary);
+  background: var(--surface-container-lowest);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
@@ -72,18 +81,20 @@
 }
 
 .actionBtn:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-focus);
+  color: var(--primary);
 }
 
 .primaryActionBtn {
-  background: var(--accent-mint);
-  color: #080C14;
-  font-size: 0.85rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 700;
-  padding: 0.5rem 1.2rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-glow-mint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
   transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
@@ -91,8 +102,8 @@
 }
 
 .primaryActionBtn:hover {
-  background: #34D399;
-  transform: translateY(-1px);
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .widgetsRow {

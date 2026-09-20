@@ -1,7 +1,12 @@
+/* ============================================================
+   WINNER VERIFICATION — Heritage & Fairway Ledger Design
+   Audit ledger. Proof submission. Gold accents for prize.
+   ============================================================ */
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-8) var(--space-4) var(--space-24);
+  padding: var(--space-8) var(--space-6) var(--space-16);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -11,92 +16,99 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-6);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-1) var(--space-3);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  background: rgba(197, 155, 39, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-gold);
+  color: var(--secondary);
   width: fit-content;
 }
 
 .badgeDot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-gold);
-  box-shadow: 0 0 8px var(--accent-gold);
+  background-color: var(--secondary-gold);
 }
 
 .title {
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 400;
+  color: var(--primary);
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   color: var(--text-secondary);
-  max-width: 680px;
-  line-height: 1.5;
+  max-width: 640px;
+  line-height: 1.6;
 }
 
-/* Stat Cards */
+/* Summary Stat Cards */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+  border: 1px solid var(--border-subtle);
 }
 
 .statCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
+  background: var(--surface-container-lowest);
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-6) var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
 }
 
+.statCard:last-child {
+  border-right: none;
+}
+
 .statLabel {
-  font-size: 0.8125rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
 }
 
 .statValue {
+  font-family: var(--font-mono);
   font-size: 2rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .statValueGold {
-  color: var(--accent-gold);
+  color: var(--secondary);
 }
 
 .statValueMint {
-  color: var(--accent-mint);
+  color: var(--primary-container);
 }
 
-/* Table Card */
+/* Winnings Ledger Table */
 .tableCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -108,6 +120,7 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  font-family: var(--font-sans);
   font-size: 0.875rem;
 }
 
@@ -115,60 +128,73 @@
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--border-subtle);
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
 .td {
   padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+  border-bottom: 1px solid var(--border-subtle);
   color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.td:first-child {
+  font-family: var(--font-sans);
 }
 
 /* Status Badges */
 .statusBadge {
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  padding: 2px 8px;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  border: 1px solid;
 }
 
 .statusPendingProof {
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  color: var(--accent-gold);
+  background: rgba(197, 155, 39, 0.1);
+  border-color: rgba(197, 155, 39, 0.3);
+  color: var(--secondary);
 }
 
 .statusSubmitted {
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: var(--accent-blue);
+  background: var(--status-info-bg);
+  border-color: rgba(19, 46, 36, 0.2);
+  color: var(--primary-container);
 }
 
 .statusApproved {
   background: var(--status-active-bg);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-color: rgba(19, 46, 36, 0.2);
   color: var(--status-active-text);
 }
 
 .statusRejected {
-  background: var(--status-danger-bg);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: var(--status-danger-text);
+  background: var(--error-container);
+  border-color: rgba(186, 26, 26, 0.2);
+  color: var(--on-error-container);
 }
 
 .claimBtn {
-  padding: 0.5rem 0.875rem;
-  background: linear-gradient(135deg, #F59E0B, #D97706);
-  color: #FFFFFF;
-  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.875rem;
+  background: var(--secondary-gold);
+  color: var(--primary);
+  border: 1px solid var(--secondary-gold);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -176,10 +202,11 @@
 }
 
 .claimBtn:hover {
-  box-shadow: var(--shadow-glow-gold);
+  background: var(--secondary-fixed-dim);
+  border-color: var(--secondary-fixed-dim);
 }
 
-/* Claim Form Layout */
+/* Claim Form */
 .claimWrapper {
   max-width: 680px;
   margin: 0 auto;
@@ -189,10 +216,8 @@
 }
 
 .claimCard {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
+  background: var(--surface-container-lowest);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
@@ -201,10 +226,9 @@
 
 .dropZone {
   border: 2px dashed var(--border-subtle);
-  border-radius: var(--radius-md);
   padding: var(--space-8);
   text-align: center;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--surface-container-low);
   cursor: pointer;
   transition: all var(--transition-fast);
   display: flex;
@@ -214,11 +238,11 @@
 }
 
 .dropZone:hover {
-  border-color: var(--accent-mint);
-  background: rgba(16, 185, 129, 0.05);
+  border-color: var(--border-focus);
+  background: var(--status-active-bg);
 }
 
 .dropZoneActive {
-  border-color: var(--accent-gold);
-  background: rgba(245, 158, 11, 0.05);
+  border-color: var(--secondary-gold);
+  background: rgba(197, 155, 39, 0.05);
 }
