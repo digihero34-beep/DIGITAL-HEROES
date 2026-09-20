@@ -33,16 +33,10 @@ export default async function AdminDashboardPage() {
       latencyMs: 14,
     },
     pendingVerificationsCount: 0,
-    ytdPhilanthropicYieldCents: 142894000,
+    ytdPhilanthropicYieldCents: 0,
     activeSubscribersCount: 0,
     totalSubscribersCount: 0,
-    nextDraw: {
-      id: 'd0000000-0000-0000-0000-000000000142',
-      drawNumber: 142,
-      scheduledFor: '2026-09-30T18:00:00.000Z',
-      status: 'draft',
-      totalPoolCents: 10000000,
-    },
+    nextDraw: null,
   };
 
   const verificationItems = queueRes.success && queueRes.data ? queueRes.data : [];

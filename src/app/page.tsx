@@ -2,7 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
 import { DrawSimulator } from '@/components/home/DrawSimulator';
+import { DrawCountdown } from '@/components/home/DrawCountdown';
 import { getCharitiesAction } from '@/modules/charities/charity-actions';
+import { getPublicPlatformStats } from '@/modules/platform/platform-actions';
 
 export const metadata = {
   title: 'Digital Heroes — Play for Purpose. Enter the Draw.',
@@ -11,9 +13,56 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const charityResult = await getCharitiesAction();
+  const [charityResult, statsResult] = await Promise.all([
+    getCharitiesAction(),
+    getPublicPlatformStats(),
+  ]);
+
   const charities = charityResult.success ? charityResult.data : [];
   const featuredCharity = charities.find((c) => c.isFeatured) || charities[0];
+
+  const stats = statsResult.success && statsResult.data ? statsResult.data : {
+    upcomingDraw: {
+      id: 'd0000000-0000-0000-0000-000000000142',
+      drawNumber: 142,
+      scheduledFor: '2026-09-30T18:00:00.000Z',
+      status: 'draft',
+      totalPoolCents: 10000000,
+      tier5PoolCents: 5500000,
+      tier4PoolCents: 2625000,
+      tier3PoolCents: 1875000,
+    },
+    publishedDrawsCount: 0,
+    totalSubscribersCount: 0,
+    activeSubscribersCount: 0,
+    accreditedCharitiesCount: charities.length,
+    totalPhilanthropicYieldCents: 0,
+    featuredCharityYieldCents: 0,
+  };
+
+  const drawNumber = stats.upcomingDraw?.drawNumber ?? 142;
+  const drawPoolCents = stats.upcomingDraw?.totalPoolCents ?? 10000000;
+  const formattedPool = (drawPoolCents / 100).toLocaleString('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 0,
+  });
+
+  const formattedTotalYield = (stats.totalPhilanthropicYieldCents / 100).toLocaleString('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 0,
+  });
+
+  const formattedFeaturedYield = (stats.featuredCharityYieldCents / 100).toLocaleString('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 0,
+  });
+
+  const entropyCommit = stats.upcomingDraw?.id
+    ? `0x${stats.upcomingDraw.id.replace(/-/g, '').slice(0, 8).toUpperCase()}...${stats.upcomingDraw.id.replace(/-/g, '').slice(-4).toUpperCase()}`
+    : '0x9B4F28...C5A3';
 
   return (
     <div className={styles.pageWrapper}>
@@ -39,8 +88,8 @@ export default async function HomePage() {
           <div className={styles.registryDivider} />
 
           <div className={`${styles.registryItem} ${styles.registryItemCenter}`}>
-            <span className={styles.registryLabel}>DRAW #142 ENTROPY COMMIT:</span>
-            <span className={styles.registryMono}>0x9B4F28...C5A3</span>
+            <span className={styles.registryLabel}>DRAW #{drawNumber} ENTROPY COMMIT:</span>
+            <span className={styles.registryMono}>{entropyCommit}</span>
           </div>
 
           <div className={styles.registryDivider} />
@@ -48,7 +97,7 @@ export default async function HomePage() {
           <div className={`${styles.registryItem} ${styles.registryItemRight}`}>
             <span className={styles.registryLiveDot} />
             <span className={styles.registryText}>
-              NEXT PROTOCOL DRAW: <strong className={styles.registryCountdown}>02D 14H 39M</strong>
+              NEXT PROTOCOL DRAW: <DrawCountdown scheduledFor={stats.upcomingDraw?.scheduledFor} className={styles.registryCountdown} />
             </span>
           </div>
         </div>
@@ -98,8 +147,8 @@ export default async function HomePage() {
           <div className={`${styles.triptychPlate} ${styles.platePrize}`}>
             <div className={styles.plateTopRuleGold} />
             <div className={styles.plateHeader}>
-              <span className={styles.plateBadgeGold}>DRAW #142 • FEATURED EXPERIENCE</span>
-              <span className={styles.plateValuePill}>VALUED £38,500</span>
+              <span className={styles.plateBadgeGold}>DRAW #{drawNumber} • FEATURED EXPERIENCE</span>
+              <span className={styles.plateValuePill}>EST. POOL {formattedPool}</span>
             </div>
             <h3 className={styles.plateTitle}>The St Andrews Heritage Experience</h3>
 
@@ -133,7 +182,7 @@ export default async function HomePage() {
             </ul>
             <div className={styles.plateFooter}>
               <Link href="/pricing" className={styles.plateLink}>
-                Enter Draw #142 →
+                Enter Draw #{drawNumber} →
               </Link>
               <span className={styles.plateMetaMono}>Capped: 5,000 entries</span>
             </div>
@@ -144,20 +193,20 @@ export default async function HomePage() {
             <div className={styles.plateTopRuleGreen} />
             <div className={styles.plateHeader}>
               <span className={styles.plateBadgeGreen}>MANDATORY TRUST YIELD</span>
-              <span className={styles.plateGuaranteePill}>50.00% MIN GUARANTEED</span>
+              <span className={styles.plateGuaranteePill}>10.00% MIN GUARANTEED</span>
             </div>
             <div className={styles.plateMetricRow}>
-              <span className={styles.plateMetricBig}>£1,428,940</span>
+              <span className={styles.plateMetricBig}>{formattedTotalYield}</span>
               <span className={styles.plateMetricLabel}>Total Disbursed to UK Charities</span>
             </div>
             <ul className={styles.plateCheckList}>
               <li className={styles.plateCheckItem}>
                 <span className={styles.checkIconGreen}>✓</span>
-                <span>24 Accredited UK Beneficiary Trusts</span>
+                <span>{stats.accreditedCharitiesCount} Accredited UK Beneficiary Trusts</span>
               </li>
               <li className={styles.plateCheckItem}>
                 <span className={styles.checkIconGreen}>✓</span>
-                <span>3,120 Junior Golf Scholars Funded YTD</span>
+                <span>{stats.activeSubscribersCount > 0 ? `${stats.activeSubscribersCount} Active Patrons Participating` : 'Patron Pledges Enrolled'}</span>
               </li>
               <li className={styles.plateCheckItem}>
                 <span className={styles.checkIconGreen}>✓</span>
@@ -168,7 +217,7 @@ export default async function HomePage() {
               <Link href="/charities" className={styles.plateLink}>
                 Browse Trust Directory →
               </Link>
-              <span className={styles.plateMetaMono}>Q2 Net Yield: 58.4%</span>
+              <span className={styles.plateMetaMono}>100% Direct Escrow</span>
             </div>
           </div>
 
@@ -177,7 +226,7 @@ export default async function HomePage() {
             <div className={styles.plateTopRuleSpruce} />
             <div className={styles.plateHeader}>
               <span className={styles.plateBadgeSpruce}>DETERMINISTIC RIGOR</span>
-              <span className={styles.plateAuditPill}>141 / 141 AUDITED</span>
+              <span className={styles.plateAuditPill}>{stats.publishedDrawsCount} AUDITED DRAWS</span>
             </div>
             <div className={styles.plateMetricRow}>
               <span className={styles.plateMetricBig}>SHA-256</span>
@@ -211,17 +260,17 @@ export default async function HomePage() {
         <div className={styles.auditStrip}>
           <div className={styles.auditItem}>
             <span className={styles.auditLabel}>Total Donated to Date</span>
-            <span className={styles.auditValue}>£1,428,940</span>
+            <span className={styles.auditValue}>{formattedTotalYield}</span>
           </div>
           <span className={styles.auditRule} />
           <div className={styles.auditItem}>
             <span className={styles.auditLabel}>Charity Minimum Yield</span>
-            <span className={`${styles.auditValue} ${styles.auditValueGold}`}>50.00%</span>
+            <span className={`${styles.auditValue} ${styles.auditValueGold}`}>10.00% MIN</span>
           </div>
           <span className={styles.auditRule} />
           <div className={styles.auditItem}>
             <span className={styles.auditLabel}>Provably Fair Draws</span>
-            <span className={styles.auditValue}>141 / 141</span>
+            <span className={styles.auditValue}>{stats.publishedDrawsCount} Verified</span>
           </div>
           <span className={styles.auditRule} />
           <div className={styles.auditItem}>
@@ -247,7 +296,7 @@ export default async function HomePage() {
             monthly draws and allocate funds across prize tiers and charity.
           </p>
         </div>
-        <DrawSimulator />
+        <DrawSimulator initialPoolCents={drawPoolCents} />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -283,7 +332,7 @@ export default async function HomePage() {
               phase: 'STEP 03 • PUBLIC AUDIT VERIFICATION',
               title: 'Public Verifier Manifest',
               desc: 'Independent audit firms & participants run our open Python verification script in terminal to independently prove winning index calculation.',
-              code: 'CLI: `dh-verify --draw=142 --audit-all`',
+              code: `CLI: \`dh-verify --draw=${drawNumber} --audit-all\``,
             },
           ].map((item) => (
             <div key={item.phase} className={styles.phaseCard}>
@@ -358,8 +407,8 @@ export default async function HomePage() {
                   <span className={styles.spotlightStatLabel}>Direct Remittance</span>
                 </div>
                 <div className={styles.spotlightStat}>
-                  <span className={styles.spotlightStatValue}>£542k</span>
-                  <span className={styles.spotlightStatLabel}>Disbursed YTD</span>
+                  <span className={styles.spotlightStatValue}>{formattedFeaturedYield}</span>
+                  <span className={styles.spotlightStatLabel}>Allocated to Date</span>
                 </div>
               </div>
 

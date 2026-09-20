@@ -1,0 +1,174 @@
+'use server';
+
+import { supabaseAdmin } from '@/infrastructure/database/supabase-admin';
+import { ActionResult } from '@/modules/auth/auth-actions';
+
+export interface PublicUpcomingDraw {
+  id: string;
+  drawNumber: number;
+  scheduledFor: string;
+  status: string;
+  totalPoolCents: number;
+  tier5PoolCents: number;
+  tier4PoolCents: number;
+  tier3PoolCents: number;
+}
+
+export interface PublicPlatformStats {
+  upcomingDraw: PublicUpcomingDraw | null;
+  publishedDrawsCount: number;
+  totalSubscribersCount: number;
+  activeSubscribersCount: number;
+  accreditedCharitiesCount: number;
+  totalPhilanthropicYieldCents: number;
+  featuredCharityYieldCents: number;
+}
+
+export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatformStats>> {
+  try {
+    // 1. Query Upcoming Draw with Prize Pool
+    const { data: latestDraw } = await supabaseAdmin
+      .from('draws')
+      .select(`
+        id,
+        draw_number,
+        scheduled_for,
+        status,
+        prize_pools (
+          total_pool_cents,
+          tier_5_pool_cents,
+          tier_4_pool_cents,
+          tier_3_pool_cents
+        )
+      `)
+      .in('status', ['draft', 'scheduled', 'simulating'])
+      .order('scheduled_for', { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+    let upcomingDraw: PublicUpcomingDraw | null = null;
+    if (latestDraw) {
+      const prizePool = Array.isArray(latestDraw.prize_pools)
+        ? latestDraw.prize_pools[0]
+        : latestDraw.prize_pools;
+
+      upcomingDraw = {
+        id: latestDraw.id,
+        drawNumber: latestDraw.draw_number,
+        scheduledFor: latestDraw.scheduled_for,
+        status: latestDraw.status,
+        totalPoolCents: prizePool?.total_pool_cents ?? 10000000,
+        tier5PoolCents: prizePool?.tier_5_pool_cents ?? 5500000,
+        tier4PoolCents: prizePool?.tier_4_pool_cents ?? 2625000,
+        tier3PoolCents: prizePool?.tier_3_pool_cents ?? 1875000,
+      };
+    }
+
+    // 2. Published Draws Count
+    const { count: publishedDrawsCount } = await supabaseAdmin
+      .from('draws')
+      .select('*', { count: 'exact', head: true })
+      .in('status', ['published', 'completed']);
+
+    // 3. Active Subscribers and Total Profiles
+    const { count: activeSubsCount } = await supabaseAdmin
+      .from('subscriptions')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active');
+
+    const { count: totalProfilesCount } = await supabaseAdmin
+      .from('profiles')
+      .select('*', { count: 'exact', head: true });
+
+    // 4. Accredited Charities Count
+    const { count: accreditedCharitiesCount } = await supabaseAdmin
+      .from('charities')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
+
+    // 5. Featured Charity Record
+    const { data: featuredCharity } = await supabaseAdmin
+      .from('charities')
+      .select('id')
+      .eq('is_featured', true)
+      .eq('is_active', true)
+      .limit(1)
+      .maybeSingle();
+
+    // 6. Real Philanthropic Yield Calculation
+    const { data: donations } = await supabaseAdmin
+      .from('charity_donations')
+      .select('amount_cents, charity_id');
+
+    let totalDonationsCents = 0;
+    let featuredDonationsCents = 0;
+    if (donations) {
+      for (const d of donations) {
+        totalDonationsCents += d.amount_cents || 0;
+        if (featuredCharity && d.charity_id === featuredCharity.id) {
+          featuredDonationsCents += d.amount_cents || 0;
+        }
+      }
+    }
+
+    // Active subscriptions charity yield
+    const { data: activeSubs } = await supabaseAdmin
+      .from('subscriptions')
+      .select('user_id, plan_id')
+      .eq('status', 'active');
+
+    let totalSubscriptionPledgesCents = 0;
+    let featuredSubscriptionPledgesCents = 0;
+
+    if (activeSubs && activeSubs.length > 0) {
+      const userIds = activeSubs.map((s) => s.user_id);
+      const { data: prefs } = await supabaseAdmin
+        .from('user_charity_preferences')
+        .select('user_id, charity_id, contribution_percentage')
+        .in('user_id', userIds);
+
+      const prefMap = new Map<string, { charity_id: string; contribution_percentage: number }>();
+      if (prefs) {
+        for (const p of prefs) {
+          prefMap.set(p.user_id, p);
+        }
+      }
+
+      for (const sub of activeSubs) {
+        // Plan cost: yearly is £240/yr (24000 cents), monthly is £25/mo (2500 cents)
+        const planPriceCents = sub.plan_id === 'plan_yearly' ? 24000 : 2500;
+        const userPref = prefMap.get(sub.user_id);
+        const percentage = userPref?.contribution_percentage ?? 10;
+        const charityAmountCents = Math.round((planPriceCents * percentage) / 100);
+
+        totalSubscriptionPledgesCents += charityAmountCents;
+
+        if (featuredCharity && userPref?.charity_id === featuredCharity.id) {
+          featuredSubscriptionPledgesCents += charityAmountCents;
+        } else if (!userPref) {
+          // If no specific charity selected, default allocation goes to featured charity
+          featuredSubscriptionPledgesCents += charityAmountCents;
+        }
+      }
+    }
+
+    const totalPhilanthropicYieldCents = totalDonationsCents + totalSubscriptionPledgesCents;
+    const featuredCharityYieldCents = featuredDonationsCents + featuredSubscriptionPledgesCents;
+
+    return {
+      success: true,
+      data: {
+        upcomingDraw,
+        publishedDrawsCount: publishedDrawsCount ?? 0,
+        totalSubscribersCount: totalProfilesCount ?? 0,
+        activeSubscribersCount: activeSubsCount ?? 0,
+        accreditedCharitiesCount: accreditedCharitiesCount ?? 0,
+        totalPhilanthropicYieldCents,
+        featuredCharityYieldCents,
+      },
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to query platform stats.';
+    return { success: false, error: message, code: 'PLATFORM_STATS_ERROR' };
+  }
+}

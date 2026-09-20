@@ -82,11 +82,62 @@ export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [countdown, setCountdown] = useState<string>('Loading...');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    async function loadUpcomingDraw() {
+      try {
+        const res = await fetch('/api/draws/upcoming');
+        const json = await res.json();
+        const scheduledFor = json.data?.scheduledFor;
+
+        if (!scheduledFor) {
+          setCountdown('Scheduled Soon');
+          return;
+        }
+
+        const target = new Date(scheduledFor).getTime();
+
+        const updateTicker = () => {
+          const now = Date.now();
+          const diff = target - now;
+
+          if (diff <= 0) {
+            setCountdown('Draw Imminent');
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const mins = Math.floor((diff / 1000 / 60) % 60);
+
+          const dStr = String(days).padStart(2, '0');
+          const hStr = String(hours).padStart(2, '0');
+          const mStr = String(mins).padStart(2, '0');
+
+          setCountdown(`${dStr}d ${hStr}h ${mStr}m`);
+        };
+
+        updateTicker();
+        timer = setInterval(updateTicker, 60000);
+      } catch {
+        setCountdown('End of Month');
+      }
+    }
+
+    loadUpcomingDraw();
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, []);
 
   const isAuthPage = pathname === '/login' || pathname === '/register';
@@ -281,7 +332,7 @@ export function Header() {
                   letterSpacing: '0.04em',
                 }}
               >
-                14d 02h 39m
+                {countdown}
               </span>
             </div>
           </div>

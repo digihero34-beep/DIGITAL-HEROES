@@ -49,4 +49,6 @@ export interface DrawRecord {
   publishedBy?: string | null;
   createdAt: string;
   updatedAt: string;
+  totalPoolCents?: number;
 }
+

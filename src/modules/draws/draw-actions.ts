@@ -264,8 +264,13 @@ export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord |
 
     const { data: row, error } = await supabase
       .from('draws')
-      .select('*')
-      .in('status', ['draft', 'simulated'])
+      .select(`
+        *,
+        prize_pools (
+          total_pool_cents
+        )
+      `)
+      .in('status', ['draft', 'scheduled', 'simulated'])
       .order('scheduled_for', { ascending: true })
       .limit(1)
       .maybeSingle();
@@ -273,6 +278,10 @@ export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord |
     if (error || !row) {
       return { success: true, data: null };
     }
+
+    const prizePool = Array.isArray(row.prize_pools)
+      ? row.prize_pools[0]
+      : row.prize_pools;
 
     return {
       success: true,
@@ -287,6 +296,7 @@ export async function getUpcomingDrawAction(): Promise<ActionResult<DrawRecord |
         publishedBy: row.published_by,
         createdAt: row.created_at,
         updatedAt: row.updated_at,
+        totalPoolCents: prizePool?.total_pool_cents ?? 10000000,
       },
     };
   } catch (error) {

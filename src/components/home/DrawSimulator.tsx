@@ -12,7 +12,11 @@ function generateRandomScores(count: number, min: number, max: number): number[]
   return Array.from(nums).sort((a, b) => a - b);
 }
 
-export function DrawSimulator() {
+interface DrawSimulatorProps {
+  initialPoolCents?: number;
+}
+
+export function DrawSimulator({ initialPoolCents = 10000000 }: DrawSimulatorProps) {
   const [userScores, setUserScores] = useState<number[]>([36, 38, 40, 42, 44]);
   const [drawnNumbers, setDrawnNumbers] = useState<number[]>([38, 40, 42, 15, 29]);
   const [charityPercent, setCharityPercent] = useState<number>(10);
@@ -39,12 +43,12 @@ export function DrawSimulator() {
     setUserScores(newScores);
   }
 
-  // Sample £50,000 monthly pool simulation
-  const samplePoolCents = 5000000;
-  const tier5Cents = Math.round(samplePoolCents * 0.40);
-  const tier4Cents = Math.round(samplePoolCents * 0.35);
-  const tier3Cents = Math.round(samplePoolCents * 0.25);
-  const simulatedCharityCents = Math.round((samplePoolCents * charityPercent) / 100);
+  // Active monthly pool from official draw ledger
+  const activePoolCents = initialPoolCents;
+  const tier5Cents = Math.round(activePoolCents * 0.40);
+  const tier4Cents = Math.round(activePoolCents * 0.35);
+  const tier3Cents = Math.round(activePoolCents * 0.25);
+  const simulatedCharityCents = Math.round((activePoolCents * charityPercent) / 100);
 
   function formatCurrency(cents: number): string {
     return `£${(cents / 100).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;

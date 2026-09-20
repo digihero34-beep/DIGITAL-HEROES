@@ -46,16 +46,42 @@ export async function getAdminPlatformStatsAction(): Promise<ActionResult<AdminP
       .limit(1)
       .maybeSingle();
 
-    // 4. Philanthropic Yield Calculation
+    // 4. Philanthropic Yield Calculation from database records
     const { data: donations } = await supabaseAdmin
       .from('charity_donations')
-      .select('amount_cents')
-      .eq('status', 'succeeded');
+      .select('amount_cents');
 
     const totalDonationsCents = (donations || []).reduce((acc, curr) => acc + (curr.amount_cents || 0), 0);
-    // PRD § 08: Minimum 10% gross contribution from £100,000 baseline pool + direct donations
-    const baselineCharityYieldCents = 142894000; // £1,428,940 baseline institutional endowment + yield
-    const ytdPhilanthropicYieldCents = baselineCharityYieldCents + totalDonationsCents;
+
+    // Calculate subscription charity yield from active subscriptions
+    const { data: activeSubs } = await supabaseAdmin
+      .from('subscriptions')
+      .select('user_id, plan_id')
+      .eq('status', 'active');
+
+    let totalSubscriptionYieldCents = 0;
+    if (activeSubs && activeSubs.length > 0) {
+      const userIds = activeSubs.map((s) => s.user_id);
+      const { data: prefs } = await supabaseAdmin
+        .from('user_charity_preferences')
+        .select('user_id, contribution_percentage')
+        .in('user_id', userIds);
+
+      const prefMap = new Map<string, number>();
+      if (prefs) {
+        for (const p of prefs) {
+          prefMap.set(p.user_id, p.contribution_percentage);
+        }
+      }
+
+      for (const sub of activeSubs) {
+        const planPriceCents = sub.plan_id === 'plan_yearly' ? 24000 : 2500;
+        const percentage = prefMap.get(sub.user_id) ?? 10;
+        totalSubscriptionYieldCents += Math.round((planPriceCents * percentage) / 100);
+      }
+    }
+
+    const ytdPhilanthropicYieldCents = totalDonationsCents + totalSubscriptionYieldCents;
 
     let nextDraw = null;
     if (latestDraw) {

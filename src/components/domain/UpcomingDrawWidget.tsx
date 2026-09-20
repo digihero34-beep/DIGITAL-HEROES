@@ -23,6 +23,10 @@ export function UpcomingDrawWidget({ upcomingDraw, activeScores }: UpcomingDrawW
     });
   }
 
+  const formattedPool = upcomingDraw?.totalPoolCents
+    ? (upcomingDraw.totalPoolCents / 100).toLocaleString('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 })
+    : '£100,000';
+
   return (
     <div className={styles.drawWidget}>
       <div className={styles.cardHeader}>
@@ -46,7 +50,7 @@ export function UpcomingDrawWidget({ upcomingDraw, activeScores }: UpcomingDrawW
 
       <div>
         <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-          Estimated Monthly Prize Pool: <strong style={{ color: 'var(--text-primary)', fontSize: '1.2rem' }}>£50,000+</strong>
+          Estimated Monthly Prize Pool: <strong style={{ color: 'var(--text-primary)', fontSize: '1.2rem' }}>{formattedPool}</strong>
           <span style={{ fontSize: '0.8rem', color: 'var(--accent-mint)', display: 'block' }}>
             Including Tier 5 Unclaimed Rollover Jackpots
           </span>
