@@ -9,14 +9,34 @@ import {
 import { getUpcomingDrawAction } from '@/modules/draws/draw-actions';
 import { getUserWinningsAction } from '@/modules/winners/verification-actions';
 import { DashboardClient } from './dashboard-client';
+import { stripe } from '@/lib/stripe';
+import { SubscriptionService } from '@/modules/subscriptions/subscription-service';
 
 export const metadata = {
   title: 'Subscriber Dashboard | Digital Heroes',
   description: 'Manage your active Stableford scores, charity pledge, monthly draw participation, and prize rewards.',
 };
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ session_id?: string }>;
+}) {
   const user = await requireAuth();
+  const params = searchParams ? await searchParams : undefined;
+
+  // If returning from Stripe Checkout, verify session server-side to provision subscription immediately
+  if (params?.session_id && params.session_id.startsWith('cs_')) {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(params.session_id);
+      if (session.payment_status === 'paid' && session.metadata?.userId === user.id) {
+        const subService = new SubscriptionService();
+        await subService.handleCheckoutSessionCompleted(session);
+      }
+    } catch {
+      // Ignored: fallback to webhook
+    }
+  }
 
   const [
     subResult,
