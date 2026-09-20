@@ -79,7 +79,7 @@ export function CharityPreferenceCard({
       {charity ? (
         <div className={styles.charityHeader}>
           {charity.logoUrl ? (
-            <div style={{ position: 'relative', width: 54, height: 54, borderRadius: 8, overflow: 'hidden' }}>
+            <div style={{ position: 'relative', width: 54, height: 54, borderRadius: 0, overflow: 'hidden', border: '1px solid var(--border-subtle)' }}>
               <Image
                 src={charity.logoUrl}
                 alt={charity.name}
