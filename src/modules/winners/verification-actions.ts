@@ -113,6 +113,13 @@ function mapWinnerRecord(row: WinnerDbRow): WinnerRecord {
 export async function getUserWinningsAction(): Promise<ActionResult<WinnerRecord[]>> {
   try {
     const user = await requireAuth();
+    const cacheKey = `user_winnings:${user.id}`;
+    const { getCached, setCached } = await import('@/lib/memory-cache');
+    const cached = getCached<WinnerRecord[]>(cacheKey);
+    if (cached) {
+      return { success: true, data: cached };
+    }
+
     const supabase = await createServerSupabaseClient();
 
     const { data: rows, error } = await supabase
@@ -134,6 +141,7 @@ export async function getUserWinningsAction(): Promise<ActionResult<WinnerRecord
     }
 
     const winnings = (rows as unknown as WinnerDbRow[]).map(mapWinnerRecord);
+    setCached(cacheKey, winnings, 30);
     return { success: true, data: winnings };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to retrieve winnings.';

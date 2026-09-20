@@ -132,6 +132,12 @@ export async function createCustomerPortalAction(): Promise<ActionResult<{ url: 
 export async function getUserSubscriptionAction(): Promise<ActionResult<UserSubscription | null>> {
   try {
     const user = await requireAuth();
+    const cacheKey = `user_sub:${user.id}`;
+    const { getCached, setCached } = await import('@/lib/memory-cache');
+    const cached = getCached<UserSubscription | null>(cacheKey);
+    if (cached !== undefined) {
+      return { success: true, data: cached };
+    }
 
     const { data: row, error } = await supabaseAdmin
       .from('subscriptions')
@@ -144,6 +150,7 @@ export async function getUserSubscriptionAction(): Promise<ActionResult<UserSubs
     }
 
     if (!row) {
+      setCached(cacheKey, null, 30);
       return { success: true, data: null };
     }
 
@@ -162,6 +169,7 @@ export async function getUserSubscriptionAction(): Promise<ActionResult<UserSubs
       updatedAt: row.updated_at,
     };
 
+    setCached(cacheKey, sub, 30);
     return { success: true, data: sub };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to retrieve subscription.';

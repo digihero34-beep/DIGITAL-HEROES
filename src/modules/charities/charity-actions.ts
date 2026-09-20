@@ -17,6 +17,7 @@ import {
   validateDonationAmount,
   filterCharities,
 } from './charity-validation';
+import { getCached, setCached, invalidateCache } from '@/lib/memory-cache';
 
 interface CharityRow {
   id: string;
@@ -53,8 +54,6 @@ function mapCharityRow(row: CharityRow): Charity {
     updatedAt: row.updated_at,
   };
 }
-
-import { getCached, setCached } from '@/lib/memory-cache';
 
 export async function getCharitiesAction(params?: {
   query?: string;
@@ -123,6 +122,12 @@ export async function getUserCharityPreferenceAction(): Promise<
 > {
   try {
     const user = await requireAuth();
+    const cacheKey = `user_charity_pref:${user.id}`;
+    const cached = getCached<UserCharityPreference | null>(cacheKey);
+    if (cached !== undefined) {
+      return { success: true, data: cached };
+    }
+
     const supabase = await createServerSupabaseClient();
 
     const { data: row, error } = await supabase
@@ -132,22 +137,26 @@ export async function getUserCharityPreferenceAction(): Promise<
       .maybeSingle();
 
     if (error || !row) {
+      setCached(cacheKey, null, 30);
       return { success: true, data: null };
     }
 
     const charityData = row.charities ? mapCharityRow(row.charities as unknown as CharityRow) : undefined;
 
+    const pref: UserCharityPreference = {
+      id: row.id,
+      userId: row.user_id,
+      charityId: row.charity_id,
+      contributionPercentage: row.contribution_percentage,
+      charity: charityData,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    };
+
+    setCached(cacheKey, pref, 30);
     return {
       success: true,
-      data: {
-        id: row.id,
-        userId: row.user_id,
-        charityId: row.charity_id,
-        contributionPercentage: row.contribution_percentage,
-        charity: charityData,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
-      },
+      data: pref,
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to load charity preference.';
@@ -181,7 +190,11 @@ export async function updateCharityPreferenceAction(params: {
       .single();
 
     if (charityError || !charity) {
-      return { success: false, error: 'Charity partner not found or inactive.', code: 'NOT_FOUND' };
+      return {
+        success: false,
+        error: 'The designated charity is not recognized or is inactive.',
+        code: 'CHARITY_NOT_FOUND',
+      };
     }
 
     // 3. Upsert preference
@@ -206,6 +219,9 @@ export async function updateCharityPreferenceAction(params: {
         code: 'UPSERT_FAILED',
       };
     }
+
+    invalidateCache(`user_charity_pref:${user.id}`);
+    invalidateCache('admin:');
 
     return {
       success: true,

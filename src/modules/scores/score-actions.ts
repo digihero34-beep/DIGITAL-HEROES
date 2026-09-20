@@ -71,6 +71,10 @@ export async function addScoreAction(
       };
     }
 
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache(`user_scores:${user.id}`);
+    invalidateCache('admin:');
+
     return {
       success: true,
       data: {
@@ -147,6 +151,10 @@ export async function updateScoreAction(
       };
     }
 
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache(`user_scores:${user.id}`);
+    invalidateCache('admin:');
+
     return {
       success: true,
       data: {
@@ -186,6 +194,10 @@ export async function deleteScoreAction(
       };
     }
 
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache(`user_scores:${user.id}`);
+    invalidateCache('admin:');
+
     return { success: true, data: undefined };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to delete round.';
@@ -196,6 +208,13 @@ export async function deleteScoreAction(
 export async function getUserScoresAction(): Promise<ActionResult<UserScoresSummary>> {
   try {
     const user = await requireAuth();
+    const cacheKey = `user_scores:${user.id}`;
+    const { getCached, setCached } = await import('@/lib/memory-cache');
+    const cached = getCached<UserScoresSummary>(cacheKey);
+    if (cached) {
+      return { success: true, data: cached };
+    }
+
     const supabase = await createServerSupabaseClient();
 
     const { data: rows, error } = await supabase
@@ -223,14 +242,17 @@ export async function getUserScoresAction(): Promise<ActionResult<UserScoresSumm
     const historicalScores = allScores.filter((s) => !s.isActive);
     const stats = calculateScorecardStats(allScores);
 
+    const summary: UserScoresSummary = {
+      activeScores,
+      historicalScores,
+      totalSubmitted: allScores.length,
+      stats,
+    };
+
+    setCached(cacheKey, summary, 30);
     return {
       success: true,
-      data: {
-        activeScores,
-        historicalScores,
-        totalSubmitted: allScores.length,
-        stats,
-      },
+      data: summary,
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to load scores.';

@@ -14,6 +14,12 @@ import {
 export async function getAdminPlatformStatsAction(): Promise<ActionResult<AdminPlatformStats>> {
   try {
     await requireAdmin();
+    const { getCached, setCached } = await import('@/lib/memory-cache');
+    const cached = getCached<AdminPlatformStats>('admin_platform_stats');
+    if (cached) {
+      return { success: true, data: cached };
+    }
+
     const queryStartTime = performance.now();
 
     // 1. Pending Verifications
@@ -136,6 +142,7 @@ export async function getAdminPlatformStatsAction(): Promise<ActionResult<AdminP
       nextDraw,
     };
 
+    setCached('admin_platform_stats', stats, 15);
     return { success: true, data: stats };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to retrieve admin stats.';
@@ -332,6 +339,11 @@ export async function getAdminSubscribersAction(params?: {
 export async function getAdminCharitiesAction(): Promise<ActionResult<AdminCharityItem[]>> {
   try {
     await requireAdmin();
+    const { getCached, setCached } = await import('@/lib/memory-cache');
+    const cached = getCached<AdminCharityItem[]>('admin_charities');
+    if (cached) {
+      return { success: true, data: cached };
+    }
 
     const { data: charities, error } = await supabaseAdmin
       .from('charities')
@@ -416,6 +428,7 @@ export async function getAdminCharitiesAction(): Promise<ActionResult<AdminChari
       };
     });
 
+    setCached('admin_charities', items, 30);
     return { success: true, data: items };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to retrieve charities.';
@@ -450,6 +463,10 @@ export async function toggleCharityFeaturedAction(params: {
       return { success: false, error: error.message, code: 'UPDATE_FAILED' };
     }
 
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache('admin_');
+    invalidateCache('charities_');
+
     return { success: true, data: { charityId: params.charityId, isFeatured: params.isFeatured } };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to toggle charity featured state.';
@@ -475,6 +492,11 @@ export async function adminUpdateUserRoleAction(params: {
     if (error) {
       return { success: false, error: error.message, code: 'ROLE_UPDATE_FAILED' };
     }
+
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache('admin_');
+    invalidateCache('auth_');
+    invalidateCache('mw_auth');
 
     return { success: true, data: { userId: params.userId, newRole: params.newRole } };
   } catch (error) {

@@ -125,6 +125,9 @@ export async function adminSignInAction(formData: z.infer<typeof SignInSchema>):
 }
 
 export async function signOutAction(): Promise<ActionResult<void>> {
+  const { invalidateCache } = await import('@/lib/memory-cache');
+  invalidateCache('auth_user:');
+  invalidateCache('user-');
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.auth.signOut();
   if (error) {

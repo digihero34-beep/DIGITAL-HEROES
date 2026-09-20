@@ -1,5 +1,7 @@
 import { cache } from 'react';
+import { cookies } from 'next/headers';
 import { createServerSupabaseClient } from '@/infrastructure/database/supabase-server';
+import { getCached, setCached } from '@/lib/memory-cache';
 import {
   AuthUser,
   UnauthorizedError,
@@ -9,9 +11,24 @@ import {
 
 /**
  * Returns the currently authenticated user with their profile role, or null if unauthenticated.
- * Memoized per-request using React.cache to eliminate redundant remote network calls.
+ * Uses high-speed process-level in-memory caching to eliminate redundant remote network calls.
  */
 export const getCurrentUser = cache(async (): Promise<AuthUser | null> => {
+  const cookieStore = await cookies();
+  const allCookies = cookieStore.getAll();
+  const authCookie = allCookies.find((c) => c.name.includes('-auth-token') && c.value);
+
+  if (!authCookie) {
+    return null;
+  }
+
+  // 1. Fast process-level in-memory cache
+  const cacheKey = `auth_user:${authCookie.value.slice(-32)}`;
+  const cachedUser = getCached<AuthUser>(cacheKey);
+  if (cachedUser) {
+    return cachedUser;
+  }
+
   const supabase = await createServerSupabaseClient();
   const {
     data: { user },
@@ -29,12 +46,16 @@ export const getCurrentUser = cache(async (): Promise<AuthUser | null> => {
     .eq('id', user.id)
     .single();
 
-  return {
+  const authUser: AuthUser = {
     id: user.id,
     email: user.email ?? '',
     fullName: profile?.full_name ?? undefined,
     role: (profile?.role as AuthUser['role']) ?? 'subscriber',
   };
+
+  // Cache authenticated user identity for 30 seconds
+  setCached(cacheKey, authUser, 30);
+  return authUser;
 });
 
 /**

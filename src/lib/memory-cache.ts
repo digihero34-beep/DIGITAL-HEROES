@@ -5,12 +5,12 @@ interface CacheEntry<T> {
 
 const cacheMap = new Map<string, CacheEntry<unknown>>();
 
-export function getCached<T>(key: string): T | null {
+export function getCached<T>(key: string): T | undefined {
   const entry = cacheMap.get(key);
-  if (!entry) return null;
+  if (!entry) return undefined;
   if (Date.now() > entry.expiresAt) {
     cacheMap.delete(key);
-    return null;
+    return undefined;
   }
   return entry.data as T;
 }
