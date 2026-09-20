@@ -49,7 +49,7 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   const currentTheme = THEMES[theme] || THEMES.spruce;
-  const nextThemeKey = NEXT_THEME[theme] || 'spruce';
+  const nextThemeKey = NEXT_THEME[theme] || 'navy';
   const nextTheme = THEMES[nextThemeKey];
 
   const handleCycleTheme = () => {

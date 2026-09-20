@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from 'react';
 
 export type ThemeOption = 'spruce' | 'navy' | 'slate';
 
@@ -14,26 +14,49 @@ const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => {},
 });
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeOption>('spruce');
+const THEME_CHANGE_EVENT = 'dh-theme-change';
 
-  useEffect(() => {
+function subscribeToTheme(callback: () => void) {
+  window.addEventListener('storage', callback);
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+  return () => {
+    window.removeEventListener('storage', callback);
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+  };
+}
+
+function getThemeSnapshot(): ThemeOption {
+  if (typeof window === 'undefined') return 'spruce';
+  try {
     const saved = localStorage.getItem('dh_theme') as ThemeOption;
-    if (saved && (saved === 'spruce' || saved === 'navy' || saved === 'slate')) {
-      requestAnimationFrame(() => {
-        setThemeState(saved);
-      });
+    if (saved === 'spruce' || saved === 'navy' || saved === 'slate') {
+      return saved;
     }
-  }, []);
+  } catch {
+    // LocalStorage might be restricted
+  }
+  return 'spruce';
+}
+
+function getServerSnapshot(): ThemeOption {
+  return 'spruce';
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerSnapshot);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   const setTheme = (newTheme: ThemeOption) => {
-    setThemeState(newTheme);
-    localStorage.setItem('dh_theme', newTheme);
+    try {
+      localStorage.setItem('dh_theme', newTheme);
+    } catch {
+      // LocalStorage access exception handling
+    }
     document.documentElement.setAttribute('data-theme', newTheme);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   };
 
   return (
