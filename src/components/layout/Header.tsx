@@ -74,7 +74,6 @@ const NAV_ITEMS = [
   { href: '/pricing', label: 'Plans' },
   { href: '/dashboard', label: 'My Portal' },
   { href: '/scores', label: 'Scorecard' },
-  { href: '/design-system', label: 'Themes' },
 ];
 
 const ADMIN_ITEM = { href: '/admin', label: 'Admin' };
