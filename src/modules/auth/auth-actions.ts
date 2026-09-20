@@ -1,6 +1,7 @@
 'use server';
 
 import { createServerSupabaseClient } from '@/infrastructure/database/supabase-server';
+import { supabaseAdmin } from '@/infrastructure/database/supabase-admin';
 import { z } from 'zod';
 import { AuthUser } from './auth-types';
 
@@ -44,6 +45,15 @@ export async function signUpAction(formData: z.infer<typeof SignUpSchema>): Prom
     return { success: false, error: error?.message || 'Failed to create account.', code: 'SIGNUP_FAILED' };
   }
 
+  // Auto-confirm user email in development so login is instantly available without external SMTP delay
+  if (!data.user.email_confirmed_at) {
+    try {
+      await supabaseAdmin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
+    } catch {
+      // Non-blocking fallback
+    }
+  }
+
   // Save charity preference if provided
   if (parsed.data.charityId) {
     await supabase.from('user_charity_preferences').upsert({
@@ -69,7 +79,11 @@ export async function signInAction(formData: z.infer<typeof SignInSchema>): Prom
   });
 
   if (error || !data.user) {
-    return { success: false, error: 'Invalid email or password.', code: 'INVALID_CREDENTIALS' };
+    const isUnconfirmed = error?.message?.toLowerCase().includes('email not confirmed');
+    const userMessage = isUnconfirmed
+      ? 'Your email address has not been confirmed yet. Please verify your email before logging in.'
+      : 'Invalid email or password. Please verify your credentials or register a new account.';
+    return { success: false, error: userMessage, code: 'INVALID_CREDENTIALS' };
   }
 
   const { data: profile } = await supabase
