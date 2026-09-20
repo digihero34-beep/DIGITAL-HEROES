@@ -10,3 +10,8 @@ export * from './error-state';
 export * from './loading-state';
 export * from './tabs';
 export * from './file-upload';
+export * from './table';
+export * from './drawer';
+export * from './timeline';
+export * from './toast';
+export * from './tooltip';

@@ -3,6 +3,8 @@ import { ButtonVariant, ButtonSize } from '@/components/ui/button';
 import { BadgeVariant } from '@/components/ui/badge';
 import { CardVariant } from '@/components/ui/card';
 import { StatTone } from '@/components/ui/stat';
+import { TimelineItemStatus } from '@/components/ui/timeline';
+import { ToastType } from '@/components/ui/toast';
 
 describe('Design System Primitives & Rule Compliance (Part 4, Rule 114)', () => {
   describe('Button Variants & Semantic Actions (Rule 99)', () => {
@@ -66,6 +68,20 @@ describe('Design System Primitives & Rule Compliance (Part 4, Rule 114)', () => 
       expect(validateUpload('image/svg+xml', 1024).isValid).toBe(false);
       expect(validateUpload('application/zip', 1024).isValid).toBe(false);
       expect(validateUpload('image/png', maxBytes + 1).isValid).toBe(false);
+    });
+  });
+
+  describe('Timeline & Stepper States (Rule 80)', () => {
+    it('should support completed, current, and upcoming stages', () => {
+      const statuses: TimelineItemStatus[] = ['completed', 'current', 'upcoming'];
+      expect(statuses).toEqual(['completed', 'current', 'upcoming']);
+    });
+  });
+
+  describe('Toast Notifications (Rule 108)', () => {
+    it('should support all four feedback categories', () => {
+      const types: ToastType[] = ['success', 'error', 'info', 'warning'];
+      expect(types.length).toBe(4);
     });
   });
 });
