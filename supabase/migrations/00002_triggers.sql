@@ -8,17 +8,21 @@
 -- for any user are marked as active (is_active = true).
 CREATE OR REPLACE FUNCTION public.maintain_rolling_five_scores()
 RETURNS TRIGGER AS $$
+DECLARE
+    target_user_id UUID;
 BEGIN
+    target_user_id := COALESCE(NEW.user_id, OLD.user_id);
+
     -- Deactivate all scores outside the 5 most recent
     UPDATE public.scores
     SET is_active = FALSE,
         updated_at = NOW()
-    WHERE user_id = NEW.user_id
+    WHERE user_id = target_user_id
       AND is_active = TRUE
       AND id NOT IN (
           SELECT id
           FROM public.scores
-          WHERE user_id = NEW.user_id
+          WHERE user_id = target_user_id
           ORDER BY played_date DESC, created_at DESC
           LIMIT 5
       );
@@ -27,21 +31,21 @@ BEGIN
     UPDATE public.scores
     SET is_active = TRUE,
         updated_at = NOW()
-    WHERE user_id = NEW.user_id
+    WHERE user_id = target_user_id
       AND id IN (
           SELECT id
           FROM public.scores
-          WHERE user_id = NEW.user_id
+          WHERE user_id = target_user_id
           ORDER BY played_date DESC, created_at DESC
           LIMIT 5
       );
 
-    RETURN NEW;
+    RETURN COALESCE(NEW, OLD);
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE TRIGGER trg_maintain_rolling_five_scores
-AFTER INSERT OR UPDATE ON public.scores
+AFTER INSERT OR UPDATE OR DELETE ON public.scores
 FOR EACH ROW
 EXECUTE FUNCTION public.maintain_rolling_five_scores();
 
