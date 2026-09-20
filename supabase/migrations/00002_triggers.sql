@@ -11,6 +11,11 @@ RETURNS TRIGGER AS $$
 DECLARE
     target_user_id UUID;
 BEGIN
+    -- Prevent recursive trigger invocation
+    IF pg_trigger_depth() > 1 THEN
+        RETURN COALESCE(NEW, OLD);
+    END IF;
+
     target_user_id := COALESCE(NEW.user_id, OLD.user_id);
 
     -- Deactivate all scores outside the 5 most recent
@@ -32,6 +37,7 @@ BEGIN
     SET is_active = TRUE,
         updated_at = NOW()
     WHERE user_id = target_user_id
+      AND is_active = FALSE
       AND id IN (
           SELECT id
           FROM public.scores
@@ -45,7 +51,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE TRIGGER trg_maintain_rolling_five_scores
-AFTER INSERT OR UPDATE OR DELETE ON public.scores
+AFTER INSERT OR DELETE OR UPDATE OF score, played_date ON public.scores
 FOR EACH ROW
 EXECUTE FUNCTION public.maintain_rolling_five_scores();
 
