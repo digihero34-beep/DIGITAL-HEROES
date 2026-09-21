@@ -1,4 +1,4 @@
-export type DrawMode = 'random' | 'algorithmic';
+export type DrawMode = 'random' | 'algorithmic' | 'guaranteed_test';
 
 export type DrawStatus =
   | 'draft'

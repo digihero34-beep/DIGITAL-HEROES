@@ -1,19 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import Link from 'next/link';
 import styles from './scores.module.css';
+import { LogoutButton } from '@/components/auth/LogoutButton';
 import {
   addScoreAction,
   deleteScoreAction,
   getUserScoresAction,
 } from '@/modules/scores/score-actions';
 import { GolfScore, UserScoresSummary } from '@/modules/scores/score-types';
+import { useRealtimeTable } from '@/hooks/use-realtime-table';
 
 interface ScorecardClientProps {
+  userId: string;
   initialData: UserScoresSummary;
+  isSubscribed?: boolean;
 }
 
-export function ScorecardClient({ initialData }: ScorecardClientProps) {
+export function ScorecardClient({ userId, initialData, isSubscribed = true }: ScorecardClientProps) {
   const todayStr = new Date().toISOString().split('T')[0];
 
   const [scoresData, setScoresData] = useState<UserScoresSummary>(initialData);
@@ -23,12 +28,20 @@ export function ScorecardClient({ initialData }: ScorecardClientProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  async function refreshScores() {
+  const refreshScores = useCallback(async () => {
     const result = await getUserScoresAction();
     if (result.success) {
       setScoresData(result.data);
     }
-  }
+  }, []);
+
+  // Live score updates — reflects add/delete on other sessions or devices immediately
+  useRealtimeTable({
+    table: 'scores',
+    filter: `user_id=eq.${userId}`,
+    channelName: `scorecard-scores-${userId}`,
+    onData: refreshScores,
+  });
 
   async function handleAddScore(e: React.FormEvent) {
     e.preventDefault();
@@ -84,9 +97,32 @@ export function ScorecardClient({ initialData }: ScorecardClientProps) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.badge}>
-          <span className={styles.badgeDot} />
-          Official Performance Engine
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div className={styles.badge}>
+            <span className={styles.badgeDot} />
+            Official Performance Engine
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <Link
+              href="/dashboard"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0.45rem 0.85rem',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                border: '1px solid var(--border-subtle)',
+                background: 'var(--surface-container-low)',
+                color: 'var(--text-secondary)',
+                textDecoration: 'none',
+              }}
+            >
+              ← Command Center
+            </Link>
+            <LogoutButton variant="subscriber" redirectTo="/login" label="Sign Out" />
+          </div>
         </div>
         <h1 className={styles.title}>Stableford Scorecard</h1>
         <p className={styles.subtitle}>
@@ -148,6 +184,43 @@ export function ScorecardClient({ initialData }: ScorecardClientProps) {
         {/* Score Submission Card */}
         <div className={styles.formCard}>
           <h2 className={styles.formTitle}>Record Round</h2>
+
+          {!isSubscribed && (
+            <div
+              style={{
+                padding: '0.85rem 1rem',
+                marginBottom: '1rem',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: '4px',
+                color: '#fca5a5',
+                fontSize: '0.8125rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.5rem',
+                flexWrap: 'wrap',
+              }}
+            >
+              <div>
+                <strong>🔒 Active Membership Required</strong>: Non-subscribers cannot record draw-eligible scores.
+              </div>
+              <Link
+                href="/pricing"
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  background: '#C9A84C',
+                  color: '#000',
+                  fontWeight: 700,
+                  borderRadius: '3px',
+                  textDecoration: 'none',
+                  fontSize: '0.75rem',
+                }}
+              >
+                Subscribe Now →
+              </Link>
+            </div>
+          )}
 
           {errorMessage && (
             <div
@@ -233,9 +306,13 @@ export function ScorecardClient({ initialData }: ScorecardClientProps) {
               type="submit"
               id="score-submit-btn"
               className={styles.submitBtn}
-              disabled={submitting}
+              disabled={submitting || !isSubscribed}
             >
-              {submitting ? 'Recording...' : 'Submit Round to Scorecard'}
+              {!isSubscribed
+                ? 'Membership Required to Record Score'
+                : submitting
+                ? 'Recording...'
+                : 'Submit Round to Scorecard'}
             </button>
           </form>
 

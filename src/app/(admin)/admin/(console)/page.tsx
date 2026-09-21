@@ -9,6 +9,8 @@ import VerificationQueueTable from '@/components/admin/VerificationQueueTable';
 import DrawCeremonyControl from '@/components/admin/DrawCeremonyControl';
 import SubscriberAuditTable from '@/components/admin/SubscriberAuditTable';
 import CharityGovernanceTable from '@/components/admin/CharityGovernanceTable';
+import AdminVitalsBento from '@/components/admin/AdminVitalsBento';
+import AdminHeaderActions from '@/components/admin/AdminHeaderActions';
 import styles from '../admin.module.css';
 
 export const metadata = {
@@ -60,95 +62,11 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className={styles.commandActions}>
-          <button type="button" className={styles.manifestBtn}>
-            Export Audit Manifest
-          </button>
-          <button type="button" className={styles.commitSigBtn}>
-            Commit Trust Sig
-          </button>
-        </div>
+        <AdminHeaderActions />
       </section>
 
-      {/* Vitals Bento Grid */}
-      <div className={styles.vitalsBentoGrid}>
-        {/* Vital 1: Merkle Root */}
-        <div className={styles.vitalCard}>
-          <div className={styles.cardTopAccentGold}></div>
-          <div>
-            <div className={styles.vitalHeader}>
-              <span>Active Merkle Tree Root</span>
-              <span className={styles.vitalIcon}>⛓️</span>
-            </div>
-            <div className={styles.vitalMonoValue}>{stats.merkleRoot}</div>
-          </div>
-          <div className={styles.vitalFooter}>
-            <span className={styles.vitalFooterLabel}>Lock State:</span>
-            <span className={`${styles.vitalFooterValue} ${styles.goldValue}`}>
-              {stats.merkleLockState}
-            </span>
-          </div>
-        </div>
-
-        {/* Vital 2: Dual Entropy Beacon */}
-        <div className={styles.vitalCard}>
-          <div className={styles.cardTopAccentGreen}></div>
-          <div>
-            <div className={styles.vitalHeader}>
-              <span>Dual Entropy Beacon</span>
-              <span className={styles.vitalIcon}>📡</span>
-            </div>
-            <div className={styles.vitalMetricHeading}>
-              Syncing Block #{stats.dualEntropyBeacon.syncBlock.toLocaleString()}
-            </div>
-          </div>
-          <div className={styles.vitalFooter}>
-            <span className={styles.vitalFooterLabel}>NIST Randomness:</span>
-            <span className={styles.statusTag}>{stats.dualEntropyBeacon.nistStatus}</span>
-          </div>
-        </div>
-
-        {/* Vital 3: Scorecard Verifications */}
-        <div className={styles.vitalCard}>
-          <div className={styles.cardTopAccentAmber}></div>
-          <div>
-            <div className={styles.vitalHeader}>
-              <span>Scorecard Verifications</span>
-              <span className={styles.vitalIcon}>⚖️</span>
-            </div>
-            <div className={styles.vitalMetricBig}>
-              {String(stats.pendingVerificationsCount).padStart(2, '0')}
-              <span className={styles.vitalMetricSub}>Pending</span>
-            </div>
-          </div>
-          <div className={styles.vitalFooter}>
-            <span className={styles.vitalFooterLabel}>Audit Status:</span>
-            <span className={`${styles.vitalFooterValue} ${stats.pendingVerificationsCount > 0 ? styles.goldValue : ''}`}>
-              {stats.pendingVerificationsCount > 0 ? 'Awaiting Trustee Sign-Off' : 'Queue Clear'}
-            </span>
-          </div>
-        </div>
-
-        {/* Vital 4: YTD Charity Yield */}
-        <div className={styles.vitalCard}>
-          <div className={styles.cardTopAccentBlue}></div>
-          <div>
-            <div className={styles.vitalHeader}>
-              <span>YTD Philanthropic Yield</span>
-              <span className={styles.vitalIcon}>🤝</span>
-            </div>
-            <div className={styles.vitalMetricBig}>
-              £{(stats.ytdPhilanthropicYieldCents / 100).toLocaleString('en-GB')}
-            </div>
-          </div>
-          <div className={styles.vitalFooter}>
-            <span className={styles.vitalFooterLabel}>Accredited Beneficiaries:</span>
-            <span className={`${styles.vitalFooterValue} ${styles.goldValue}`}>
-              {charities.length} Active Partners
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* Vitals Bento Grid with Live Real-Time Subscriptions */}
+      <AdminVitalsBento initialStats={stats} charitiesCount={charities.length} />
 
       {/* OPERATIONAL SURFACES STACK */}
       <div className={styles.sectionsStack}>

@@ -3,7 +3,15 @@ interface CacheEntry<T> {
   expiresAt: number;
 }
 
-const cacheMap = new Map<string, CacheEntry<unknown>>();
+const globalCache = globalThis as unknown as {
+  __dh_cacheMap?: Map<string, CacheEntry<unknown>>;
+};
+
+if (!globalCache.__dh_cacheMap) {
+  globalCache.__dh_cacheMap = new Map<string, CacheEntry<unknown>>();
+}
+
+const cacheMap = globalCache.__dh_cacheMap;
 
 export function getCached<T>(key: string): T | undefined {
   const entry = cacheMap.get(key);
@@ -33,3 +41,4 @@ export function invalidateCache(keyPrefix?: string): void {
     }
   }
 }
+

@@ -17,12 +17,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 2. Ultra-fast Cookie Gate: if no auth cookie exists, reject immediately with ZERO network latency
-  const authCookie = request.cookies
-    .getAll()
-    .find((c) => c.name.includes('-auth-token') && Boolean(c.value));
+  // 2. Ultra-fast Cookie & Session Gate: if no auth cookie exists, reject immediately with ZERO network latency
+  const allCookies = request.cookies.getAll();
+  const hasAuthCookie = allCookies.some((c) => c.name.includes('-auth-token') && Boolean(c.value));
 
-  if (!authCookie) {
+  if (!hasAuthCookie) {
     if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
       const redirectUrl = new URL('/admin/login', request.url);
       redirectUrl.searchParams.set('redirect', pathname);
@@ -38,27 +37,30 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 3. Ultra-fast Process Cache check (0.01ms resolution)
-  const tokenKey = authCookie.value.slice(-32);
-  const cachedAuth = getCached<{ id: string; role: string }>(`mw_auth:${tokenKey}`);
+  // 3. Ultra-fast JWT Session extraction (0.01ms resolution, 0 network calls)
+  const { extractSessionPayload } = await import('@/modules/auth/auth-token-utils');
+  const session = extractSessionPayload(allCookies);
 
-  if (cachedAuth) {
-    if (pathname === '/admin/login') {
-      if (cachedAuth.role === 'admin') {
-        return NextResponse.redirect(new URL('/admin', request.url));
+  if (session) {
+    const cachedRole = getCached<string>(`user_role:${session.userId}`);
+    if (cachedRole) {
+      if (pathname === '/admin/login') {
+        if (cachedRole === 'admin') {
+          return NextResponse.redirect(new URL('/admin', request.url));
+        }
+        return NextResponse.next();
       }
+
+      if (pathname.startsWith('/admin')) {
+        if (cachedRole !== 'admin') {
+          return NextResponse.redirect(
+            new URL('/dashboard?error=admin_privileges_required', request.url)
+          );
+        }
+      }
+
       return NextResponse.next();
     }
-
-    if (pathname.startsWith('/admin')) {
-      if (cachedAuth.role !== 'admin') {
-        return NextResponse.redirect(
-          new URL('/dashboard?error=admin_privileges_required', request.url)
-        );
-      }
-    }
-
-    return NextResponse.next();
   }
 
   // 4. Cache miss: perform authenticated session refresh with Supabase
@@ -115,8 +117,8 @@ export async function middleware(request: NextRequest) {
     role = profile.role;
   }
 
-  // Cache in process memory for 60 seconds
-  setCached(`mw_auth:${tokenKey}`, { id: user.id, role }, 60);
+  // Cache in process memory for 120 seconds
+  setCached(`user_role:${user.id}`, role, 300);
 
   if (pathname === '/admin/login') {
     if (role === 'admin') {

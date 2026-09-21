@@ -5,12 +5,12 @@ import { getCached, setCached } from '@/lib/memory-cache';
 export async function GET() {
   try {
     const cached = getCached<unknown>('api_upcoming_draw');
-    if (cached) {
+    if (cached !== undefined) {
       return NextResponse.json(
         { success: true, data: cached },
         {
           headers: {
-            'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
           },
         }
       );
@@ -27,13 +27,21 @@ export async function GET() {
           total_pool_cents
         )
       `)
-      .in('status', ['draft', 'scheduled', 'simulating'])
+      .in('status', ['draft', 'simulated'])
       .order('scheduled_for', { ascending: true })
       .limit(1)
       .maybeSingle();
 
     if (error || !draw) {
-      return NextResponse.json({ success: true, data: null });
+      setCached('api_upcoming_draw', null, 60);
+      return NextResponse.json(
+        { success: true, data: null },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+          },
+        }
+      );
     }
 
     const prizePool = Array.isArray(draw.prize_pools) ? draw.prize_pools[0] : draw.prize_pools;
@@ -46,7 +54,7 @@ export async function GET() {
       totalPoolCents: prizePool?.total_pool_cents ?? 10000000,
     };
 
-    setCached('api_upcoming_draw', data, 30);
+    setCached('api_upcoming_draw', data, 60);
 
     return NextResponse.json(
       {
@@ -55,7 +63,7 @@ export async function GET() {
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
         },
       }
     );

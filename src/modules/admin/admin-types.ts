@@ -58,9 +58,61 @@ export interface AdminCharityItem {
   name: string;
   slug: string;
   category: string;
+  tagline?: string;
+  description?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
   isFeatured: boolean;
   isActive: boolean;
   supporterCount: number;
   totalRaisedCents: number;
   eventsCount: number;
 }
+
+export interface AdminUserDetail {
+  profile: {
+    id: string;
+    email: string;
+    fullName?: string;
+    role: 'public' | 'subscriber' | 'admin';
+    createdAt: string;
+  };
+  subscription: {
+    id?: string;
+    planId?: string;
+    planName?: string;
+    status: string;
+    stripeCustomerId?: string;
+    stripeSubscriptionId?: string;
+    currentPeriodStart?: string;
+    currentPeriodEnd?: string;
+    cancelAtPeriodEnd?: boolean;
+  } | null;
+  scores: {
+    activeScores: Array<{ id: string; score: number; playedDate: string; createdAt: string }>;
+    historicalScores: Array<{ id: string; score: number; playedDate: string; createdAt: string }>;
+    totalSubmitted: number;
+    stats: {
+      averageScore: number;
+      highestScore: number;
+      lowestScore: number;
+    };
+  };
+  charityPreference: {
+    charityId: string;
+    charityName: string;
+    category: string;
+    contributionPercentage: number;
+  } | null;
+  winnings: Array<{
+    id: string;
+    drawNumber: number;
+    matchTier: string;
+    matchedNumbers: number[];
+    prizeAmountCents: number;
+    verificationStatus: string;
+    payoutStatus?: string;
+    createdAt: string;
+  }>;
+}
+

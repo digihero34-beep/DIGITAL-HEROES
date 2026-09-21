@@ -1,10 +1,21 @@
 import React from 'react';
+import { requireAuth } from '@/modules/auth/server-guards';
 import { getUserScoresAction } from '@/modules/scores/score-actions';
+import { getUserSubscriptionAction } from '@/modules/subscriptions/subscription-actions';
 import { ScorecardClient } from './scorecard-client';
 import { UserScoresSummary } from '@/modules/scores/score-types';
 
+export const metadata = {
+  title: 'Scorecard | Digital Heroes',
+  description: 'Record and manage your Stableford golf scores for monthly draw entry.',
+};
+
 export default async function ScoresPage() {
-  const result = await getUserScoresAction();
+  const [user, result, subRes] = await Promise.all([
+    requireAuth(),
+    getUserScoresAction(),
+    getUserSubscriptionAction(),
+  ]);
 
   const fallbackData: UserScoresSummary = {
     activeScores: [],
@@ -14,6 +25,7 @@ export default async function ScoresPage() {
   };
 
   const initialData = result.success ? result.data : fallbackData;
+  const isSubscribed = subRes.success && subRes.data?.status === 'active';
 
-  return <ScorecardClient initialData={initialData} />;
+  return <ScorecardClient userId={user.id} initialData={initialData} isSubscribed={isSubscribed} />;
 }

@@ -5,6 +5,7 @@ import { supabaseAdmin } from '@/infrastructure/database/supabase-admin';
 import { ActionResult } from '@/modules/auth/auth-actions';
 import { PayoutRecord, PayoutStatus } from '@/modules/winners/winner-types';
 import { canCompletePayout } from '@/modules/winners/verification-validation';
+import { invalidateCache } from '@/lib/memory-cache';
 
 interface PayoutDbRow {
   id: string;
@@ -89,6 +90,10 @@ export async function completePayoutAction(params: {
     if (updateError || !updated) {
       return { success: false, error: 'Failed to record payout completion.', code: 'UPDATE_FAILED' };
     }
+
+    invalidateCache('admin_verification_queue');
+    invalidateCache('admin_platform_stats');
+    invalidateCache('user_winnings');
 
     return {
       success: true,

@@ -34,25 +34,73 @@ export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatf
       return { success: true, data: cachedStats };
     }
 
-    // 1. Query Upcoming Draw with Prize Pool
-    const { data: latestDraw } = await supabaseAdmin
-      .from('draws')
-      .select(`
-        id,
-        draw_number,
-        scheduled_for,
-        status,
-        prize_pools (
-          total_pool_cents,
-          tier_5_pool_cents,
-          tier_4_pool_cents,
-          tier_3_pool_cents
-        )
-      `)
-      .in('status', ['draft', 'scheduled', 'simulating'])
-      .order('scheduled_for', { ascending: true })
-      .limit(1)
-      .maybeSingle();
+    // Parallelize all independent database queries into a single concurrent roundtrip
+    const [
+      drawRes,
+      publishedRes,
+      activeSubsRes,
+      totalProfilesRes,
+      charitiesRes,
+      featuredRes,
+      donationsRes,
+      activeSubsListRes,
+    ] = await Promise.all([
+      supabaseAdmin
+        .from('draws')
+        .select(`
+          id,
+          draw_number,
+          scheduled_for,
+          status,
+          prize_pools (
+            total_pool_cents,
+            tier_5_pool_cents,
+            tier_4_pool_cents,
+            tier_3_pool_cents
+          )
+        `)
+        .order('scheduled_for', { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      supabaseAdmin
+        .from('draws')
+        .select('*', { count: 'exact', head: true })
+        .in('status', ['published', 'completed']),
+      supabaseAdmin
+        .from('subscriptions')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      supabaseAdmin
+        .from('profiles')
+        .select('*', { count: 'exact', head: true }),
+      supabaseAdmin
+        .from('charities')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_active', true),
+      supabaseAdmin
+        .from('charities')
+        .select('id')
+        .eq('is_featured', true)
+        .eq('is_active', true)
+        .limit(1)
+        .maybeSingle(),
+      supabaseAdmin
+        .from('charity_donations')
+        .select('amount_cents, charity_id'),
+      supabaseAdmin
+        .from('subscriptions')
+        .select('user_id, plan_id')
+        .eq('status', 'active'),
+    ]);
+
+    const latestDraw = drawRes.data;
+    const publishedDrawsCount = publishedRes.count;
+    const activeSubsCount = activeSubsRes.count;
+    const totalProfilesCount = totalProfilesRes.count;
+    const accreditedCharitiesCount = charitiesRes.count;
+    const featuredCharity = featuredRes.data;
+    const donations = donationsRes.data;
+    const activeSubs = activeSubsListRes.data;
 
     let upcomingDraw: PublicUpcomingDraw | null = null;
     if (latestDraw) {
@@ -72,42 +120,6 @@ export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatf
       };
     }
 
-    // 2. Published Draws Count
-    const { count: publishedDrawsCount } = await supabaseAdmin
-      .from('draws')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['published', 'completed']);
-
-    // 3. Active Subscribers and Total Profiles
-    const { count: activeSubsCount } = await supabaseAdmin
-      .from('subscriptions')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    const { count: totalProfilesCount } = await supabaseAdmin
-      .from('profiles')
-      .select('*', { count: 'exact', head: true });
-
-    // 4. Accredited Charities Count
-    const { count: accreditedCharitiesCount } = await supabaseAdmin
-      .from('charities')
-      .select('*', { count: 'exact', head: true })
-      .eq('is_active', true);
-
-    // 5. Featured Charity Record
-    const { data: featuredCharity } = await supabaseAdmin
-      .from('charities')
-      .select('id')
-      .eq('is_featured', true)
-      .eq('is_active', true)
-      .limit(1)
-      .maybeSingle();
-
-    // 6. Real Philanthropic Yield Calculation
-    const { data: donations } = await supabaseAdmin
-      .from('charity_donations')
-      .select('amount_cents, charity_id');
-
     let totalDonationsCents = 0;
     let featuredDonationsCents = 0;
     if (donations) {
@@ -118,12 +130,6 @@ export async function getPublicPlatformStats(): Promise<ActionResult<PublicPlatf
         }
       }
     }
-
-    // Active subscriptions charity yield
-    const { data: activeSubs } = await supabaseAdmin
-      .from('subscriptions')
-      .select('user_id, plan_id')
-      .eq('status', 'active');
 
     let totalSubscriptionPledgesCents = 0;
     let featuredSubscriptionPledgesCents = 0;

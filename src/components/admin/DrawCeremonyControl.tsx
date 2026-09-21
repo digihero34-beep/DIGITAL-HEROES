@@ -1,8 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { DrawMode, SimulationBreakdown, WinningNumbers } from '@/modules/draws/draw-types';
-import { simulateDrawAction, publishDrawAction } from '@/modules/draws/draw-actions';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { DrawMode, SimulationBreakdown, WinningNumbers, MatchResult } from '@/modules/draws/draw-types';
+import {
+  simulateDrawAction,
+  publishDrawAction,
+  createNextDrawAction,
+  getPublishedDrawWinnersAction,
+} from '@/modules/draws/draw-actions';
+import { getAdminUserDetailAction, adminUpdateUserRoleAction } from '@/modules/admin/admin-actions';
+import { AdminUserDetail } from '@/modules/admin/admin-types';
+import PatronDossierModal from './PatronDossierModal';
+import AdminDialog, { useAdminDialog } from './AdminDialog';
 import styles from './admin-components.module.css';
 
 interface Props {
@@ -20,24 +30,85 @@ export default function DrawCeremonyControl({
   initialStatus,
   totalPoolCents,
 }: Props) {
-  const [drawMode, setDrawMode] = useState<DrawMode>('random');
+  const [mainDrawMode, setMainDrawMode] = useState<'random' | 'algorithmic'>('random');
+  const [randomSubMode, setRandomSubMode] = useState<'live' | 'guaranteed_test'>('live');
+
+  const effectiveDrawMode: DrawMode =
+    mainDrawMode === 'random'
+      ? randomSubMode === 'guaranteed_test'
+        ? 'guaranteed_test'
+        : 'random'
+      : 'algorithmic';
+
+  const router = useRouter();
   const [isSimulating, setIsSimulating] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [isCreatingNext, setIsCreatingNext] = useState(false);
   const [simulation, setSimulation] = useState<SimulationBreakdown | null>(null);
   const [publishedData, setPublishedData] = useState<{
     winningNumbers: WinningNumbers;
     winnersCount: number;
     publishedAt: string;
+    winners?: MatchResult[];
   } | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [status, setStatus] = useState(initialStatus);
+  const { dialog, showAlert, showConfirm } = useAdminDialog();
+
+  const [selectedUserDetail, setSelectedUserDetail] = useState<AdminUserDetail | null>(null);
+  const [isLoadingUserDetail, setIsLoadingUserDetail] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialStatus === 'published' && !publishedData) {
+      getPublishedDrawWinnersAction(drawId).then((res) => {
+        if (res.success && res.data && res.data.winningNumbers) {
+          setPublishedData({
+            winningNumbers: res.data.winningNumbers,
+            winnersCount: res.data.winnersCount,
+            publishedAt: res.data.publishedAt || new Date().toISOString(),
+            winners: res.data.winners,
+          });
+        }
+      });
+    }
+  }, [drawId, initialStatus, publishedData]);
+
+  const handleViewPatronDossier = async (userId: string) => {
+    setIsLoadingUserDetail(userId);
+    const res = await getAdminUserDetailAction(userId);
+    setIsLoadingUserDetail(null);
+    if (res.success && res.data) {
+      setSelectedUserDetail(res.data);
+    } else {
+      showAlert('error', 'Profile Unavailable', !res.success ? res.error : 'User profile details could not be retrieved.');
+    }
+  };
+
+  const handleCreateNextDraw = async () => {
+    setIsCreatingNext(true);
+    setFeedback(null);
+    const res = await createNextDrawAction();
+    setIsCreatingNext(false);
+    if (res.success && res.data) {
+      setFeedback({
+        type: 'success',
+        message: `Draw #${res.data.drawNumber} provisioned in Draft mode! Refreshing console...`,
+      });
+      setTimeout(() => {
+        router.refresh();
+        window.location.reload();
+      }, 800);
+    } else {
+      setFeedback({ type: 'error', message: res.success ? 'Failed to create draw.' : res.error });
+    }
+  };
 
   const handleSimulate = async () => {
     setIsSimulating(true);
     setFeedback(null);
 
     const res = await simulateDrawAction({
-      drawMode,
+      drawMode: effectiveDrawMode,
     });
 
     setIsSimulating(false);
@@ -45,37 +116,38 @@ export default function DrawCeremonyControl({
       setSimulation(res.data);
       setFeedback({
         type: 'success',
-        message: `Simulation completed. Evaluated ${res.data.totalEligibleSubscribers} eligible patrons.`,
+        message: `Simulation completed (${effectiveDrawMode === 'guaranteed_test' ? '🎯 Evaluator Preset' : effectiveDrawMode.toUpperCase()}). Evaluated ${res.data.totalEligibleSubscribers} eligible patrons.`,
       });
     } else {
       setFeedback({ type: 'error', message: !res.success ? res.error : 'Simulation failed.' });
     }
   };
 
-  const handlePublish = async () => {
-    if (!window.confirm(`Are you certain you want to officially publish Draw #${drawNumber}? This operation is cryptographically locked and immutable.`)) {
-      return;
-    }
+  const handlePublish = () => {
+    showConfirm(
+      `Publish Draw #${drawNumber}`,
+      `This will cryptographically lock and publish the results. This operation is immutable and cannot be reversed.`,
+      async () => {
+        setIsPublishing(true);
+        setFeedback(null);
 
-    setIsPublishing(true);
-    setFeedback(null);
+        const res = await publishDrawAction({ drawId, drawMode: effectiveDrawMode });
 
-    const res = await publishDrawAction({
-      drawId,
-      drawMode,
-    });
-
-    setIsPublishing(false);
-    if (res.success && res.data) {
-      setPublishedData(res.data);
-      setStatus('published');
-      setFeedback({
-        type: 'success',
-        message: `Draw #${drawNumber} officially published with ${res.data.winnersCount} winning patrons recorded!`,
-      });
-    } else {
-      setFeedback({ type: 'error', message: !res.success ? res.error : 'Failed to publish draw.' });
-    }
+        setIsPublishing(false);
+        if (res.success && res.data) {
+          setPublishedData(res.data);
+          setStatus('published');
+          setFeedback({
+            type: 'success',
+            message: `Draw #${drawNumber} officially published with ${res.data.winnersCount} winning patrons recorded!`,
+          });
+        } else {
+          setFeedback({ type: 'error', message: !res.success ? res.error : 'Failed to publish draw.' });
+        }
+      },
+      'Publish & Lock',
+      'Cancel'
+    );
   };
 
   return (
@@ -127,32 +199,83 @@ export default function DrawCeremonyControl({
           <div className={styles.formGroup}>
             <label className={styles.inputLabel}>Draw Randomness Mode</label>
             <div className={styles.radioGroup}>
-              <label className={`${styles.radioLabel} ${drawMode === 'random' ? styles.radioActive : ''}`}>
-                <input
-                  type="radio"
-                  name="drawMode"
-                  value="random"
-                  checked={drawMode === 'random'}
-                  onChange={() => setDrawMode('random')}
-                  disabled={status === 'published'}
-                />
-                <div>
-                  <strong>Random (PRNG Secure)</strong>
-                  <span>Uniform crypto distribution [1, 45]</span>
-                </div>
-              </label>
+              {/* Option 1: Random (PRNG Secure) */}
+              <div
+                className={`${styles.radioLabelCard} ${
+                  mainDrawMode === 'random' ? styles.radioActive : ''
+                }`}
+              >
+                <label
+                  className={styles.radioLabelMain}
+                  onClick={() => setMainDrawMode('random')}
+                >
+                  <input
+                    type="radio"
+                    name="mainDrawMode"
+                    value="random"
+                    checked={mainDrawMode === 'random'}
+                    onChange={() => setMainDrawMode('random')}
+                    disabled={status === 'published'}
+                  />
+                  <div>
+                    <strong>Random (PRNG Secure)</strong>
+                    <span>Uniform crypto distribution [1, 45]</span>
+                  </div>
+                </label>
 
+                {/* Sub-mode selector under Random */}
+                {mainDrawMode === 'random' && (
+                  <div className={styles.subModeContainer}>
+                    <div className={styles.subModeHeader}>Random Sub-Mode Preset:</div>
+                    <div className={styles.subModeToggleRow}>
+                      <button
+                        type="button"
+                        className={`${styles.subModeBtn} ${
+                          randomSubMode === 'live' ? styles.subModeBtnActive : ''
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRandomSubMode('live');
+                        }}
+                        disabled={status === 'published'}
+                      >
+                        🌐 Live (PRNG)
+                      </button>
+                      <button
+                        type="button"
+                        className={`${styles.subModeBtn} ${
+                          randomSubMode === 'guaranteed_test' ? styles.subModeBtnTestingActive : ''
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRandomSubMode('guaranteed_test');
+                        }}
+                        disabled={status === 'published'}
+                      >
+                        🔑 Dual-Key Preset (Random User Win)
+                      </button>
+                    </div>
+                    {randomSubMode === 'guaranteed_test' && (
+                      <div className={styles.subModeNotice}>
+                        <strong>🔑 Dual-Key Testing Preset Active:</strong> Randomly selects an active patron score set so any user wins during ceremony testing.
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Option 2: Algorithmic (Laplace-Smoothed) */}
               <label
                 className={`${styles.radioLabel} ${
-                  drawMode === 'algorithmic' ? styles.radioActive : ''
+                  mainDrawMode === 'algorithmic' ? styles.radioActive : ''
                 }`}
               >
                 <input
                   type="radio"
-                  name="drawMode"
+                  name="mainDrawMode"
                   value="algorithmic"
-                  checked={drawMode === 'algorithmic'}
-                  onChange={() => setDrawMode('algorithmic')}
+                  checked={mainDrawMode === 'algorithmic'}
+                  onChange={() => setMainDrawMode('algorithmic')}
                   disabled={status === 'published'}
                 />
                 <div>
@@ -172,14 +295,16 @@ export default function DrawCeremonyControl({
             >
               {isSimulating ? 'Simulating...' : 'Run Monte Carlo Simulation'}
             </button>
-            <button
-              type="button"
-              onClick={handlePublish}
-              disabled={isPublishing || isSimulating || status === 'published'}
-              className={styles.approveBtn}
-            >
-              {isPublishing ? 'Signing Ceremony...' : 'Commit & Publish Draw'}
-            </button>
+            {status !== 'published' && (
+              <button
+                type="button"
+                onClick={handlePublish}
+                disabled={isPublishing || isSimulating}
+                className={styles.approveBtn}
+              >
+                {isPublishing ? 'Signing Ceremony...' : 'Commit & Publish Draw'}
+              </button>
+            )}
           </div>
 
           {feedback && (
@@ -199,7 +324,7 @@ export default function DrawCeremonyControl({
             <div className={styles.publishedResultsCard}>
               <div className={styles.publishedHeader}>
                 <span className={styles.ceremonyVerified}>✓ CRYPTOGRAPHICALLY COMMITTED</span>
-                <span className={styles.publishedTimestamp}>
+                <span className={styles.publishedTimestamp} style={{ display: 'block', marginTop: '2px' }}>
                   {new Date(publishedData.publishedAt).toUTCString()}
                 </span>
               </div>
@@ -220,6 +345,83 @@ export default function DrawCeremonyControl({
                   <span>Prize Dispersal Status</span>
                   <strong className={styles.goldText}>Awaiting Verification</strong>
                 </div>
+              </div>
+
+              {/* Published Winning Patrons Roster */}
+              {publishedData.winners && publishedData.winners.length > 0 && (
+                <div className={styles.winnersRosterSection}>
+                  <h4 className={styles.winnersRosterTitle}>
+                    🏆 Official Winning Patrons Roster ({publishedData.winners.length})
+                  </h4>
+                  <div className={styles.winnersList}>
+                    {publishedData.winners.map((winner) => (
+                      <div key={winner.userId} className={styles.winnerCard}>
+                        <div className={styles.winnerInfo}>
+                          <div className={styles.winnerNameRow}>
+                            <strong>{winner.fullName || winner.userEmail.split('@')[0]}</strong>
+                            <span
+                              className={`${styles.tierBadge} ${
+                                winner.matchTier === 'match_5'
+                                  ? styles.tier5
+                                  : winner.matchTier === 'match_4'
+                                  ? styles.tier4
+                                  : styles.tier3
+                              }`}
+                            >
+                              {winner.matchTier === 'match_5'
+                                ? 'TIER 5 (5 MATCHES)'
+                                : winner.matchTier === 'match_4'
+                                ? 'TIER 4 (4 MATCHES)'
+                                : 'TIER 3 (3 MATCHES)'}
+                            </span>
+                          </div>
+                          <div className={styles.winnerMetaRow}>
+                            <span className={styles.winnerEmail}>{winner.userEmail}</span>
+                            <span className={styles.matchedPillRow}>
+                              Matched:{' '}
+                              {winner.matchedNumbers.map((num) => (
+                                <span key={num} className={styles.matchedNumberPill}>
+                                  {num}
+                                </span>
+                              ))}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className={styles.actionBtnGold}
+                          onClick={() => handleViewPatronDossier(winner.userId)}
+                          disabled={isLoadingUserDetail === winner.userId}
+                        >
+                          {isLoadingUserDetail === winner.userId ? 'Loading...' : '👤 View Dossier'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Next Commit Action Bar */}
+              <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+                  Draw #{drawNumber} committed. Click to provision Draw #{drawNumber + 1} and open the next commitment cycle.
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCreateNextDraw}
+                  disabled={isCreatingNext}
+                  className={styles.approveBtn}
+                  style={{
+                    padding: '0.55rem 1.25rem',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+                    borderColor: '#10b981',
+                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
+                  }}
+                >
+                  {isCreatingNext ? 'Provisioning Next Draw...' : `⚡ Next Commit (Draw #${drawNumber + 1})`}
+                </button>
               </div>
             </div>
           ) : simulation ? (
@@ -256,6 +458,64 @@ export default function DrawCeremonyControl({
                   <small>25% Pool Allocation</small>
                 </div>
               </div>
+
+              {/* Simulation Winning Patrons Roster */}
+              {simulation.winners && simulation.winners.length > 0 ? (
+                <div className={styles.winnersRosterSection}>
+                  <h4 className={styles.winnersRosterTitle}>
+                    🏆 Projected Winning Patrons ({simulation.winners.length})
+                  </h4>
+                  <div className={styles.winnersList}>
+                    {simulation.winners.map((winner) => (
+                      <div key={winner.userId} className={styles.winnerCard}>
+                        <div className={styles.winnerInfo}>
+                          <div className={styles.winnerNameRow}>
+                            <strong>{winner.fullName || winner.userEmail.split('@')[0]}</strong>
+                            <span
+                              className={`${styles.tierBadge} ${
+                                winner.matchTier === 'match_5'
+                                  ? styles.tier5
+                                  : winner.matchTier === 'match_4'
+                                  ? styles.tier4
+                                  : styles.tier3
+                              }`}
+                            >
+                              {winner.matchTier === 'match_5'
+                                ? 'TIER 5 (5 MATCHES)'
+                                : winner.matchTier === 'match_4'
+                                ? 'TIER 4 (4 MATCHES)'
+                                : 'TIER 3 (3 MATCHES)'}
+                            </span>
+                          </div>
+                          <div className={styles.winnerMetaRow}>
+                            <span className={styles.winnerEmail}>{winner.userEmail}</span>
+                            <span className={styles.matchedPillRow}>
+                              Matched:{' '}
+                              {winner.matchedNumbers.map((num) => (
+                                <span key={num} className={styles.matchedNumberPill}>
+                                  {num}
+                                </span>
+                              ))}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className={styles.actionBtnGold}
+                          onClick={() => handleViewPatronDossier(winner.userId)}
+                          disabled={isLoadingUserDetail === winner.userId}
+                        >
+                          {isLoadingUserDetail === winner.userId ? 'Loading...' : '👤 View Dossier'}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.noWinnersNotice}>
+                  <span>ℹ️ No active subscriber 5-score combinations matched 3+ numbers in this simulation run.</span>
+                </div>
+              )}
             </div>
           ) : (
             <div className={styles.simPlaceholder}>
@@ -268,6 +528,29 @@ export default function DrawCeremonyControl({
           )}
         </div>
       </div>
+
+      {/* Patron Dossier Modal */}
+      {selectedUserDetail && (
+        <PatronDossierModal
+          detail={selectedUserDetail}
+          onClose={() => setSelectedUserDetail(null)}
+          onRoleToggle={async (userId, currentRole) => {
+            const newRole = currentRole === 'admin' ? 'subscriber' : 'admin';
+            const res = await adminUpdateUserRoleAction({ userId, newRole });
+            if (res.success) {
+              handleViewPatronDossier(userId);
+            } else {
+              showAlert('error', 'Role Update Failed', `Unable to update patron role: ${res.error}`);
+            }
+          }}
+          isUpdatingRole={false}
+          onRefresh={() => {
+            handleViewPatronDossier(selectedUserDetail.profile.id);
+          }}
+        />
+      )}
+
+      <AdminDialog options={dialog} />
     </div>
   );
 }

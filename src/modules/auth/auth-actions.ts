@@ -92,15 +92,21 @@ export async function signInAction(formData: z.infer<typeof SignInSchema>): Prom
     .eq('id', data.user.id)
     .single();
 
+  const authUser: AuthUser = {
+    id: data.user.id,
+    email: data.user.email ?? '',
+    fullName: profile?.full_name ?? undefined,
+    role: (profile?.role as AuthUser['role']) ?? 'subscriber',
+  };
+
+  const { setCached } = await import('@/lib/memory-cache');
+  setCached(`auth_user:${data.user.id}`, authUser, 120);
+  setCached(`user_role:${data.user.id}`, authUser.role, 300);
+
   return {
     success: true,
     data: {
-      user: {
-        id: data.user.id,
-        email: data.user.email ?? '',
-        fullName: profile?.full_name ?? undefined,
-        role: (profile?.role as AuthUser['role']) ?? 'subscriber',
-      },
+      user: authUser,
     },
   };
 }
@@ -114,6 +120,9 @@ export async function adminSignInAction(formData: z.infer<typeof SignInSchema>):
   if (result.data.user.role !== 'admin') {
     const supabase = await createServerSupabaseClient();
     await supabase.auth.signOut();
+    const { invalidateCache } = await import('@/lib/memory-cache');
+    invalidateCache(`auth_user:${result.data.user.id}`);
+    invalidateCache(`user_role:${result.data.user.id}`);
     return {
       success: false,
       error: 'Access Denied: Level 4 Administrative Clearance is required for this terminal. Only authorized Sovereign Trustees may access.',
@@ -127,7 +136,11 @@ export async function adminSignInAction(formData: z.infer<typeof SignInSchema>):
 export async function signOutAction(): Promise<ActionResult<void>> {
   const { invalidateCache } = await import('@/lib/memory-cache');
   invalidateCache('auth_user:');
-  invalidateCache('user-');
+  invalidateCache('user_role:');
+  invalidateCache('user_scores:');
+  invalidateCache('user_sub:');
+  invalidateCache('user_charity_pref:');
+  invalidateCache('user_winnings:');
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.auth.signOut();
   if (error) {

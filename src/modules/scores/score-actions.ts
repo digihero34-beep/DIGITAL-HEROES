@@ -1,6 +1,6 @@
 'use server';
 
-import { requireAuth } from '@/modules/auth/server-guards';
+import { requireAuth, requireActiveSubscription } from '@/modules/auth/server-guards';
 import { createServerSupabaseClient } from '@/infrastructure/database/supabase-server';
 import { ActionResult } from '@/modules/auth/auth-actions';
 import {
@@ -20,6 +20,7 @@ export async function addScoreAction(
 ): Promise<ActionResult<GolfScore>> {
   try {
     const user = await requireAuth();
+    await requireActiveSubscription(user.id);
 
     // 1. Validate score limits
     const scoreVal = validateStablefordScore(input.score);
@@ -98,6 +99,7 @@ export async function updateScoreAction(
 ): Promise<ActionResult<GolfScore>> {
   try {
     const user = await requireAuth();
+    await requireActiveSubscription(user.id);
 
     // 1. Validate score limits
     const scoreVal = validateStablefordScore(input.score);

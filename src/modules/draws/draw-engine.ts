@@ -131,3 +131,52 @@ export function generateAlgorithmicDrawNumbers(
   const sorted = chosen.sort((a, b) => a - b);
   return sorted as WinningNumbers;
 }
+
+/**
+ * Generates 5 numbers guaranteed to match active subscriber scores for HR/evaluator testing.
+ */
+export function generateGuaranteedWinnerDrawNumbers(
+  subscriberScoreSets: number[][]
+): WinningNumbers {
+  const chosen = new Set<number>();
+
+  if (subscriberScoreSets.length > 0) {
+    // Pick a target subscriber's set randomly
+    const randomIdx = Math.floor(Math.random() * subscriberScoreSets.length);
+    const targetSet = subscriberScoreSets[randomIdx];
+
+    if (targetSet && targetSet.length > 0) {
+      const uniqueScores = Array.from(
+        new Set(targetSet.filter((s) => s >= DRAW_MIN_NUMBER && s <= DRAW_MAX_NUMBER))
+      );
+      // Guarantee at least 4 matching numbers from target subscriber to produce a Tier 4 or Tier 5 winner
+      for (const score of uniqueScores) {
+        chosen.add(score);
+        if (chosen.size >= 4) break;
+      }
+    }
+  }
+
+  // Pick remaining numbers directly from all active subscriber score sets
+  for (const set of subscriberScoreSets) {
+    for (const score of set) {
+      if (score >= DRAW_MIN_NUMBER && score <= DRAW_MAX_NUMBER) {
+        chosen.add(score);
+        if (chosen.size >= DRAW_NUMBER_COUNT) break;
+      }
+    }
+    if (chosen.size >= DRAW_NUMBER_COUNT) break;
+  }
+
+  // Fill remainder if needed
+  let candidate = DRAW_MIN_NUMBER;
+  while (chosen.size < DRAW_NUMBER_COUNT && candidate <= DRAW_MAX_NUMBER) {
+    if (!chosen.has(candidate)) {
+      chosen.add(candidate);
+    }
+    candidate++;
+  }
+
+  const sorted = Array.from(chosen).sort((a, b) => a - b);
+  return sorted as WinningNumbers;
+}

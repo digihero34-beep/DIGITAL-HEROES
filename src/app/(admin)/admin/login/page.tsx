@@ -109,6 +109,22 @@ function AdminLoginForm() {
           </button>
         </form>
 
+        <div style={{
+          marginTop: '1.25rem',
+          padding: '0.75rem 1rem',
+          border: '1px solid rgba(212, 175, 55, 0.25)',
+          background: 'rgba(212, 175, 55, 0.04)',
+          fontSize: '0.75rem',
+          color: '#cbd5e1',
+          lineHeight: 1.5,
+        }}>
+          <div style={{ fontWeight: 700, color: '#d4af37', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span>🔒</span>
+            <span>Zero Public Registration Protocol</span>
+          </div>
+          Public account creation is permanently disabled for administrative terminals. Sovereign Trustee credentials are generated via offline dual-keyholder governance and provisioned directly in the core trust ledger.
+        </div>
+
         <div className={styles.footerVitals}>
           <span>Status: <strong>Online</strong></span>
           <span>Security: <strong>ECDSA-SECP256K1</strong></span>

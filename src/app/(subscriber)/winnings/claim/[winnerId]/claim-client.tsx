@@ -42,30 +42,40 @@ export function ClaimClient({ winner }: ClaimClientProps) {
     setSubmitting(true);
     setErrorMessage(null);
 
-    try {
-      const storagePath = `proofs/${winner.id}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const dataUrl = reader.result as string;
 
-      const result = await submitProofAction({
-        winnerId: winner.id,
-        proofStoragePath: storagePath,
-        proofFilename: file.name,
-        proofFileSize: file.size,
-        proofMimeType: file.type || 'application/octet-stream',
-      });
+        const result = await submitProofAction({
+          winnerId: winner.id,
+          proofStoragePath: dataUrl,
+          proofFilename: file.name,
+          proofFileSize: file.size,
+          proofMimeType: file.type || 'image/png',
+        });
 
-      if (!result.success) {
-        setErrorMessage(result.error);
+        if (!result.success) {
+          setErrorMessage(result.error);
+          setSubmitting(false);
+          return;
+        }
+
+        setSuccessMessage('Verification document submitted successfully! Our compliance team is reviewing it.');
+        router.refresh();
+      } catch {
+        setErrorMessage('An unexpected error occurred during submission.');
+      } finally {
         setSubmitting(false);
-        return;
       }
+    };
 
-      setSuccessMessage('Verification document submitted successfully! Our compliance team is reviewing it.');
-      router.refresh();
-    } catch {
-      setErrorMessage('An unexpected error occurred during submission.');
-    } finally {
+    reader.onerror = () => {
+      setErrorMessage('Failed to read selected file.');
       setSubmitting(false);
-    }
+    };
+
+    reader.readAsDataURL(file);
   }
 
   const isLocked = winner.verificationStatus === 'submitted' || winner.verificationStatus === 'approved';
@@ -90,7 +100,7 @@ export function ClaimClient({ winner }: ClaimClientProps) {
                 Claim {formatCurrencyGBP(winner.prizeAmountCents)}
               </h1>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                Draw #{winner.drawNumber || 1} • {winner.matchTier === 'match_5' ? '5-Number Jackpot' : `${winner.matchTier.replace('match_', '')}-Number Match`}
+                Draw #{winner.drawNumber || 1} • {winner.matchTier?.toLowerCase() === 'match_5' ? '5-Number Jackpot' : `${winner.matchTier?.toLowerCase().replace('match_', '')}-Number Match`}
               </p>
             </div>
             <div style={{ textAlign: 'right' }}>

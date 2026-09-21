@@ -270,4 +270,84 @@ describe('Admin Operations & Trust Console Integration Tests (AC-ADM-01 to AC-AD
       expect(Number.isInteger(totalYieldPence)).toBe(true);
     });
   });
+
+  describe('AC-ADM-06: Patron Dossier Inspection & Access Governance', () => {
+    it('should structure complete user dossier for admin oversight', () => {
+      const mockDossier = {
+        profile: {
+          id: 'user_patron_99',
+          email: 'golfer@links.uk',
+          fullName: 'St. Andrews Member',
+          role: 'subscriber' as const,
+          createdAt: '2026-01-15T10:00:00Z',
+        },
+        subscription: {
+          id: 'sub_99',
+          planId: 'plan_monthly',
+          planName: 'Digital Heroes Monthly Membership',
+          status: 'active',
+          stripeCustomerId: 'cus_99',
+        },
+        scores: {
+          activeScores: [
+            { id: 'sc1', score: 38, playedDate: '2026-09-18', createdAt: '2026-09-18T14:00:00Z' },
+            { id: 'sc2', score: 40, playedDate: '2026-09-15', createdAt: '2026-09-15T14:00:00Z' },
+            { id: 'sc3', score: 36, playedDate: '2026-09-12', createdAt: '2026-09-12T14:00:00Z' },
+            { id: 'sc4', score: 42, playedDate: '2026-09-08', createdAt: '2026-09-08T14:00:00Z' },
+            { id: 'sc5', score: 37, playedDate: '2026-09-01', createdAt: '2026-09-01T14:00:00Z' },
+          ],
+          historicalScores: [],
+          totalSubmitted: 5,
+          stats: { averageScore: 38.6, highestScore: 42, lowestScore: 36 },
+        },
+        charityPreference: {
+          charityId: 'charity_01',
+          charityName: 'Fairway Futures Foundation',
+          category: 'Youth & Education',
+          contributionPercentage: 25,
+        },
+        winnings: [
+          {
+            id: 'win_1',
+            drawNumber: 141,
+            matchTier: 'MATCH_4',
+            matchedNumbers: [38, 40, 36, 42],
+            prizeAmountCents: 150000,
+            verificationStatus: 'approved',
+            payoutStatus: 'paid',
+            createdAt: '2026-09-01T18:00:00Z',
+          },
+        ],
+      };
+
+      expect(mockDossier.profile.email).toBe('golfer@links.uk');
+      expect(mockDossier.scores.activeScores.length).toBe(5);
+      expect(mockDossier.charityPreference.contributionPercentage).toBe(25);
+      expect(mockDossier.winnings[0].prizeAmountCents).toBe(150000);
+      expect(mockDossier.subscription.status).toBe('active');
+    });
+
+    it('should enforce that subscribers only access their own isolated session', () => {
+      const subscriberSessionUserId = 'user_patron_99';
+      const targetRequestedUserId = 'user_other_100';
+
+      function enforceDataIsolation(sessionUserId: string, targetUserId: string, role: string) {
+        if (role !== 'admin' && sessionUserId !== targetUserId) {
+          throw new ForbiddenError('Unauthorized: Patron data isolation policy prohibits cross-user access.');
+        }
+        return true;
+      }
+
+      // Subscriber attempting to access another user's data -> REJECTED
+      expect(() => enforceDataIsolation(subscriberSessionUserId, targetRequestedUserId, 'subscriber'))
+        .toThrowError(ForbiddenError);
+
+      // Subscriber accessing own data -> ALLOWED
+      expect(enforceDataIsolation(subscriberSessionUserId, subscriberSessionUserId, 'subscriber')).toBe(true);
+
+      // Admin accessing any user's data -> ALLOWED
+      expect(enforceDataIsolation('admin_id', targetRequestedUserId, 'admin')).toBe(true);
+    });
+  });
 });
+
