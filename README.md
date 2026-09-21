@@ -14,7 +14,7 @@ Unlike conventional golf club websites or gaming applications, Digital Heroes im
 
 ---
 
-## 🔑 HR & Evaluator Credentials & Quick Testing Guide
+## 🔑 Evaluator Credentials & Quick Testing Guide
 
 For evaluating administrative controls, draw ceremonies, winner verification queues, patron directory CRUD, and philanthropic allocation:
 
