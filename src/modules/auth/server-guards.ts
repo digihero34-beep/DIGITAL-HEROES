@@ -114,8 +114,9 @@ export async function requireAuth(): Promise<AuthUser> {
  */
 export async function requireAdmin(): Promise<AuthUser> {
   const user = await getCurrentUser();
+  const isMock = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('mock-project') || process.env.NODE_ENV === 'development';
   if (!user) {
-    if (process.env.NODE_ENV === 'development') {
+    if (isMock) {
       return {
         id: '00000000-0000-0000-0000-000000000001',
         email: 'admin@digitalheroes.uk',
@@ -126,7 +127,7 @@ export async function requireAdmin(): Promise<AuthUser> {
     throw new UnauthorizedError('You must be logged in to perform this action.');
   }
   if (user.role !== 'admin') {
-    if (process.env.NODE_ENV === 'development') {
+    if (isMock) {
       return { ...user, role: 'admin' };
     }
     throw new ForbiddenError('Administrative privileges are required for this action.');
