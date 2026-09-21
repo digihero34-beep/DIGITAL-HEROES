@@ -14,6 +14,20 @@ Unlike conventional golf club websites or gaming applications, Digital Heroes im
 
 ---
 
+## 🔑 HR & Evaluator Credentials & Quick Testing Guide
+
+For evaluating administrative controls, draw ceremonies, winner verification queues, patron directory CRUD, and philanthropic allocation:
+
+| User Role | Email Identifier | Password | Access Portal URL | Operational Scope |
+| :--- | :--- | :--- | :--- | :--- |
+| **Sovereign Trustee (Admin)** | `admin@digitalheroes.uk` | `AdminPass123!` | [`http://localhost:3000/admin`](http://localhost:3000/admin) | Full Admin Console (System Vitals, Draw Ceremonies, Patron Directory CRUD, Winner Verifications, Charity Governance) |
+| **Enrolled Subscriber (Patron)** | `subscriber@digitalheroes.uk` | `PatronPass123!` | [`http://localhost:3000/login`](http://localhost:3000/login) | Patron Dashboard, Score Entry Ledger, Charity Selection, Winnings Claims |
+
+> **Development Mode Access Notice:**  
+> In local development mode (`NODE_ENV=development`), visiting [`/admin`](http://localhost:3000/admin) automatically activates a Level 4 Sovereign Trustee session if no active session is present. Alternatively, credentials can be entered explicitly via the Trustee Login terminal at [`/admin/login`](http://localhost:3000/admin/login).
+
+---
+
 ## 2. Core Architectural Pillars
 
 ```
