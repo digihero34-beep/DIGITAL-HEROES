@@ -75,7 +75,7 @@ function AdminLoginForm() {
               type="email"
               required
               autoComplete="email"
-              placeholder="trustee@digitalheroes.co.in"
+              placeholder="trustee@digitalheroes.co.in or admin@digitalheroes.uk"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
@@ -118,11 +118,33 @@ function AdminLoginForm() {
           color: '#cbd5e1',
           lineHeight: 1.5,
         }}>
-          <div style={{ fontWeight: 700, color: '#d4af37', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <span>🔒</span>
-            <span>Zero Public Registration Protocol</span>
+          <div style={{ fontWeight: 700, color: '#d4af37', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span>🔒</span>
+              <span>Sovereign Trustee Clearance</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('trustee@digitalheroes.co.in');
+                setPassword('TrusteePass2026!');
+              }}
+              style={{
+                background: '#d4af37',
+                color: '#060a12',
+                border: 'none',
+                padding: '0.2rem 0.5rem',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                borderRadius: '0px',
+              }}
+            >
+              Fill Credentials
+            </button>
           </div>
-          Public account creation is permanently disabled for administrative terminals. Sovereign Trustee credentials are generated via offline dual-keyholder governance and provisioned directly in the core trust ledger.
+          Default Trustee Email: <strong style={{ color: '#fff' }}>trustee@digitalheroes.co.in</strong> (or <strong>admin@digitalheroes.uk</strong>)<br />
+          Clearance Key: <strong style={{ color: '#fff' }}>TrusteePass2026!</strong>
         </div>
 
         <div className={styles.footerVitals}>
