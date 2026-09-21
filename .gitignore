@@ -40,5 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# agent instructions (local only)
+# agent instructions & docs (local only)
 .agents/
+.docs/
+docs/
+.next/
