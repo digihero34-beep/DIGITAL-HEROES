@@ -18,13 +18,13 @@ Unlike conventional golf club websites or gaming applications, Digital Heroes im
 
 For evaluating administrative controls, draw ceremonies, winner verification queues, patron directory CRUD, and philanthropic allocation:
 
-| User Role | Email Identifier | Password | Access Portal URL | Operational Scope |
-| :--- | :--- | :--- | :--- | :--- |
-| **Sovereign Trustee (Admin)** | `admin@digitalheroes.uk` | `AdminPass123!` | [`http://localhost:3000/admin`](http://localhost:3000/admin) | Full Admin Console (System Vitals, Draw Ceremonies, Patron Directory CRUD, Winner Verifications, Charity Governance) |
-| **Enrolled Subscriber (Patron)** | `subscriber@digitalheroes.uk` | `PatronPass123!` | [`http://localhost:3000/login`](http://localhost:3000/login) | Patron Dashboard, Score Entry Ledger, Charity Selection, Winnings Claims |
+| User Role | Email Identifier | Password | Live Production URL (Vercel) | Local Development URL | Operational Scope |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Sovereign Trustee (Admin)** | `admin@digitalheroes.uk` *(or `trustee@digitalheroes.co.in`)* | `AdminPass123!` | [`https://digital-heroes-olive-tau.vercel.app/admin/login`](https://digital-heroes-olive-tau.vercel.app/admin/login) | [`http://localhost:3000/admin`](http://localhost:3000/admin) | Full Admin Console (System Vitals, Draw Ceremonies, Patron Directory CRUD, Winner Verifications, Charity Governance) |
+| **Enrolled Subscriber (Patron)** | `subscriber@digitalheroes.uk` | `PatronPass123!` | [`https://digital-heroes-olive-tau.vercel.app/login`](https://digital-heroes-olive-tau.vercel.app/login) | [`http://localhost:3000/login`](http://localhost:3000/login) | Patron Dashboard, Score Entry Ledger, Charity Selection, Winnings Claims |
 
-> **Development Mode Access Notice:**  
-> In local development mode (`NODE_ENV=development`), visiting [`/admin`](http://localhost:3000/admin) automatically activates a Level 4 Sovereign Trustee session if no active session is present. Alternatively, credentials can be entered explicitly via the Trustee Login terminal at [`/admin/login`](http://localhost:3000/admin/login).
+> **Evaluation & Demo Access Notice:**  
+> Both local development (`http://localhost:3000`) and live production (`https://digital-heroes-olive-tau.vercel.app`) support instant one-click credential filling or direct navigation. Sovereign Trustee terminals also feature auto-authentication fallback for seamless evaluator testing.
 
 ---
 
